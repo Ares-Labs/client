@@ -1,46 +1,38 @@
 {
   "name": "2022-mars-client",
+  "version": "0.0.0",
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+
     "validate-html": "java -jar node_modules/vnu-jar/build/dist/vnu.jar --Werror --filterfile .vnuignore --skip-non-html ./src",
     "validate-sonar-ci": "node_modules/sonar-scanner/bin/sonar-scanner",
     "validate-sonar-local-mac": "node_modules/sonar-scanner/bin/sonar-scanner -Dsonar.host.url=https://sonar.ti.howest.be",
     "validate-sonar-local-win": ".\\node_modules\\sonar-scanner\\bin\\sonar-scanner -Dsonar.host.url=https://sonar.ti.howest.be",
     "validate-ci": "npm run validate-html && npm run validate-sonar-ci",
     "validate-local-mac": "npm run validate-html && npm run validate-sonar-local-mac",
-    "validate-local-win": "npm run validate-html && npm run validate-sonar-local-win",
-    "test": "jest --coverage --watchAll --env=jsdom"
+    "validate-local-win": "npm run validate-html && npm run validate-sonar-local-win"
   },
   "dependencies": {
+    "vue": "^3.2.41",
     "sonar-scanner": "^3.1.0",
     "vnu-jar": "^20.2.28"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.7",
-    "@babel/preset-env": "^7.12.7",
-    "@testing-library/jest-dom": "^5.11.6",
-    "babel-jest": "^26.6.3",
-    "jest": "^26.6.3",
-    "jest-sonar-reporter": "^2.0.0",
-    "jsdom": "^15.1.1"
+    "@rushstack/eslint-patch": "^1.1.4",
+    "@vitejs/plugin-vue": "^3.1.2",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "eslint": "^8.22.0",
+    "eslint-plugin-vue": "^9.3.0",
+    "prettier": "^2.7.1",
+    "vite": "^3.1.8"
   },
   "moduleDirectories": [
     "node_modules",
     "src"
-  ],
-  "jest": {
-    "verbose": true,
-    "collectCoverage": true,
-    "testResultsProcessor": "jest-sonar-reporter",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
-  },
-  "jestSonar": {
-    "reportPath": "reports",
-    "reportFile": "test-report.xml",
-    "indent": 4
-  }
-
+  ]
 }

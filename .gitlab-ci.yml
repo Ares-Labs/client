@@ -25,6 +25,7 @@ deploy:
       - documents/**/*
   script:
     - apk add openssh-client
+    - apk add --update nodejs npm
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
@@ -32,5 +33,10 @@ deploy:
     - pwd
     - rm src/config.json
     - ssh-keyscan -H 172.18.18.200 >> ~/.ssh/known_hosts
-    - scp -qr ./src/* gitlab-runner@172.18.18.200:"/var/www/html/2022-2023/mars-${CI_PROJECT_NAMESPACE:(-2)}/"
+    - mkdir client-06
+    - scp -qr ./* gitlab-runner@172.18.18.200:"./client-06/"
+    - cd ./client-06/
+    - npm install
+    - npm run build
+    - cp -r ./dist/* gitlab-runner@172.18.18.200:"/var/www/html/2022-2023/mars-06/"
   environment: production

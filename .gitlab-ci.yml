@@ -31,12 +31,8 @@ deploy:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - pwd
-    - rm src/config.json
     - ssh-keyscan -H 172.18.18.200 >> ~/.ssh/known_hosts
-    - mkdir client-06
-    - scp -qr ./* gitlab-runner@172.18.18.200:"./client-06/"
-    - cd ./client-06/
     - npm install
     - npm run build
-    - cp -r ./dist/* gitlab-runner@172.18.18.200:"/var/www/html/2022-2023/mars-06/"
+    - cp -r ./dist/* /var/www/html/2022-2023/mars-06/
   environment: production

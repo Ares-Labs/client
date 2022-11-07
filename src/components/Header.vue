@@ -1,4 +1,8 @@
-<script setup></script>
+<script>
+export default {
+  name: 'Header',
+};
+</script>
 
 <template>
   <header>
@@ -22,5 +26,4 @@ header {
   border-radius: 1rem;
   box-shadow: black 0.1rem 0.1rem 1.5rem 0.3rem;
 }
-
 </style>

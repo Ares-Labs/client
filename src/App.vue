@@ -39,17 +39,19 @@ a {
   text-decoration: none;
 }
 
-main div {
-  display: grid;
-  grid-template-columns: 30rem 30rem 30rem;
-  grid-template-rows: auto;
-  grid-template-areas:
+main {
+  div {
+    display: grid;
+    grid-template-columns: 30rem 30rem 30rem;
+    grid-template-rows: auto;
+    grid-template-areas:
     "man live re"
     "map map pri";
-  gap: 10rem;
-  justify-content: center;
-  justify-items: center;
-  font-size: 1.5rem;
+    gap: 10rem;
+    justify-content: center;
+    justify-items: center;
+    font-size: 1.5rem;
+  }
 }
 
 #manage {
@@ -59,6 +61,7 @@ main div {
   padding: 2rem;
   box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
 }
+
 #manage:hover {
   background-color: orange;
   box-shadow: none;
@@ -71,6 +74,7 @@ main div {
   padding: 2rem;
   box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
 }
+
 #live:hover {
   background-color: orange;
   box-shadow: none;
@@ -83,6 +87,7 @@ main div {
   padding: 2rem;
   box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
 }
+
 #recent:hover {
   background-color: orange;
   box-shadow: none;
@@ -95,6 +100,7 @@ main div {
   padding: 2rem 10rem;
   box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
 }
+
 #map:hover {
   background-color: orange;
   box-shadow: none;
@@ -107,6 +113,7 @@ main div {
   padding: 2rem;
   box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
 }
+
 #pricing:hover {
   background-color: orange;
   box-shadow: none;

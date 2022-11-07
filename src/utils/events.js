@@ -17,6 +17,10 @@ class Gateway {
     };
   }
 
+  send(event, data) {
+    this.#eb.send(CHNL_TO_SERVER, JSON.stringify({ event, data }));
+  }
+
   #registerHandler(chanel, callback) {
     const bound_callback = callback.bind(this);
     this.#eb.registerHandler(chanel, bound_callback);
@@ -43,12 +47,20 @@ class Gateway {
     this.#subscribers[event]?.forEach((callback) => callback(data));
   }
 
+  /// Adds an event listener if it doesn't exist yet.
+  #addEvent(event) {
+    if (this.#subscribers[event] === undefined) {
+      this.#subscribers[event] = [];
+      this.send("subscribe", event);
+    }
+  }
+
   subscribe(event, callback) {
     const event_subscribers = this.#subscribers[event];
 
     // Create new event if it doesn't exist
     if (event_subscribers === undefined) {
-      this.#subscribers[event] = [];
+      this.#addEvent(event);
       return this.subscribe(event, callback);
     }
 

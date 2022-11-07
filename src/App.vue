@@ -1,4 +1,11 @@
-<script setup></script>
+<script setup>
+import Gateway from "./utils/events.js";
+
+// Example gateway subscription
+Gateway.subscribe("event", (data) => {
+  console.log(data);
+});
+</script>
 
 <template>
   <header>
@@ -11,7 +18,9 @@
 </template>
 
 <style lang="scss" scoped>
-main p {
-  color: red;
+main {
+  p {
+    color: red;
+  }
 }
 </style>

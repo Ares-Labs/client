@@ -34,5 +34,5 @@ deploy:
     - ssh-keyscan -H 172.18.18.200 >> ~/.ssh/known_hosts
     - npm install
     - npm run build
-    - cp -r ./dist/* /var/www/html/2022-2023/mars-06/
+    - scp -qr ./dist/* gitlab-runner@172.18.18.200:"/var/www/html/2022-2023/mars-${CI_PROJECT_NAMESPACE:(-2)}/"
   environment: production

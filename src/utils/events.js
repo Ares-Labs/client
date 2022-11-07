@@ -48,12 +48,12 @@ class Gateway {
   /**
    * Subscribe to a particular event. The callback will be called when the event is received.
    *
-   * @param {string} event The event to subscribe to
-   * @param {function(string, string): void} callback The callback to call when the event is received
+   * @param {string} channel The vert.x event channel to subscribe to
+   * @param {function(string, string): void} callback The callback to call when a message has been received on that channel
    */
-  #registerHandler(chanel, callback) {
+  #registerHandler(channel, callback) {
     const bound_callback = callback.bind(this);
-    this.#eb.registerHandler(chanel, bound_callback);
+    this.#eb.registerHandler(channel, bound_callback);
   }
 
   /**

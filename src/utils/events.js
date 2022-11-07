@@ -28,15 +28,15 @@ class Gateway {
       return;
     }
 
-    const parsed = JSON.parse(message);
+    const { event, data } = message.body;
 
-    if (parsed.event === undefined || parsed.data === undefined) {
+    if (event === undefined || data === undefined) {
       // Invalid event
       return;
     }
 
-    this.#invokeSubscriptions("all", parsed.data);
-    this.#invokeSubscriptions(parsed.event, parsed.data);
+    this.#invokeSubscriptions("all", data);
+    this.#invokeSubscriptions(event, data);
   }
 
   #invokeSubscriptions(event, data) {

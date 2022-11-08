@@ -36,10 +36,9 @@ export default {
   width: 20rem;
   height: 3rem;
   padding: 0.3rem;
-  margin: 3rem;
+  margin-bottom: 1.5rem;
   border-radius: 1rem;
   background-color: #e8e8e8;
-  box-shadow: black -0.5rem 0.5rem 0.3rem 0.01rem;
   div {
     div {
       p:last-child {
@@ -52,7 +51,6 @@ export default {
 
 .to-be-added-user-info {
   display: flex;
-
 }
 
 svg {

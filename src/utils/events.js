@@ -5,10 +5,14 @@ const INBOUND_CHNL = "events.from.martians";
 const EVENTBUS_PATH = "http://localhost:8080/events";
 
 /**
- * All subscribable events.
- *
  * @typedef {Object} Events
  * @property {string} ALL
+ */
+
+/**
+ * All subscribable events.
+ *
+ * @type {Events}
  */
 const EventType = {
   ALL: "events.all",

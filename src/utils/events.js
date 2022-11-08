@@ -1,12 +1,19 @@
 import EventBus from "vertx3-eventbus-client";
 
-const OUTBOUND_CHNL = "events.to.martians";
-const INBOUND_CHNL = "events.from.martians";
+const INBOUND_CHNL = "events.to.martians";
+const OUTBOUND_CHNL = "events.from.martians";
 const EVENTBUS_PATH = "http://localhost:8080/events";
+
+const EVENTS_PREFIX = "events";
 
 /**
  * @typedef {Object} Events
  * @property {string} ALL
+ *
+ * @typedef {Object} EventBusMessage
+ * @property {string} type
+ * @property {string} address
+ * @property {Object} body
  */
 
 /**
@@ -15,7 +22,7 @@ const EVENTBUS_PATH = "http://localhost:8080/events";
  * @type {Events}
  */
 const EventType = {
-  ALL: "events.all",
+  ALL: `${EVENTS_PREFIX}.all`,
 };
 
 /**
@@ -74,7 +81,7 @@ class Gateway {
     this.#outbound = `${INBOUND_CHNL}.${this.#id}`;
 
     this.#eb.onopen = () => {
-      this.#registerHandler(this.#inbound, this.#onMessage);
+      this.#registerHandler(INBOUND_CHNL, this.#onMessage);
       this.#isConnectionOpen = true;
 
       Object.keys(this.#subscribers)
@@ -132,19 +139,19 @@ class Gateway {
   /**
    * Send a message to the server in the appropriate format.
    *
-   * @param {string} event The event that the server should identify the message with
+   * @param {string} type The type of the message.
    * @param {Object} data The data that the server should process
    */
-  send(event, data) {
+  send(type, data) {
     this.#requiresInitialization();
-    this.#eb.send(this.#outbound, JSON.stringify({ event, data }));
+    this.#eb.send(this.#outbound, JSON.stringify({ type, data }));
   }
 
   /**
    * Subscribe to a particular event. The callback will be called when the event is received.
    *
    * @param {string} channel The vert.x event channel to subscribe to
-   * @param {function(string, string): void} callback The callback to call when a message has been received on that channel
+   * @param {function(string, EventBusMessage): void} callback The callback to call when a message has been received on that channel
    */
   #registerHandler(channel, callback) {
     this.#requiresInitialization();
@@ -157,7 +164,7 @@ class Gateway {
    * This invokes all registered subscriptions.
    *
    * @param {string} error The error message, if any.
-   * @param {string} message The message received from the server
+   * @param {EventBusMessage} message The message received from the server
    */
   #onMessage(error, message) {
     if (error) {
@@ -165,15 +172,17 @@ class Gateway {
       return;
     }
 
-    const { event, data } = message.body;
+    const { type, data } = message.body;
 
-    if (event === undefined || data === undefined) {
+    if (type === undefined || data === undefined) {
       // Invalid event
       return;
     }
 
-    this.#invokeSubscriptions(this.allEvents, data);
-    this.#invokeSubscriptions(event, data);
+    if (message.startsWith(EVENTS_PREFIX)) {
+      this.#invokeSubscriptions(this.ALL_EVENTS, data);
+      this.#invokeSubscriptions(type, data);
+    }
   }
 
   /**

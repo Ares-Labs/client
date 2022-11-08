@@ -87,6 +87,9 @@ class Gateway {
   /** @type {Queries} */
   #queries = QUERY_TYPE;
 
+  /** @type {array<function>} */
+  #onReadyEvents = new Array();
+
   /**
    * Create a new gateway for a vert.x event bus.
    *
@@ -101,6 +104,7 @@ class Gateway {
    * Define the id of the user that is currently "signed in".
    *
    * @param {string} id The ID of the user
+   * @returns {void}
    */
   init(id) {
     if (this.#isInitialized) {
@@ -125,6 +129,8 @@ class Gateway {
       Object.keys(this.#subscribers)
         .filter((event) => event !== this.allEvents)
         .forEach((event) => this.send("subscribe", event));
+
+      this.#onReadyEvents.forEach((event) => event());
     };
   }
 
@@ -176,6 +182,8 @@ class Gateway {
 
   /**
    * Simple method to ensure that the gateway is initialized before any other method is called.
+   *
+   * @returns {void}
    */
   #requiresInitialization() {
     if (!this.#isInitialized) {
@@ -185,6 +193,8 @@ class Gateway {
 
   /**
    * Check if a connection has been established.
+   *
+   * @returns {void}
    */
   #requiresConnection() {
     this.#requiresInitialization();
@@ -200,6 +210,7 @@ class Gateway {
    * @param {string} channel The channel to send the message over.
    * @param {string} type The type of the message.
    * @param {Object} data The data that the server should process
+   * @returns {void}
    */
   #sendPayload(channel, type, data) {
     this.#requiresConnection();
@@ -212,6 +223,7 @@ class Gateway {
    *
    * @param {string} type The type of the message.
    * @param {Object} data The data that the server should process
+   * @returns {void}
    */
   send(type, data) {
     this.#sendPayload(this.#outbound, type, data);
@@ -222,6 +234,7 @@ class Gateway {
    *
    * @param {string} channel The vert.x event channel to subscribe to
    * @param {function(string, EventBusMessage): void} callback The callback to call when a message has been received on that channel
+   * @returns {void}
    */
   #registerHandler(channel, callback) {
     this.#requiresInitialization();
@@ -235,6 +248,7 @@ class Gateway {
    *
    * @param {string} error The error message, if any.
    * @param {EventBusMessage} message The message received from the server
+   * @returns {void}
    */
   #onMessage(error, message) {
     if (error) {
@@ -258,6 +272,7 @@ class Gateway {
    *
    * @param {string} event The event to invoke subscriptions for
    * @param {object} data The data to pass to the subscription callbacks
+   * @returns {void}
    */
   #invokeSubscriptions(event, data) {
     this.#subscribers[event]?.forEach((callback) => callback(data));
@@ -267,6 +282,7 @@ class Gateway {
    * Adds an event listener if it doesn't exist yet. Also initializes the array in the subscribers object.
    *
    * @param {string} event The event to add.
+   * @returns {void}
    */
   #addEvent(event) {
     if (this.#subscribers[event] === undefined) {
@@ -287,6 +303,7 @@ class Gateway {
    *
    * @param {string} type The message type to subscribe to
    * @param {function(object): void} callback The callback to call when a message with the specified type is received
+   * @returns {void}
    */
   #subscribeToMessage(type, callback) {
     this.#requiresInitialization();
@@ -307,6 +324,7 @@ class Gateway {
    *
    * @param {string} event The event to subscribe to
    * @param {function(object): void} callback The callback to call when the event is received
+   * @returns {void}
    */
   subscribe(event, callback) {
     if (!Object.values(this.events).includes(event)) {
@@ -317,26 +335,23 @@ class Gateway {
   }
 
   /**
-   * Execute a query and wait for its response, the query must be a valid `Queries` type.
+   * Execute a query and wait for its response.
    *
-   * @param {Queries} query The query to execute.
+   * @param {string} channel The channel to send the query over.
+   * @param {string} query The query to execute.
    * @param {Object} data The data to send with the query.
    *
    * @template T
    * @returns {Promise<T>} The response from the server.
    */
-  execute(query, data) {
-    if (!Object.values(this.queries).includes(query)) {
-      throw new Error(`Query '${query}' is not a valid query`);
-    }
-
+  #executeQuery(channel, query, data) {
     if (data.id === undefined) {
       data.id = uuid();
     }
 
     return new Promise((resolve, reject) => {
       try {
-        this.send(query, data);
+        this.#sendPayload(channel, query, data);
         this.#subscribeToMessage(query, (res) => {
           // If the passed response is null, then we are requesting what id this callback is waiting for.
           // This is used to identify the callback that should be removed when a response is received.
@@ -362,6 +377,52 @@ class Gateway {
         reject(e);
       }
     });
+  }
+
+  /**
+   * Execute a query and wait for its response, the query must be a valid `Queries` type.
+   * Sends the query over the session channel.
+   *
+   * ## Example
+   * ```js
+   * import Gateway from "./utils/events";
+   *
+   * Gateway.execute('my-query', { data: 'to send' }).then((res) => {
+   *  console.log(res);
+   * });
+   * ```
+   *
+   * @param {Queries} query The query to execute.
+   * @param {Object} data The data to send with the query.
+   *
+   * @template T
+   * @returns {Promise<T>} The response from the server.
+   */
+  execute(query, data) {
+    if (!Object.values(this.queries).includes(query)) {
+      throw new Error(`Query '${query}' is not a valid query`);
+    }
+
+    return this.#executeQuery(this.#outbound, query, data);
+  }
+
+  /**
+   * Add a callback to the callbacks that should be executed when the connection is opened.
+   *
+   * ## Example
+   * ```js
+   * import Gateway from "./utils/events";
+   *
+   * Gateway.onReady(() => {
+   *  console.log("Gateway is ready!");
+   * });
+   * ```
+   *
+   * @param {function(): void} callback The callback to execute when the connection is opened.
+   * @returns {void}
+   */
+  onReady(callback) {
+    this.#onReadyEvents.push(callback);
   }
 }
 

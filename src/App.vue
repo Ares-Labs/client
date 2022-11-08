@@ -7,13 +7,6 @@ if (!Gateway.isInitialized) {
 
   Gateway.init(id);
 }
-
-// const res = await Gateway.execute(Gateway.queries.NEW_PROPERTY, { name: "id", value: "123" });
-// Gateway.execute("queries.add-property", {}).then(console.log);
-
-Gateway.subscribe(Gateway.events.ALL, (data) => {
-  console.log(data);
-});
 </script>
 
 <template>

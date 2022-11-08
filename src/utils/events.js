@@ -101,7 +101,7 @@ class Gateway {
       this.#isConnectionOpen = true;
 
       this.#sendPayload(OUTBOUND_CHNL, "session", this.#id);
-      this.this.#registerHandler(this.#inbound, this.#onMessage);
+      this.#registerHandler(this.#inbound, this.#onMessage);
 
       Object.keys(this.#subscribers)
         .filter((event) => event !== this.allEvents)

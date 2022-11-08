@@ -1,7 +1,9 @@
 import EventBus from "vertx3-eventbus-client";
 
-const CHNL_TO_SERVER = "events.to.martians";
+const OUTBOUND_CHNL = "events.to.martians";
+const INBOUND_CHNL = "events.from.martians";
 const EVENTBUS_PATH = "http://localhost:8080/events";
+const ALL_EVENTS = "events.all";
 
 /**
  * Handle the WebSocket connection to the event bus.
@@ -24,12 +26,20 @@ class Gateway {
   #eb;
   #subscribers;
   #id;
-  #channel;
+  #inbound;
+  #outbound;
   #is_connection_open = false;
   #is_initialized = false;
+  #url;
 
-  constructor() {
+  /**
+   * Create a new gateway for a vert.x event bus.
+   *
+   * @param {string} url The URL of the event bus.
+   */
+  constructor(url) {
     this.#is_initialized = false;
+    this.#url = url;
   }
 
   /**
@@ -44,22 +54,47 @@ class Gateway {
 
     this.#id = id;
     this.#is_initialized = true;
-    this.#eb = new EventBus(EVENTBUS_PATH);
+    this.#eb = new EventBus(this.#url);
     this.#subscribers = {};
-    this.#channel = `${CHNL_TO_SERVER}.${this.#id}`;
+    this.#inbound = `${OUTBOUND_CHNL}.${this.#id}`;
+    this.#outbound = `${INBOUND_CHNL}.${this.#id}`;
 
     this.#eb.onopen = () => {
-      this.#registerHandler(this.#channel, this.#onMessage);
+      this.#registerHandler(this.#inbound, this.#onMessage);
       this.#is_connection_open = true;
 
-      Object.keys(this.#subscribers).forEach((event) =>
-        this.send("subscribe", event)
-      );
+      Object.keys(this.#subscribers)
+        .filter((event) => event !== this.ALL_EVENTS)
+        .forEach((event) => this.send("subscribe", event));
     };
   }
 
+  /**
+   * Get whether the Gateway has been initialized.
+   *
+   * @returns {boolean} Whether the Gateway has been initialized.
+   */
   get is_initialized() {
     return this.#is_initialized;
+  }
+
+  /**
+   * The event for all events. This means that this gets triggered for every event the client has registered. Can be used for logging purposes.
+   *
+   * ## Example
+   * ```js
+   * import Gateway from "./utils/events";
+   *
+   * Gateway.init("my-id");
+   * Gateway.subscribe(Gateway.ALL_EVENTS, (data) => {
+   *  console.log(data);
+   * });
+   * ```
+   *
+   * @returns {string} The event for all events.
+   */
+  get ALL_EVENTS() {
+    return ALL_EVENTS;
   }
 
   /**
@@ -79,7 +114,7 @@ class Gateway {
    */
   send(event, data) {
     this.#requiresInitialization();
-    this.#eb.send(CHNL_TO_SERVER, JSON.stringify({ event, data }));
+    this.#eb.send(this.#outbound, JSON.stringify({ event, data }));
   }
 
   /**
@@ -114,7 +149,7 @@ class Gateway {
       return;
     }
 
-    this.#invokeSubscriptions("all", data);
+    this.#invokeSubscriptions(this.ALL_EVENTS, data);
     this.#invokeSubscriptions(event, data);
   }
 
@@ -138,7 +173,11 @@ class Gateway {
     if (this.#subscribers[event] === undefined) {
       this.#subscribers[event] = [];
 
-      if (this.#is_initialized && this.#is_connection_open) {
+      if (
+        this.#is_initialized &&
+        this.#is_connection_open &&
+        event !== this.ALL_EVENTS
+      ) {
         this.send("subscribe", event);
       }
     }
@@ -164,4 +203,4 @@ class Gateway {
   }
 }
 
-export default new Gateway();
+export default new Gateway(EVENTBUS_PATH);

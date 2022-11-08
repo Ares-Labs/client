@@ -7,6 +7,10 @@ if (!Gateway.is_initialized) {
 
   Gateway.init(id);
 }
+
+Gateway.subscribe(Gateway.ALL_EVENTS, (data) => {
+  console.log(data);
+});
 </script>
 
 <template>

@@ -41,8 +41,8 @@ class Gateway {
   #id;
   #inbound;
   #outbound;
-  #is_connection_open = false;
-  #is_initialized = false;
+  #isConnectionOpen = false;
+  #isInitialized = false;
   #url;
   #events = EventType;
 
@@ -52,7 +52,7 @@ class Gateway {
    * @param {string} url The URL of the event bus.
    */
   constructor(url) {
-    this.#is_initialized = false;
+    this.#isInitialized = false;
     this.#url = url;
   }
 
@@ -62,12 +62,12 @@ class Gateway {
    * @param {string} id The ID of the user
    */
   init(id) {
-    if (this.#is_initialized) {
+    if (this.#isInitialized) {
       throw new Error("Gateway is already initialized");
     }
 
     this.#id = id;
-    this.#is_initialized = true;
+    this.#isInitialized = true;
     this.#eb = new EventBus(this.#url);
     this.#subscribers = {};
     this.#inbound = `${OUTBOUND_CHNL}.${this.#id}`;
@@ -75,10 +75,10 @@ class Gateway {
 
     this.#eb.onopen = () => {
       this.#registerHandler(this.#inbound, this.#onMessage);
-      this.#is_connection_open = true;
+      this.#isConnectionOpen = true;
 
       Object.keys(this.#subscribers)
-        .filter((event) => event !== this.ALL_EVENTS)
+        .filter((event) => event !== this.allEvents)
         .forEach((event) => this.send("subscribe", event));
     };
   }
@@ -88,8 +88,8 @@ class Gateway {
    *
    * @returns {boolean} Whether the Gateway has been initialized.
    */
-  get is_initialized() {
-    return this.#is_initialized;
+  get isInitialized() {
+    return this.#isInitialized;
   }
 
   /**
@@ -100,14 +100,14 @@ class Gateway {
    * import Gateway from "./utils/events";
    *
    * Gateway.init("my-id");
-   * Gateway.subscribe(Gateway.ALL_EVENTS, (data) => {
+   * Gateway.subscribe(Gateway.allEvents, (data) => {
    *  console.log(data);
    * });
    * ```
    *
    * @returns {string} The event for all events.
    */
-  get ALL_EVENTS() {
+  get allEvents() {
     return this.#events.ALL;
   }
 
@@ -116,7 +116,7 @@ class Gateway {
    *
    * @returns {Events} All events that have been reserved.
    */
-  get EVENTS() {
+  get events() {
     return this.#events;
   }
 
@@ -124,7 +124,7 @@ class Gateway {
    * Simple method to ensure that the gateway is initialized before any other method is called.
    */
   #requiresInitialization() {
-    if (!this.#is_initialized) {
+    if (!this.#isInitialized) {
       throw new Error("Gateway is not initialized");
     }
   }
@@ -172,7 +172,7 @@ class Gateway {
       return;
     }
 
-    this.#invokeSubscriptions(this.ALL_EVENTS, data);
+    this.#invokeSubscriptions(this.allEvents, data);
     this.#invokeSubscriptions(event, data);
   }
 
@@ -193,7 +193,7 @@ class Gateway {
    * @param {string} event The event to add.
    */
   #addEvent(event) {
-    if (!this.EVENTS[event]) {
+    if (!this.events[event]) {
       throw new Error(`Event '${event}' is not a valid event`);
     }
 
@@ -201,9 +201,9 @@ class Gateway {
       this.#subscribers[event] = [];
 
       if (
-        this.#is_initialized &&
-        this.#is_connection_open &&
-        event !== this.ALL_EVENTS
+        this.#isInitialized &&
+        this.#isConnectionOpen &&
+        event !== this.allEvents
       ) {
         this.send("subscribe", event);
       }
@@ -223,7 +223,8 @@ class Gateway {
     // Create new event if it doesn't exist
     if (event_subscribers === undefined) {
       this.#addEvent(event);
-      return this.subscribe(event, callback);
+      this.subscribe(event, callback);
+      return;
     }
 
     event_subscribers.push(callback);

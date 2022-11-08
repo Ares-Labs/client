@@ -3,7 +3,13 @@ import EventBus from "vertx3-eventbus-client";
 const OUTBOUND_CHNL = "events.to.martians";
 const INBOUND_CHNL = "events.from.martians";
 const EVENTBUS_PATH = "http://localhost:8080/events";
-const ALL_EVENTS = "events.all";
+
+/**
+ * All subscribable events.
+ */
+const EventType = {
+  ALL: "events.all",
+};
 
 /**
  * Handle the WebSocket connection to the event bus.
@@ -31,6 +37,7 @@ class Gateway {
   #is_connection_open = false;
   #is_initialized = false;
   #url;
+  #events = EventType;
 
   /**
    * Create a new gateway for a vert.x event bus.
@@ -94,7 +101,16 @@ class Gateway {
    * @returns {string} The event for all events.
    */
   get ALL_EVENTS() {
-    return ALL_EVENTS;
+    return this.#events.ALL;
+  }
+
+  /**
+   * All events that have been reserved. Every subscription must be one of these events.
+   *
+   * @returns {EventType} All events that have been reserved.
+   */
+  get EVENTS() {
+    return this.#events;
   }
 
   /**
@@ -170,6 +186,10 @@ class Gateway {
    * @param {string} event The event to add.
    */
   #addEvent(event) {
+    if (!this.EVENTS[event]) {
+      throw new Error(`Event '${event}' is not a valid event`);
+    }
+
     if (this.#subscribers[event] === undefined) {
       this.#subscribers[event] = [];
 

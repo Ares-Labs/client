@@ -57,10 +57,10 @@ const QUERY_TYPE = {
  * ```
  */
 class Gateway {
-  /** @type {EventBus} */
+  /** @type {EventBus.EventBus} */
   #eb;
 
-  /** @type {{[key: string]: array<string>}}*/
+  /** @type {{[key: string]: array<function(object): void>}}*/
   #subscribers;
 
   /** @type {string} */
@@ -88,7 +88,7 @@ class Gateway {
   #queries = QUERY_TYPE;
 
   /** @type {array<function>} */
-  #onReadyEvents = new Array();
+  #onReadyEvents = [];
 
   /**
    * Create a new gateway for a vert.x event bus.
@@ -263,7 +263,7 @@ class Gateway {
       return;
     }
 
-    this.#invokeSubscriptions(this.ALL_EVENTS, data);
+    this.#invokeSubscriptions(this.allEvents, data);
     this.#invokeSubscriptions(type, data);
   }
 
@@ -362,7 +362,7 @@ class Gateway {
           if (res.id === data.id) {
             // Remove any callback that is waiting for a response in our query with the same ID.
             this.#subscribers[query] = this.#subscribers[query].filter(
-              (cb) => cb(null) != data.id
+              (cb) => cb(null) !== data.id
             );
 
             // If no other callbacks are waiting for a response from the same query type remove the key from the object.
@@ -392,7 +392,7 @@ class Gateway {
    * });
    * ```
    *
-   * @param {Queries} query The query to execute.
+   * @param {String} query The query to execute.
    * @param {Object} data The data to send with the query.
    *
    * @template T

@@ -1,7 +1,19 @@
+<script>
+import Header from "../components/Header.vue";
+
+export default {
+  components: {
+    Header,
+  }
+};
+</script>
 <template>
+  <Header />
   <div>
     <h1>Live data</h1>
-    <router-link to="/">dashboard</router-link>
-    <router-link to="/manage-property">manage property</router-link>
   </div>
 </template>
+
+<style lang="scss" scoped>
+
+</style>

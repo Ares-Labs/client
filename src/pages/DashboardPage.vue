@@ -5,3 +5,7 @@
     <router-link to="/manage-property">manage property</router-link>
   </div>
 </template>
+
+<style lang="scss" scoped>
+
+</style>

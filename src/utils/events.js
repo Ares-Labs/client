@@ -6,6 +6,9 @@ const EVENTBUS_PATH = "http://localhost:8080/events";
 
 /**
  * All subscribable events.
+ *
+ * @typedef {Object} Events
+ * @property {string} ALL
  */
 const EventType = {
   ALL: "events.all",
@@ -107,7 +110,7 @@ class Gateway {
   /**
    * All events that have been reserved. Every subscription must be one of these events.
    *
-   * @returns {EventType} All events that have been reserved.
+   * @returns {Events} All events that have been reserved.
    */
   get EVENTS() {
     return this.#events;

@@ -58,6 +58,10 @@ class Gateway {
     };
   }
 
+  get is_initialized() {
+    return this.#is_initialized;
+  }
+
   /**
    * Simple method to ensure that the gateway is initialized before any other method is called.
    */

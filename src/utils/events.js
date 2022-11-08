@@ -1,5 +1,4 @@
 import EventBus from "vertx3-eventbus-client";
-import { v4 as uuid } from "uuid";
 
 const CHNL_TO_SERVER = "events.to.martians";
 const EVENTBUS_PATH = "http://localhost:8080/events";
@@ -9,10 +8,13 @@ const EVENTBUS_PATH = "http://localhost:8080/events";
  * This is a singleton class, which should be used in each component that requires some data from the server.
  * At **NO POINT** should this be passed as a property/argument.
  *
+ * Requires initialization through the `init` method.
+ *
  * ## Example
  * ```js
  * import Gateway from "./utils/events";
  *
+ * Gateway.init("my-id");
  * Gateway.subscribe("my-event", (data) => {
  *   console.log(data);
  * });
@@ -23,16 +25,46 @@ class Gateway {
   #subscribers;
   #id;
   #channel;
+  #is_connection_open = false;
+  #is_initialized = false;
 
   constructor() {
+    this.#is_initialized = false;
+  }
+
+  /**
+   * Define the id of the user that is currently "signed in".
+   *
+   * @param {string} id The ID of the user
+   */
+  init(id) {
+    if (this.#is_initialized) {
+      throw new Error("Gateway is already initialized");
+    }
+
+    this.#id = id;
+    this.#is_initialized = true;
     this.#eb = new EventBus(EVENTBUS_PATH);
     this.#subscribers = {};
-    this.#id = uuid();
     this.#channel = `${CHNL_TO_SERVER}.${this.#id}`;
 
     this.#eb.onopen = () => {
       this.#registerHandler(this.#channel, this.#onMessage);
+      this.#is_connection_open = true;
+
+      Object.keys(this.#subscribers).forEach((event) =>
+        this.send("subscribe", event)
+      );
     };
+  }
+
+  /**
+   * Simple method to ensure that the gateway is initialized before any other method is called.
+   */
+  #requiresInitialization() {
+    if (!this.#is_initialized) {
+      throw new Error("Gateway is not initialized");
+    }
   }
 
   /**
@@ -42,6 +74,7 @@ class Gateway {
    * @param {Object} data The data that the server should process
    */
   send(event, data) {
+    this.#requiresInitialization();
     this.#eb.send(CHNL_TO_SERVER, JSON.stringify({ event, data }));
   }
 
@@ -52,6 +85,7 @@ class Gateway {
    * @param {function(string, string): void} callback The callback to call when a message has been received on that channel
    */
   #registerHandler(channel, callback) {
+    this.#requiresInitialization();
     const bound_callback = callback.bind(this);
     this.#eb.registerHandler(channel, bound_callback);
   }
@@ -87,6 +121,7 @@ class Gateway {
    * @param {object} data The data to pass to the subscription callbacks
    */
   #invokeSubscriptions(event, data) {
+    this.#requiresInitialization();
     this.#subscribers[event]?.forEach((callback) => callback(data));
   }
 
@@ -98,7 +133,10 @@ class Gateway {
   #addEvent(event) {
     if (this.#subscribers[event] === undefined) {
       this.#subscribers[event] = [];
-      this.send("subscribe", event);
+
+      if (this.#is_initialized && this.#is_connection_open) {
+        this.send("subscribe", event);
+      }
     }
   }
 
@@ -109,6 +147,7 @@ class Gateway {
    * @param {function(object): void} callback The callback to call when the event is received
    */
   subscribe(event, callback) {
+    this.#requiresInitialization();
     const event_subscribers = this.#subscribers[event];
 
     // Create new event if it doesn't exist

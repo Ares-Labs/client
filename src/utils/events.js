@@ -43,14 +43,31 @@ const EventType = {
  * ```
  */
 class Gateway {
+  /** @type {EventBus} */
   #eb;
+
+  /** @type {{[key: string]: array<string>}}*/
   #subscribers;
+
+  /** @type {string} */
   #id;
+
+  /** @type {string} */
   #inbound;
+
+  /** @type {string} */
   #outbound;
+
+  /** @type {boolean} */
   #isConnectionOpen = false;
+
+  /** @type {boolean} */
   #isInitialized = false;
+
+  /** @type {string} */
   #url;
+
+  /** @type {Events} */
   #events = EventType;
 
   /**
@@ -81,8 +98,10 @@ class Gateway {
     this.#outbound = `${INBOUND_CHNL}.${this.#id}`;
 
     this.#eb.onopen = () => {
-      this.#registerHandler(INBOUND_CHNL, this.#onMessage);
       this.#isConnectionOpen = true;
+
+      this.#sendPayload(OUTBOUND_CHNL, "session", this.#id);
+      this.this.#registerHandler(this.#inbound, this.#onMessage);
 
       Object.keys(this.#subscribers)
         .filter((event) => event !== this.allEvents)
@@ -136,15 +155,35 @@ class Gateway {
     }
   }
 
+  #requiresConnection() {
+    this.#requiresInitialization();
+
+    if (!this.#isConnectionOpen) {
+      throw new Error("Gateway is not connected");
+    }
+  }
+
+  /**
+   * Send a message to the server in the appropriate format on a specific channel.
+   *
+   * @param {string} channel The channel to send the message over.
+   * @param {string} type The type of the message.
+   * @param {Object} data The data that the server should process
+   */
+  #sendPayload(channel, type, data) {
+    this.#requiresConnection();
+    this.#eb.send(channel, JSON.stringify({ type, data }));
+  }
+
   /**
    * Send a message to the server in the appropriate format.
+   * These messages are sent in the private channel.
    *
    * @param {string} type The type of the message.
    * @param {Object} data The data that the server should process
    */
   send(type, data) {
-    this.#requiresInitialization();
-    this.#eb.send(this.#outbound, JSON.stringify({ type, data }));
+    this.#sendPayload(this.#outbound, type, data);
   }
 
   /**
@@ -192,7 +231,6 @@ class Gateway {
    * @param {object} data The data to pass to the subscription callbacks
    */
   #invokeSubscriptions(event, data) {
-    this.#requiresInitialization();
     this.#subscribers[event]?.forEach((callback) => callback(data));
   }
 

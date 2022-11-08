@@ -1,14 +1,19 @@
 import EventBus from "vertx3-eventbus-client";
+import { v4 as uuid } from "uuid";
 
 const INBOUND_CHNL = "events.to.martians";
 const OUTBOUND_CHNL = "events.from.martians";
 const EVENTBUS_PATH = "http://localhost:8080/events";
 
 const EVENTS_PREFIX = "events";
+const QUERIES_PREFIX = "queries";
 
 /**
  * @typedef {Object} Events
  * @property {string} ALL
+ *
+ * @typedef {Object} Queries
+ * @property {string} ADD_PROPERTY
  *
  * @typedef {Object} EventBusMessage
  * @property {string} type
@@ -21,8 +26,17 @@ const EVENTS_PREFIX = "events";
  *
  * @type {Events}
  */
-const EventType = {
+const EVENT_TYPE = {
   ALL: `${EVENTS_PREFIX}.all`,
+};
+
+/**
+ * All queryable events.
+ *
+ * @type {Queries}
+ */
+const QUERY_TYPE = {
+  ADD_PROPERTY: `${QUERIES_PREFIX}.add-property`,
 };
 
 /**
@@ -68,7 +82,10 @@ class Gateway {
   #url;
 
   /** @type {Events} */
-  #events = EventType;
+  #events = EVENT_TYPE;
+
+  /** @type {Queries} */
+  #queries = QUERY_TYPE;
 
   /**
    * Create a new gateway for a vert.x event bus.
@@ -94,8 +111,10 @@ class Gateway {
     this.#isInitialized = true;
     this.#eb = new EventBus(this.#url);
     this.#subscribers = {};
-    this.#inbound = `${OUTBOUND_CHNL}.${this.#id}`;
-    this.#outbound = `${INBOUND_CHNL}.${this.#id}`;
+    // this.#inbound = `${OUTBOUND_CHNL}.${this.#id}`;
+    // this.#outbound = `${INBOUND_CHNL}.${this.#id}`;
+    this.#inbound = `${INBOUND_CHNL}`;
+    this.#outbound = `${OUTBOUND_CHNL}`;
 
     this.#eb.onopen = () => {
       this.#isConnectionOpen = true;
@@ -147,6 +166,15 @@ class Gateway {
   }
 
   /**
+   * All available query types. Every executed query must be one of these.
+   *
+   * @returns {Queries} All available query types.
+   */
+  get queries() {
+    return this.#queries;
+  }
+
+  /**
    * Simple method to ensure that the gateway is initialized before any other method is called.
    */
   #requiresInitialization() {
@@ -155,6 +183,9 @@ class Gateway {
     }
   }
 
+  /**
+   * Check if a connection has been established.
+   */
   #requiresConnection() {
     this.#requiresInitialization();
 
@@ -218,10 +249,8 @@ class Gateway {
       return;
     }
 
-    if (message.startsWith(EVENTS_PREFIX)) {
-      this.#invokeSubscriptions(this.ALL_EVENTS, data);
-      this.#invokeSubscriptions(type, data);
-    }
+    this.#invokeSubscriptions(this.ALL_EVENTS, data);
+    this.#invokeSubscriptions(type, data);
   }
 
   /**
@@ -240,10 +269,6 @@ class Gateway {
    * @param {string} event The event to add.
    */
   #addEvent(event) {
-    if (!this.events[event]) {
-      throw new Error(`Event '${event}' is not a valid event`);
-    }
-
     if (this.#subscribers[event] === undefined) {
       this.#subscribers[event] = [];
 
@@ -258,23 +283,85 @@ class Gateway {
   }
 
   /**
+   * Subscribe to a particular message with a type. The callback will be called every time when a match is received.
+   *
+   * @param {string} type The message type to subscribe to
+   * @param {function(object): void} callback The callback to call when a message with the specified type is received
+   */
+  #subscribeToMessage(type, callback) {
+    this.#requiresInitialization();
+    const event_subscribers = this.#subscribers[type];
+
+    // Create new event if it doesn't exist
+    if (event_subscribers === undefined) {
+      this.#addEvent(type);
+      this.#subscribeToMessage(type, callback);
+      return;
+    }
+
+    event_subscribers.push(callback);
+  }
+
+  /**
    * Subscribe to a particular event. The callback will be called when the event is received.
    *
    * @param {string} event The event to subscribe to
    * @param {function(object): void} callback The callback to call when the event is received
    */
   subscribe(event, callback) {
-    this.#requiresInitialization();
-    const event_subscribers = this.#subscribers[event];
-
-    // Create new event if it doesn't exist
-    if (event_subscribers === undefined) {
-      this.#addEvent(event);
-      this.subscribe(event, callback);
-      return;
+    if (!Object.values(this.events).includes(event)) {
+      throw new Error(`Event '${event}' is not a valid event`);
     }
 
-    event_subscribers.push(callback);
+    this.#subscribeToMessage(event, callback);
+  }
+
+  /**
+   * Execute a query and wait for its response, the query must be a valid `Queries` type.
+   *
+   * @param {Queries} query The query to execute.
+   * @param {Object} data The data to send with the query.
+   *
+   * @template T
+   * @returns {Promise<T>} The response from the server.
+   */
+  execute(query, data) {
+    if (!Object.values(this.queries).includes(query)) {
+      throw new Error(`Query '${query}' is not a valid query`);
+    }
+
+    if (data.id === undefined) {
+      data.id = uuid();
+    }
+
+    return new Promise((resolve, reject) => {
+      try {
+        this.send(query, data);
+        this.#subscribeToMessage(query, (res) => {
+          // If the passed response is null, then we are requesting what id this callback is waiting for.
+          // This is used to identify the callback that should be removed when a response is received.
+          if (res === null) {
+            return data.id;
+          }
+
+          if (res.id === data.id) {
+            // Remove any callback that is waiting for a response in our query with the same ID.
+            this.#subscribers[query] = this.#subscribers[query].filter(
+              (cb) => cb(null) != data.id
+            );
+
+            // If no other callbacks are waiting for a response from the same query type remove the key from the object.
+            if (this.#subscribers[query].length === 0) {
+              delete this.#subscribers[query];
+            }
+
+            resolve(res);
+          }
+        });
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 }
 

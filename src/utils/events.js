@@ -90,6 +90,9 @@ class Gateway {
   /** @type {array<function>} */
   #onReadyEvents = [];
 
+  /** @type {boolean} */
+  #connIsReady = false;
+
   /**
    * Create a new gateway for a vert.x event bus.
    *
@@ -130,6 +133,7 @@ class Gateway {
         .filter((event) => event !== this.allEvents)
         .forEach((event) => this.send("subscribe", event));
 
+      this.#connIsReady = true;
       this.#onReadyEvents.forEach((event) => event());
     };
   }
@@ -422,6 +426,11 @@ class Gateway {
    * @returns {void}
    */
   onReady(callback) {
+    if (this.#connIsReady) {
+      callback();
+      return;
+    }
+
     this.#onReadyEvents.push(callback);
   }
 }

@@ -1,9 +1,11 @@
 <script>
-import Property from "../components/Property.vue";
+import Property from "../components/Property/Property.vue";
 import HeaderWithoutLinks from "../components/Header/HeaderWithoutLinks.vue";
+import AddProperty from "../components/Property/AddProperty.vue";
 
 export default {
   components: {
+    AddProperty,
     HeaderWithoutLinks,
     Property,
   }
@@ -15,11 +17,13 @@ export default {
   <div class="wrapper">
     <main>
       <div class="flex">
-        <property name="Howest University"></property>
+        <router-link to="/manage-property"> <!-- TODO: add this for other components -->
+          <property name="Howest University"></property>
+        </router-link>
         <property name="Wall Street"></property>
         <property name="Space Station"></property>
         <property name="Mining Station"></property>
-        <property class="add"></property>
+        <add-property></add-property>
       </div>
     </main>
   </div>
@@ -39,8 +43,4 @@ export default {
   justify-content: center;
 }
 
-.add {
-  background: url("@/assets/media/sum.svg") no-repeat center;
-  background-size: 5rem;
-}
 </style>

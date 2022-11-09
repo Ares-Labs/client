@@ -10,7 +10,7 @@ export default {
     <main>
       <div>
         <div>
-          <router-link to="/manage-property"><p>Manage Property</p></router-link>
+          <router-link to="/choose-property"><p>Manage Property</p></router-link>
           <router-link to="/live-data"><p>Live Data</p></router-link>
           <router-link to="/"><p>Recent activity</p></router-link>
         </div>

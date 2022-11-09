@@ -7,7 +7,7 @@ export default {
 
 <template>
   <header>
-    <router-link to="/"><img src="src/images/ares-labs-logo.png" alt="Ares Labs logo"></router-link>
+    <router-link to="/"><img src="../../assets/media/ares-labs-logo.png" alt="Ares Labs logo"></router-link>
     <h1>{{name}}</h1>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="44" height="44"
          viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">

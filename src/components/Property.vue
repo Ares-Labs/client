@@ -1,7 +1,7 @@
 <script>
 export default {
   name: "Property",
-  props: ['name', 'image']
+  props: ['name']
 };
 </script>
 

@@ -63,6 +63,9 @@ class Gateway {
   /** @type {{[key: string]: array<function(object): void>}}*/
   #subscribers;
 
+  /** @type {{[key: string]: array<function(object): void>}}*/
+  #requestIdentifiers;
+
   /** @type {string} */
   #id;
 
@@ -118,23 +121,24 @@ class Gateway {
     this.#isInitialized = true;
     this.#eb = new EventBus(this.#url);
     this.#subscribers = {};
-    // this.#inbound = `${OUTBOUND_CHNL}.${this.#id}`;
-    // this.#outbound = `${INBOUND_CHNL}.${this.#id}`;
-    this.#inbound = `${INBOUND_CHNL}`;
-    this.#outbound = `${OUTBOUND_CHNL}`;
+    this.#requestIdentifiers = {};
+    this.#inbound = `${INBOUND_CHNL}.${this.#id}`;
+    this.#outbound = `${OUTBOUND_CHNL}.${this.#id}`;
 
     this.#eb.onopen = () => {
       this.#isConnectionOpen = true;
-
-      this.#sendPayload(OUTBOUND_CHNL, "session", this.#id);
       this.#registerHandler(this.#inbound, this.#onMessage);
 
-      Object.keys(this.#subscribers)
-        .filter((event) => event !== this.allEvents)
-        .forEach((event) => this.send("subscribe", event));
+      this.#executeQuery(OUTBOUND_CHNL, "session", { id: this.#id }).then(
+        () => {
+          Object.keys(this.#subscribers)
+            .filter((event) => event !== this.allEvents)
+            .forEach((event) => this.send("subscribe", { id: event }));
 
-      this.#connIsReady = true;
-      this.#onReadyEvents.forEach((event) => event());
+          this.#connIsReady = true;
+          this.#onReadyEvents.forEach((event) => event());
+        }
+      );
     };
   }
 
@@ -267,6 +271,23 @@ class Gateway {
       return;
     }
 
+    if (type === "error") {
+      // Event returned error.
+      // TODO: Make error visible for frontend
+      console.error(data.message);
+      return;
+    }
+
+    const id = data.requestIdentifier;
+    const hasExistingRequestIdentifier = id && id in this.#requestIdentifiers;
+
+    if (hasExistingRequestIdentifier) {
+      delete data.requestIdentifier;
+      this.#requestIdentifiers[id](data);
+      delete this.#requestIdentifiers[id];
+      return;
+    }
+
     this.#invokeSubscriptions(this.allEvents, data);
     this.#invokeSubscriptions(type, data);
   }
@@ -283,21 +304,19 @@ class Gateway {
   }
 
   /**
-   * Adds an event listener if it doesn't exist yet. Also initializes the array in the subscribers object.
+   * Initializes the array in the subscribers object if none exists yet.
    *
    * @param {string} event The event to add.
    * @returns {void}
    */
   #addEvent(event) {
+    this.#requiresInitialization();
+
     if (this.#subscribers[event] === undefined) {
       this.#subscribers[event] = [];
 
-      if (
-        this.#isInitialized &&
-        this.#isConnectionOpen &&
-        event !== this.allEvents
-      ) {
-        this.send("subscribe", event);
+      if (event !== this.allEvents) {
+        this.send("subscribe", { id: event });
       }
     }
   }
@@ -349,34 +368,14 @@ class Gateway {
    * @returns {Promise<T>} The response from the server.
    */
   #executeQuery(channel, query, data) {
-    if (data.id === undefined) {
-      data.id = uuid();
+    if (data.requestIdentifier === undefined) {
+      data.requestIdentifier = uuid();
     }
 
     return new Promise((resolve, reject) => {
       try {
         this.#sendPayload(channel, query, data);
-        this.#subscribeToMessage(query, (res) => {
-          // If the passed response is null, then we are requesting what id this callback is waiting for.
-          // This is used to identify the callback that should be removed when a response is received.
-          if (res === null) {
-            return data.id;
-          }
-
-          if (res.id === data.id) {
-            // Remove any callback that is waiting for a response in our query with the same ID.
-            this.#subscribers[query] = this.#subscribers[query].filter(
-              (cb) => cb(null) !== data.id
-            );
-
-            // If no other callbacks are waiting for a response from the same query type remove the key from the object.
-            if (this.#subscribers[query].length === 0) {
-              delete this.#subscribers[query];
-            }
-
-            resolve(res);
-          }
-        });
+        this.#requestIdentifiers[data.requestIdentifier] = resolve;
       } catch (e) {
         reject(e);
       }

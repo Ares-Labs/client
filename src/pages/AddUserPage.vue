@@ -1,5 +1,5 @@
 <script>
-import Header from "../components/Header.vue";
+import Header from "../components/Header/Header.vue";
 import ToBeAddedUser from "../components/ToBeAddedUser.vue";
 
 export default {

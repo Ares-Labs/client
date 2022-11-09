@@ -6,7 +6,7 @@ export default {
 
 <template>
   <header>
-    <router-link to="/"><img src="../images/ares-labs-logo.png" alt="ares-labs-logo"/></router-link>
+    <router-link to="/"><img src="../../images/ares-labs-logo.png" alt="ares-labs-logo"/></router-link>
     <div>
       <router-link to="/manage-property"><p>Manage Property</p></router-link>
       <router-link to="/live-data"><p>Live Data</p></router-link>

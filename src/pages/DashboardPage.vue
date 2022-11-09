@@ -6,23 +6,30 @@ export default {
 </script>
 <template>
   <header-without-links name="Dashboard"></header-without-links>
-  <main>
-    <div>
+  <div class="wrapper">
+    <main>
       <div>
-        <router-link to="/manage-property"><p>Manage Property</p></router-link>
-        <router-link to="/live-data"><p>Live Data</p></router-link>
-        <router-link to="/"><p>Recent activity</p></router-link>
+        <div>
+          <router-link to="/manage-property"><p>Manage Property</p></router-link>
+          <router-link to="/live-data"><p>Live Data</p></router-link>
+          <router-link to="/"><p>Recent activity</p></router-link>
+        </div>
+        <div>
+          <router-link to="/"><p>Map</p></router-link>
+          <router-link to="/"><p>Pricing / Upgrade</p></router-link>
+        </div>
       </div>
-      <div>
-        <router-link to="/"><p>Map</p></router-link>
-        <router-link to="/"><p>Pricing / Upgrade</p></router-link>
-      </div>
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 $hover-color: #e8e8e8;
+
+.wrapper {
+  width: 90%;
+  margin: auto;
+}
 
 main {
   div {

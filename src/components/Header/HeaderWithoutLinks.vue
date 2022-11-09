@@ -25,9 +25,9 @@ $hover-color: #e8e8e8;
 header {
   display: flex;
   justify-content: space-between;
-  padding: 1.5rem;
+  padding: 1.5rem 10% 1.5rem 10%;
   box-shadow: black 0.1rem 0.1rem 0.7rem 0.1rem;
-  margin-bottom: 15rem;
+  margin-bottom: 10rem;
 
   h1 {
     font-size: 2rem;

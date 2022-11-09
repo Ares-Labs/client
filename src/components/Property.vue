@@ -1,7 +1,7 @@
 <script>
 export default {
   name: "Property",
-  props: ['name']
+  props: ['name', 'image']
 };
 </script>
 
@@ -18,8 +18,8 @@ export default {
   align-items:center;
   justify-content:center;
   border: solid black 0.1rem;
-  width: 30rem;
-  height: 15rem;
+  width: 20rem;
+  height: 12rem;
   padding: 0.3rem;
   margin: 3rem;
   border-radius: 1rem;

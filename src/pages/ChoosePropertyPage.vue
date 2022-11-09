@@ -27,6 +27,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
 .wrapper {
   width: 90%;
   margin: auto;

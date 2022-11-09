@@ -12,6 +12,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import "src/assets/css/mixins";
 
 .property {
   display: flex;
@@ -26,6 +27,12 @@ export default {
   background-color: #e8e8e8;
   font-weight: bold;
   font-size: 2rem;
+  box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
+  transition: transform ease 0.5s;
+}
+
+.property:hover {
+  @include hover;
 }
 
 </style>

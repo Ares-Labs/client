@@ -24,6 +24,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import "src/assets/css/mixins.scss";
 $hover-color: #e8e8e8;
 
 .wrapper {
@@ -54,9 +55,7 @@ main {
     }
 
     p:hover {
-      background-color: $hover-color;
-      box-shadow: none;
-      transform: translate(0, 5px);
+      @include hover;
     }
   }
 }

@@ -19,7 +19,7 @@ export default {
         <property name="Wall Street"></property>
         <property name="Space Station"></property>
         <property name="Mining Station"></property>
-        <property></property>
+        <property class="add"></property>
       </div>
     </main>
   </div>
@@ -37,5 +37,10 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.add {
+  background: url("@/assets/media/sum.svg") no-repeat center;
+  background-size: 5rem;
 }
 </style>

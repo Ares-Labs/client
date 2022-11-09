@@ -1,12 +1,14 @@
 <script>
 export default {
-  name: 'Header',
+  name: "Header",
 };
 </script>
 
 <template>
   <header>
-    <router-link to="/"><img src="../../assets/media/ares-labs-logo.png" alt="ares-labs-logo"/></router-link>
+    <router-link to="/"
+      ><img src="../../assets/media/ares-labs-logo.png" alt="ares-labs-logo"
+    /></router-link>
     <div>
       <router-link to="/manage-property"><p>Manage Property</p></router-link>
       <router-link to="/live-data"><p>Live Data</p></router-link>
@@ -14,13 +16,22 @@ export default {
       <router-link to="#"><p>Recent activity</p></router-link>
       <router-link to="#"><p>Pricing / Upgrade</p></router-link>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="44" height="44"
-         viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
-         stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9"/>
-      <circle cx="12" cy="10" r="3"/>
-      <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855"/>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="icon icon-tabler icon-tabler-user-circle"
+      width="44"
+      height="44"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="#2c3e50"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="10" r="3" />
+      <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
     </svg>
   </header>
 </template>
@@ -36,13 +47,16 @@ header {
   div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    width: 40%;
+
     p {
-      display: block;
-      align-items: center;
-      margin: 1rem 0 0 5rem ;
       height: 100%;
       transition: transform ease 0.5s;
-      }
+      font-size: 1.25rem;
+      color: black;
+    }
+
     p:hover {
       transform: translate(0, 3px);
     }

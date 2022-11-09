@@ -16,5 +16,6 @@ export default {
 <style lang="scss" scoped>
 .awaiting {
   border: green dashed;
+  background-image: none;
 }
 </style>

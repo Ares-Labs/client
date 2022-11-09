@@ -1,10 +1,12 @@
 <script>
-import Property from "../components/Property/Property.vue";
-import HeaderWithoutLinks from "../components/Header/HeaderWithoutLinks.vue";
-import AddProperty from "../components/Property/AddProperty.vue";
+import Property from "@/components/Property/Property.vue";
+import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
+import AddProperty from "@/components/Property/AddProperty.vue";
+import AwaitingProperty from "@/components/Property/AwaitingProperty.vue";
 
 export default {
   components: {
+    AwaitingProperty,
     AddProperty,
     HeaderWithoutLinks,
     Property,
@@ -23,6 +25,7 @@ export default {
         <property name="Wall Street"></property>
         <property name="Space Station"></property>
         <property name="Mining Station"></property>
+        <awaiting-property name="Something"></awaiting-property>
         <add-property></add-property>
       </div>
     </main>

@@ -6,13 +6,22 @@ export default {
 
 <template>
   <header>
-    <router-link to="/"><img src="#" alt="ares-lab-icon"></router-link>
-    <router-link to="/manage-property">manage property</router-link>
-    <router-link to="/live-data">live data</router-link>
-    <p>Map</p>
-    <p>Recent activity</p>
-    <p>Pricing / Upgrade</p>
-    <img src="#" alt="profile icon">
+    <router-link to="/"><img src="../images/ares-labs-logo.png" alt="ares-labs-logo"/></router-link>
+    <div>
+      <router-link to="/manage-property"><p>Manage Property</p></router-link>
+      <router-link to="/live-data"><p>Live Data</p></router-link>
+      <router-link to="#"><p>Map</p></router-link>
+      <router-link to="#"><p>Recent activity</p></router-link>
+      <router-link to="#"><p>Pricing / Upgrade</p></router-link>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="44" height="44"
+         viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
+         stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9"/>
+      <circle cx="12" cy="10" r="3"/>
+      <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855"/>
+    </svg>
   </header>
 </template>
 
@@ -22,5 +31,25 @@ header {
   justify-content: space-between;
   padding: 1.5rem;
   box-shadow: black 0.1rem 0.1rem 0.7rem 0.1rem;
+  height: 3rem;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    p {
+      display: block;
+      align-items: center;
+      margin: 1rem 0 0 5rem ;
+      height: 100%;
+      transition: transform ease 0.5s;
+      }
+    p:hover {
+      transform: translate(0, 3px);
+    }
+  }
+
+  img {
+    width: 3rem;
+  }
 }
 </style>

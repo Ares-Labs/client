@@ -1,6 +1,6 @@
 <script>
-import Header from "../assets/components/Header.vue";
-import ToBeAddedUser from "../assets/components/ToBeAddedUser.vue";
+import Header from "../components/Header.vue";
+import ToBeAddedUser from "../components/ToBeAddedUser.vue";
 
 export default {
   components: {

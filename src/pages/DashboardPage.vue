@@ -6,3 +6,7 @@
     <router-link to="/add-user">add user</router-link>
   </div>
 </template>
+
+<style lang="scss" scoped>
+
+</style>

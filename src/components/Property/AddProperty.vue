@@ -1,19 +1,15 @@
-<script setup>
-import Property from "@/components/Property/Property.vue";
-
-function addProperty() {
-  console.log("added property")
-}
-</script>
-
 <script>
+import Property from "@/components/Property/Property.vue";
 export default {
-  name: "AddProperty"
+  name: "AddProperty",
+  components: { Property },
 };
 </script>
 
 <template>
-  <property @click="addProperty" class="add"></property>
+  <router-link to="/add-property">
+    <property class="add"></property>
+  </router-link>
 </template>
 
 <style lang="scss" scoped>

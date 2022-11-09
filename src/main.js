@@ -8,6 +8,7 @@ import ChoosePropertyPage from "./pages/ChoosePropertyPage.vue";
 import LiveDataPage from "./pages/LiveDataPage.vue";
 import ManagePropertyPage from "./pages/ManagePropertyPage.vue";
 import AddUserPage from "./pages/AddUserPage.vue";
+import AddPropertyPage from "./pages/AddPropertyPage.vue";
 import { createApp } from "vue";
 
 const routes = [
@@ -16,6 +17,7 @@ const routes = [
   { path: "/live-data", component: LiveDataPage },
   { path: "/manage-property", component: ManagePropertyPage },
   { path: "/add-user", component: AddUserPage},
+  { path: "/add-property", component: AddPropertyPage}
 ];
 
 const router = createRouter({

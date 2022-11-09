@@ -9,10 +9,10 @@ export default {
     <router-link to="/"><img src="../images/ares-labs-logo.png" alt="ares-labs-logo"/></router-link>
     <div>
       <router-link to="/manage-property"><p>Manage Property</p></router-link>
-      <router-link to="/"><p>Live Data</p></router-link>
-      <router-link to="/"><p>Map</p></router-link>
-      <router-link to="/"><p>Recent activity</p></router-link>
-      <router-link to="/"><p>Pricing / Upgrade</p></router-link>
+      <router-link to="/live-data"><p>Live Data</p></router-link>
+      <router-link to="#"><p>Map</p></router-link>
+      <router-link to="#"><p>Recent activity</p></router-link>
+      <router-link to="#"><p>Pricing / Upgrade</p></router-link>
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="44" height="44"
          viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"

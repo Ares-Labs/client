@@ -2,128 +2,83 @@
 
 </script>
 <template>
-  <div>
-    <h1>Dashboard</h1>
-    <router-link to="/live-data">live data</router-link>
-    <router-link to="/manage-property">manage property</router-link>
-    <router-link to="/add-user">add user</router-link>
-  </div>
-
   <header>
-    <img src="images/ares-labs-logo.png" alt="Ares Labs logo">
+    <router-link to="/"><img src="../images/ares-labs-logo.png" alt="Ares Labs logo"></router-link>
     <h1>Dashboard</h1>
-    <img src="#" alt="Profile icon">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="10" r="3" />
+      <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+    </svg>
   </header>
-
   <main>
     <div>
-      <p id="manage"><a href="#">Manage property</a></p>
-      <p id="live"><a href="">Live data</a></p>
-      <p id="recent"><a href="">Recent activity</a></p>
-      <p id="map"><a href="">Map</a></p>
-      <p id="pricing"><a href="">Pricing / Upgrade</a></p>
+      <div>
+        <router-link to="/manage-property"><p>Manage Property</p></router-link>
+        <router-link to="/live-data"><p>Live Data</p></router-link>
+        <router-link to="/"><p>Recent activity</p></router-link>
+      </div>
+      <div>
+        <router-link to="/"><p>Map</p></router-link>
+        <router-link to="/"><p>Pricing / Upgrade</p></router-link>
+      </div>
     </div>
   </main>
 </template>
 
 <style lang="scss" scoped>
+$hover-color: #e8e8e8;
+$hover-animation: translate(0, 5px);
+$transition-type-and-speed: transform ease 0.5s;
 
 header {
   display: flex;
   justify-content: space-between;
-  padding: 3rem;
+  padding: 1.5rem;
+  box-shadow: black 0.1rem 0.1rem 0.7rem 0.1rem;
+  margin-bottom: 15rem;
 
   h1 {
     font-size: 2rem;
+    display: block;
+    align-items: center;
+    margin: 0.5rem 0 0 5rem ;
+    height: 100%;
   }
-
-  margin-bottom: 20rem;
-  background-color: orange;
-  border-radius: 1rem;
-  box-shadow: black 0.1rem 0.1rem 1.5rem 0.3rem;
-}
-
-a {
-  text-decoration: none;
+  img {
+    width: 3rem;
+  }
 }
 
 main {
   div {
-    display: grid;
-    grid-template-columns: 30rem 30rem 30rem;
-    grid-template-rows: auto;
-    grid-template-areas:
-    "man live re"
-    "map map pri";
-    gap: 10rem;
-    justify-content: center;
-    justify-items: center;
     font-size: 1.5rem;
+    div {
+      :first-of-type {
+        margin-bottom: 2rem;
+      }
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+      gap: 3rem;
+
+    }
+
+    p {
+      border: solid black;
+      padding: 7rem 12rem;
+      box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
+      transition: $transition-type-and-speed;
+      border-radius: 0.3rem;
+    }
+
+    p:hover {
+      background-color: $hover-color;
+      box-shadow: none;
+      transform: $hover-animation;
+    }
   }
 }
 
-#manage {
-  grid-area: man;
-  border: solid black;
-  border-radius: 2rem;
-  padding: 2rem;
-  box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
-}
-
-#manage:hover {
-  background-color: orange;
-  box-shadow: none;
-}
-
-#live {
-  grid-area: live;
-  border: solid black;
-  border-radius: 2rem;
-  padding: 2rem;
-  box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
-}
-
-#live:hover {
-  background-color: orange;
-  box-shadow: none;
-}
-
-#recent {
-  grid-area: re;
-  border: solid black;
-  border-radius: 2rem;
-  padding: 2rem;
-  box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
-}
-
-#recent:hover {
-  background-color: orange;
-  box-shadow: none;
-}
-
-#map {
-  grid-area: map;
-  border: solid black;
-  border-radius: 2rem;
-  padding: 2rem 10rem;
-  box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
-}
-
-#map:hover {
-  background-color: orange;
-  box-shadow: none;
-}
-
-#pricing {
-  grid-area: pri;
-  border: solid black;
-  border-radius: 2rem;
-  padding: 2rem;
-  box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
-}
-
-#pricing:hover {
-  background-color: orange;
-  box-shadow: none;
-}
 </style>

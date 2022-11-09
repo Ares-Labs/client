@@ -29,8 +29,6 @@
 
 <style lang="scss" scoped>
 $hover-color: #e8e8e8;
-$hover-animation: translate(0, 5px);
-$transition-type-and-speed: transform ease 0.5s;
 
 header {
   display: flex;
@@ -69,14 +67,14 @@ main {
       border: solid black;
       padding: 7rem 12rem;
       box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
-      transition: $transition-type-and-speed;
+      transition: transform ease 0.5s;
       border-radius: 0.3rem;
     }
 
     p:hover {
       background-color: $hover-color;
       box-shadow: none;
-      transform: $hover-animation;
+      transform: translate(0, 5px);
     }
   }
 }

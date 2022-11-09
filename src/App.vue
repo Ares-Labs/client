@@ -17,7 +17,9 @@ if (!Gateway.isInitialized) {
 * {
   font-family: "Open Sans", sans-serif;
 }
-a, router-link {
+
+a,
+router-link {
   text-decoration: none;
 }
 </style>

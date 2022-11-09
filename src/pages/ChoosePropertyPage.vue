@@ -1,12 +1,16 @@
-<template>
-$END$
-</template>
-
 <script>
+import Header from "../components/Header.vue";
+
 export default {
-name: "ChoosePropertyPage"
-}
+  components: {
+    Header,
+  }
+};
 </script>
+
+<template>
+<Header/>
+</template>
 
 <style scoped>
 

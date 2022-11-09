@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import App from "./App.vue";
 import DashboardPage from "./pages/DashboardPage.vue";
+import ChoosePropertyPage from "./pages/ChoosePropertyPage.vue";
 import LiveDataPage from "./pages/LiveDataPage.vue";
 import ManagePropertyPage from "./pages/ManagePropertyPage.vue";
 import AddUserPage from "./pages/AddUserPage.vue";
@@ -11,6 +12,7 @@ import { createApp } from "vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
+  {path: "/choose-property", component: ChoosePropertyPage},
   { path: "/live-data", component: LiveDataPage },
   { path: "/manage-property", component: ManagePropertyPage },
   { path: "/add-user", component: AddUserPage},

@@ -1,12 +1,17 @@
-<template>
-$END$
-</template>
-
 <script>
+import Header from "../components/Header.vue";
+
 export default {
-name: "AddPropertyPage"
-}
+  components: {
+    Header,
+  }
+};
 </script>
+
+
+<template>
+
+</template>
 
 <style scoped>
 

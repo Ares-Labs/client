@@ -1,8 +1,10 @@
 <script>
 import Header from "../components/Header.vue";
+import Property from "../components/Property.vue";
 
 export default {
   components: {
+    Property,
     Header,
   }
 };
@@ -10,8 +12,13 @@ export default {
 
 <template>
 <Header/>
+<main>
+  <div>
+    <Property/>
+  </div>
+</main>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

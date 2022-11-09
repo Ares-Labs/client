@@ -12,7 +12,7 @@ import { createApp } from "vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
-  {path: "/choose-property", component: ChoosePropertyPage},
+  { path: "/choose-property", component: ChoosePropertyPage },
   { path: "/live-data", component: LiveDataPage },
   { path: "/manage-property", component: ManagePropertyPage },
   { path: "/add-user", component: AddUserPage},

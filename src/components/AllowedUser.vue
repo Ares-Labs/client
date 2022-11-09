@@ -50,7 +50,6 @@ function deleteUser(user) {
 
 #userinfo {
   display: flex;
-
 }
 
 svg {
@@ -67,6 +66,5 @@ button {
   color: white;
   margin-top: 1.5rem;
 }
-
 
 </style>

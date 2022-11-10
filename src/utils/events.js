@@ -12,6 +12,10 @@ const QUERIES_PREFIX = "queries";
  * @typedef {Object} Events
  * @property {string} ALL
  * @property {string} ALERTS
+ * @property {string} WEEKLY_VISITORS
+ * @property {string} GET_CRIMES_IN_AREA
+ * @property {string} SCANNED_VISITORS
+ * @property {string} AUTH_ENTRIES
  */
 
 /**
@@ -20,6 +24,18 @@ const QUERIES_PREFIX = "queries";
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
  * @property {string} GET_ALLOWED_USERS
+ * @property {string} ADD_ALLOWED_USER
+ * @property {string} REMOVE_ALLOWED_USER
+ * @property {string} GET_ALERTS
+ * @property {string} ADD_ALERTS
+ * @property {string} GET_WEEKLY_VISITORS
+ * @property {string} ADD_VISITOR
+ * @property {string} GET_CRIMES_IN_AREA
+ * @property {string} ADD_CRIME
+ * @property {string} GET_SCANNED_VISITORS
+ * @property {string} ADD_SCANNED_VISITOR
+ * @property {string} GET_AUTH_ENTRIES
+ * @property {string} ADD_AUTH_ENTRY
  */
 
 /**
@@ -37,7 +53,6 @@ const QUERIES_PREFIX = "queries";
 const EVENT_TYPE = {
   ALL: "all",
   ALERTS: "alerts",
-
   WEEKLY_VISITORS: "visits",
   GET_CRIMES_IN_AREA: "crimes",
   SCANNED_VISITORS: "scanned",

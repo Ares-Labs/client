@@ -1,7 +1,5 @@
-<script>
-export default {
-  name: "ToBeAddedUser"
-};
+<script setup>
+
 </script>
 
 <template>

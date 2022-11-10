@@ -1,11 +1,9 @@
-<script>
+<script setup>
 import Property from "@/components/Property/Property.vue";
 
-export default {
-  name: "AwaitingProperty",
-  components: { Property },
-  props: ['name'],
-};
+const props = defineProps({
+  name: String,
+});
 </script>
 
 <template>

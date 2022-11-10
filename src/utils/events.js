@@ -495,7 +495,7 @@ class Gateway {
    * @template T
    * @returns {Promise<T>} The response from the server.
    */
-  execute(query, data) {
+  execute(query, data = {}) {
     if (!Object.values(this.queries).includes(query)) {
       throw new Error(`Query '${query}' is not a valid query`);
     }

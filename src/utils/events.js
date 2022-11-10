@@ -21,6 +21,8 @@ const QUERIES_PREFIX = "queries";
 
 /**
  * @typedef {Object} Queries
+ * @property {string} GET_USER
+ * @property {string} GET_EQUIPMENT_TYPES
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
@@ -74,6 +76,7 @@ const EVENT_TYPE = {
  */
 const QUERY_TYPE = {
   GET_USER: "get-user",
+  GET_EQUIPMENT_TYPES: "get-equipment-types",
 
   ADD_PROPERTY: "add-property",
   REMOVE_PROPERTY: "remove-property",

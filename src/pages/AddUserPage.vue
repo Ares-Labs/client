@@ -1,6 +1,6 @@
 <script setup>
 import Header from "../components/Header/Header.vue";
-import ToBeAddedUser from "../components/ToBeAddedUser.vue";
+import ToBeAddedUser from "../components/users/ToBeAddedUser.vue";
 </script>
 
 <template>

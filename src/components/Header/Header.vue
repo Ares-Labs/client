@@ -24,7 +24,7 @@ header {
   justify-content: space-between;
   padding: 1.5rem 10% 1.5rem 10%;
   box-shadow: black 0.1rem 0.1rem 0.7rem 0.1rem;
-  margin-bottom: 10rem;
+  margin-bottom: 5rem;
   height: 3rem;
 
   div {

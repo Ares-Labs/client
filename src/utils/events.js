@@ -27,6 +27,9 @@ const QUERIES_PREFIX = "queries";
  * @property {string} CHANGE_PROPERTY_STATUS
  * @property {string} CHANGE_PROPERTY_SIZE
  * @property {string} GET_PENDING_PROPERTIES
+ * @property {string} ADD_EQUIPMENT_PROPERTY
+ * @property {string} REMOVE_EQUIPMENT_PROPERTY
+ * @property {string} GET_EQUIPMENT_PROPERTY
  * @property {string} GET_ALLOWED_USERS
  * @property {string} ADD_ALLOWED_USER
  * @property {string} REMOVE_ALLOWED_USER
@@ -78,6 +81,9 @@ const QUERY_TYPE = {
   CHANGE_PROPERTY_STATUS: "change-property-status",
   CHANGE_PROPERTY_SIZE: "change-property-size",
   GET_PENDING_PROPERTIES: "get-pending-properties",
+  ADD_EQUIPMENT_PROPERTY: "add-equipment-property",
+  REMOVE_EQUIPMENT_PROPERTY: "remove-equipment-property",
+  GET_EQUIPMENT_PROPERTY: "get-equipment-property",
 
   GET_ALLOWED_USERS: "get-allowed-users",
   ADD_ALLOWED_USER: "add-allowed-user",

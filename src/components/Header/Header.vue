@@ -11,10 +11,12 @@
       <router-link to="/manage-property"><p>Manage Property</p></router-link>
       <router-link to="/live-data"><p>Live Data</p></router-link>
       <router-link to="#"><p>Map</p></router-link>
-      <router-link to="#"><p>Recent activity</p></router-link>
+      <router-link to="#"><p>Statistics</p></router-link>
       <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
     </div>
-    <img src="src/assets/media/profile.svg" alt="profile">
+    <router-link to="/profile">
+      <img src="src/assets/media/profile.svg" alt="profile">
+    </router-link>
   </header>
 </template>
 

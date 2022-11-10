@@ -3,7 +3,7 @@ import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
 </script>
 
 <template>
-  <HeaderWithoutLinks></HeaderWithoutLinks>
+  <HeaderWithoutLinks name="User Profile"></HeaderWithoutLinks>
 </template>
 
 <style lang="scss" scoped>

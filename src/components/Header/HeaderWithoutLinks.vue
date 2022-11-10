@@ -8,7 +8,9 @@ const props = defineProps(['name'])
       ><img src="../../assets/media/ares-labs-logo.png" alt="Ares Labs logo"
     /></router-link>
     <h1>{{props.name}}</h1>
-    <img src="src/assets/media/profile.svg" alt="profile">
+    <router-link to="/profile">
+      <img src="src/assets/media/profile.svg" alt="profile">
+    </router-link>
   </header>
 </template>
 

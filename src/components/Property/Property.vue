@@ -1,12 +1,13 @@
-<script setup>
-const props = defineProps({
-  name: String,
-});
+<script>
+export default {
+  name: "Property",
+  props: ['name', 'route']
+};
 </script>
 
 <template>
 <div class="property">
-  <p>{{name}}</p>
+  <router-link :to="`${route}`">{{name}}</router-link>
 </div>
 </template>
 

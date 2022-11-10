@@ -25,6 +25,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
  * @property {string} CHANGE_PROPERTY_STATUS
+ * @property {string} GET_PENDING_PROPERTIES
  * @property {string} GET_ALLOWED_USERS
  * @property {string} ADD_ALLOWED_USER
  * @property {string} REMOVE_ALLOWED_USER
@@ -74,6 +75,7 @@ const QUERY_TYPE = {
   REMOVE_PROPERTY: "remove-property",
   GET_PROPERTY: "get-property",
   CHANGE_PROPERTY_STATUS: "change-property-status",
+  GET_PENDING_PROPERTIES: "get-pending-properties",
 
   GET_ALLOWED_USERS: "get-allowed-users",
   ADD_ALLOWED_USER: "add-allowed-user",

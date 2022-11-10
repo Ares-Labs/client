@@ -14,6 +14,9 @@ const QUERIES_PREFIX = "queries";
  *
  * @typedef {Object} Queries
  * @property {string} ADD_PROPERTY
+ * @property {string} REMOVE_PROPERTY
+ * @property {string} GET_PROPERTY
+ * @property {string} GET_ALLOWED_USERS
  *
  * @typedef {Object} EventBusMessage
  * @property {string} type
@@ -37,6 +40,9 @@ const EVENT_TYPE = {
  */
 const QUERY_TYPE = {
   ADD_PROPERTY: `${QUERIES_PREFIX}.add-property`,
+  REMOVE_PROPERTY: `${QUERIES_PREFIX}.remove-property`,
+  GET_PROPERTY: `${QUERIES_PREFIX}.get-property`,
+  GET_ALLOWED_USERS: `${QUERIES_PREFIX}.get-allowed-users`,
 };
 
 /**
@@ -130,7 +136,8 @@ class Gateway {
       this.#registerHandler(this.#inbound, this.#onMessage);
 
       this.#executeQuery(OUTBOUND_CHNL, "session", { id: this.#id }).then(
-        () => {
+        (data) => {
+          console.log(data);
           Object.keys(this.#subscribers)
             .filter((event) => event !== this.allEvents)
             .forEach((event) => this.send("subscribe", { id: event }));

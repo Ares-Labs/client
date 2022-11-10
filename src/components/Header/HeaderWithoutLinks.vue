@@ -1,5 +1,5 @@
 <script setup>
-
+const props = defineProps(['name'])
 </script>
 
 <template>
@@ -7,8 +7,10 @@
     <router-link to="/"
       ><img src="../../assets/media/ares-labs-logo.png" alt="Ares Labs logo"
     /></router-link>
-    <h1>{{ name }}</h1>
-    <img src="src/assets/media/profile.svg" alt="profile">
+    <h1>{{props.name}}</h1>
+    <router-link to="/profile">
+      <img src="src/assets/media/profile.svg" alt="profile">
+    </router-link>
   </header>
 </template>
 

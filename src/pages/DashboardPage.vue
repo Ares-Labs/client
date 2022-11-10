@@ -2,7 +2,7 @@
 import HeaderWithoutLinks from "../components/Header/HeaderWithoutLinks.vue";
 </script>
 <template>
-  <header-without-links name="Dashboard"></header-without-links>
+  <HeaderWithoutLinks name="Dashboard"></HeaderWithoutLinks>
   <div class="wrapper">
     <main>
       <div>

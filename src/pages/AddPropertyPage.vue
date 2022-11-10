@@ -30,7 +30,7 @@ export default {
             </div>
             <div id="right">
               <label for="reason">What is the reason you want to add this property?</label>
-              <input type="text" id="reason" name="text">
+              <input type="text" id="reason" name="text" placeholder="">
               <input type="submit" value="Submit">
             </div>
           </div>
@@ -47,9 +47,21 @@ export default {
   margin: auto;
 }
 
+legend {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+  margin: auto auto 5rem;
+}
+
+input {
+  display: block;
+}
+
 .flex {
   display: flex;
-  
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 </style>

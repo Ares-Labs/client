@@ -42,13 +42,14 @@ header {
   justify-content: space-between;
   padding: 1.5rem 10% 1.5rem 10%;
   box-shadow: black 0.1rem 0.1rem 0.7rem 0.1rem;
+  margin-bottom: 10rem;
   height: 3rem;
 
   div {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 40%;
+    width: 70%;
 
     p {
       height: 100%;

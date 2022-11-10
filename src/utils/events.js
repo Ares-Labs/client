@@ -61,10 +61,19 @@ const QUERY_TYPE = {
   REMOVE_ALLOWED_USER: "remove-allowed-user",
 
   GET_ALERTS: "get-alerts",
+  ADD_ALERTS: "add-alert",
+
   GET_WEEKLY_VISITORS: "get-weekly-visitors",
+  ADD_VISITOR: "add-visitor",
+
   GET_CRIMES_IN_AREA: "get-crimes-in-area",
+  ADD_CRIME: "add-crime",
+
   GET_SCANNED_VISITORS: "get-scanned-visitors",
+  ADD_SCANNED_VISITOR: "add-scanned-visitor",
+
   GET_AUTH_ENTRIES: "get-auth-entries",
+  ADD_AUTH_ENTRY: "add-auth-entry",
 };
 
 // Add some prefixes

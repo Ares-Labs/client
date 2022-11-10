@@ -1,13 +1,6 @@
-<script>
+<script setup>
 import Header from "@/components/Header/Header.vue";
-
-export default {
-  components: {
-    Header,
-  }
-};
 </script>
-
 
 <template>
   <Header/>
@@ -17,20 +10,21 @@ export default {
         <fieldset>
           <legend>Request to add property</legend>
           <div class="flex">
-            <div id="left">
+            <div>
               <p>Choose your property location on the map</p>
+              <img src="src/images/map.jpg" alt="map">
               <label for="name">Name of your property</label>
-              <input type="text" id="name" name="name">
+              <input type="text" id="name" name="name" autocomplete="off">
               <label for="tier">Tier or protection</label>
               <select id="tier" name="tier">
-                <option value="1">Tier 1</option>
-                <option value="2">Tier 2</option>
-                <option value="3">Tier 3</option>
+                <option value="Basic">Basic</option>
+                <option value="Premium">Premium</option>
+                <option value="Optimum">Optimum</option>
               </select>
             </div>
-            <div id="right">
+            <div>
               <label for="reason">What is the reason you want to add this property?</label>
-              <input type="text" id="reason" name="text" placeholder="">
+              <textarea name="reason" id="reason" autocomplete="off"></textarea>
               <input type="submit" value="Submit">
             </div>
           </div>
@@ -42,11 +36,6 @@ export default {
 
 <style lang="scss" scoped>
 
-.wrapper {
-  width: 90%;
-  margin: auto;
-}
-
 legend {
   text-align: center;
   font-weight: bold;
@@ -54,14 +43,48 @@ legend {
   margin: auto auto 5rem;
 }
 
-input {
+input, select {
   display: block;
+  width: 100%;
+  padding: 0;
+}
+
+label {
+  display: block;
+}
+
+img {
+  height: 24rem;
+  width: available;
+}
+
+textarea {
+  width: 100%;
+  height: 23rem;
+  margin-bottom: 7rem;
+  resize: none;
+}
+
+input[type='submit'] {
+  width: initial;
+  float: right;
+}
+
+.wrapper {
+  width: 80%;
+  margin: auto;
 }
 
 .flex {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  * {
+    margin-bottom: 1rem;
+  }
 }
 
+#reason {
+  margin-bottom: 7.5rem;
+}
 </style>

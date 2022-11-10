@@ -258,6 +258,15 @@ class Gateway {
   }
 
   /**
+   * Get the current connection its client id.
+   *
+   * @returns {string} The current connection its client id.
+   */
+  get clientId() {
+    return this.#id;
+  }
+
+  /**
    * Send a subscribe event to the event bus.
    *
    * @param {string} event The event to subscribe to.

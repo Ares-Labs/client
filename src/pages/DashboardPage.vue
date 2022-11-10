@@ -9,7 +9,7 @@ import HeaderWithoutLinks from "../components/Header/HeaderWithoutLinks.vue";
         <div>
           <router-link to="/choose-property"><p>Manage Property</p></router-link>
           <router-link to="/live-data"><p>Live Data</p></router-link>
-          <router-link to="/"><p>Recent activity</p></router-link>
+          <router-link to="/"><p>Statistics</p></router-link>
         </div>
         <div>
           <router-link to="/"><p>Map</p></router-link>

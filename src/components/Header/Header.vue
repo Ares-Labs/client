@@ -14,7 +14,7 @@ export default {
       <router-link to="/live-data"><p>Live Data</p></router-link>
       <router-link to="#"><p>Map</p></router-link>
       <router-link to="#"><p>Recent activity</p></router-link>
-      <router-link to="#"><p>Pricing / Upgrade</p></router-link>
+      <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
     </div>
     <svg
       xmlns="http://www.w3.org/2000/svg"

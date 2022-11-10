@@ -1,5 +1,5 @@
 <script>
-import Header from "../components/Header.vue";
+import Header from "../components/Header/Header.vue";
 import ToBeAddedUser from "../components/ToBeAddedUser.vue";
 
 export default {
@@ -13,7 +13,7 @@ export default {
 <template>
   <Header/>
   <main>
-    <aside id="recent-ppl">
+    <aside id="recent-ppl" aria-label="recent-ppl">
       <h2>Recent People</h2>
       <div>
         <ToBeAddedUser/>
@@ -41,7 +41,7 @@ export default {
       </div>
     </article>
 
-    <aside id="blacklist">
+    <aside id="blacklist" aria-label="blacklist">
       <h2>Blacklist</h2>
       <div>
         <ToBeAddedUser/>

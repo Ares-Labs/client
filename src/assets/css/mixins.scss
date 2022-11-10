@@ -1,0 +1,5 @@
+@mixin hover {
+  background-color: #e8e8e8;
+  box-shadow: none;
+  transform: translate(0, 5px);
+}

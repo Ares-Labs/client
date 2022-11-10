@@ -76,7 +76,7 @@ img {
 
   .actions {
     display: flex;
-    border-top: solid black;
+    border-top: solid black 0.1rem;
     gap: 2rem;
     padding-top: 1rem;
     justify-content: center;

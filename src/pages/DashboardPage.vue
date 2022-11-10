@@ -1,8 +1,5 @@
-<script>
+<script setup>
 import HeaderWithoutLinks from "../components/Header/HeaderWithoutLinks.vue";
-export default {
-  components: { HeaderWithoutLinks }
-};
 </script>
 <template>
   <header-without-links name="Dashboard"></header-without-links>

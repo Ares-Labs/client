@@ -11,13 +11,17 @@ const QUERIES_PREFIX = "queries";
 /**
  * @typedef {Object} Events
  * @property {string} ALL
- *
+ */
+
+/**
  * @typedef {Object} Queries
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
  * @property {string} GET_ALLOWED_USERS
- *
+ */
+
+/**
  * @typedef {Object} EventBusMessage
  * @property {string} type
  * @property {string} address

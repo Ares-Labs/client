@@ -6,6 +6,6 @@ import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
   <HeaderWithoutLinks></HeaderWithoutLinks>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

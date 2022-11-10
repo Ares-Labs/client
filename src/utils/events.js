@@ -16,6 +16,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} GET_CRIMES_IN_AREA
  * @property {string} SCANNED_VISITORS
  * @property {string} AUTH_ENTRIES
+ * @property {string} PROPERTY_STATUS_CHANGE
  */
 
 /**
@@ -23,6 +24,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
+ * @property {string} CHANGE_PROPERTY_STATUS
  * @property {string} GET_ALLOWED_USERS
  * @property {string} ADD_ALLOWED_USER
  * @property {string} REMOVE_ALLOWED_USER
@@ -57,6 +59,7 @@ const EVENT_TYPE = {
   GET_CRIMES_IN_AREA: "crimes",
   SCANNED_VISITORS: "scanned",
   AUTH_ENTRIES: "auth-entries",
+  PROPERTY_STATUS_CHANGE: "property-status-change",
 };
 
 /**
@@ -70,6 +73,7 @@ const QUERY_TYPE = {
   ADD_PROPERTY: "add-property",
   REMOVE_PROPERTY: "remove-property",
   GET_PROPERTY: "get-property",
+  CHANGE_PROPERTY_STATUS: "change-property-status",
 
   GET_ALLOWED_USERS: "get-allowed-users",
   ADD_ALLOWED_USER: "add-allowed-user",

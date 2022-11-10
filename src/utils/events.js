@@ -17,6 +17,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} SCANNED_VISITORS
  * @property {string} AUTH_ENTRIES
  * @property {string} PROPERTY_STATUS_CHANGE
+ * @property {string} PROPERTY_EQUIPMENT_CHANGE
  */
 
 /**
@@ -67,6 +68,7 @@ const EVENT_TYPE = {
   SCANNED_VISITORS: "scanned",
   AUTH_ENTRIES: "auth-entries",
   PROPERTY_STATUS_CHANGE: "property-status-change",
+  PROPERTY_EQUIPMENT_CHANGE: "property-equipment-change",
 };
 
 /**

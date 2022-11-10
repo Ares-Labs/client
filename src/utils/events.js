@@ -40,10 +40,9 @@ const QUERIES_PREFIX = "queries";
  * @property {string} ADD_ALERTS
  * @property {string} GET_WEEKLY_VISITORS
  * @property {string} ADD_VISITOR
+ * @property {string} GET_SCANNED_VISITORS
  * @property {string} GET_CRIMES_IN_AREA
  * @property {string} ADD_CRIME
- * @property {string} GET_SCANNED_VISITORS
- * @property {string} ADD_SCANNED_VISITOR
  * @property {string} GET_AUTH_ENTRIES
  * @property {string} ADD_AUTH_ENTRY
  */
@@ -99,12 +98,10 @@ const QUERY_TYPE = {
 
   GET_WEEKLY_VISITORS: "get-weekly-visitors",
   ADD_VISITOR: "add-visitor",
+  GET_SCANNED_VISITORS: "get-scanned-visitors",
 
   GET_CRIMES_IN_AREA: "get-crimes-in-area",
   ADD_CRIME: "add-crime",
-
-  GET_SCANNED_VISITORS: "get-scanned-visitors",
-  ADD_SCANNED_VISITOR: "add-scanned-visitor",
 
   GET_AUTH_ENTRIES: "get-auth-entries",
   ADD_AUTH_ENTRY: "add-auth-entry",

@@ -11,6 +11,7 @@ const QUERIES_PREFIX = "queries";
 /**
  * @typedef {Object} Events
  * @property {string} ALL
+ * @property {string} ALERTS
  */
 
 /**
@@ -35,6 +36,7 @@ const QUERIES_PREFIX = "queries";
  */
 const EVENT_TYPE = {
   ALL: `${EVENTS_PREFIX}.all`,
+  ALERTS: `${EVENTS_PREFIX}.alerts`,
 };
 
 /**
@@ -140,13 +142,12 @@ class Gateway {
       this.#registerHandler(this.#inbound, this.#onMessage);
 
       this.#executeQuery(OUTBOUND_CHNL, "session", { id: this.#id }).then(
-        (data) => {
-          console.log(data);
+        () => {
+          this.#connIsReady = true;
           Object.keys(this.#subscribers)
             .filter((event) => event !== this.allEvents)
-            .forEach((event) => this.send("subscribe", { id: event }));
+            .forEach((event) => this.#subscribe(event));
 
-          this.#connIsReady = true;
           this.#onReadyEvents.forEach((event) => event());
         }
       );
@@ -197,6 +198,22 @@ class Gateway {
    */
   get queries() {
     return this.#queries;
+  }
+
+  /**
+   * Send a subscribe event to the event bus.
+   *
+   * @param {string} event The event to subscribe to.
+   * @returns {void}
+   */
+  #subscribe(event) {
+    this.#requiresConnection();
+
+    if (event === this.allEvents) {
+      return;
+    }
+
+    this.send("subscribe", { id: event, clientId: this.#id });
   }
 
   /**
@@ -326,8 +343,8 @@ class Gateway {
     if (this.#subscribers[event] === undefined) {
       this.#subscribers[event] = [];
 
-      if (event !== this.allEvents) {
-        this.send("subscribe", { id: event });
+      if (event !== this.allEvents && this.#connIsReady) {
+        this.#subscribe(event);
       }
     }
   }

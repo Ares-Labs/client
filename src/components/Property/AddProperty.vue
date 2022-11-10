@@ -1,9 +1,6 @@
-<script>
+<script setup>
 import Property from "@/components/Property/Property.vue";
-export default {
-  name: "AddProperty",
-  components: { Property },
-};
+
 </script>
 
 <template>

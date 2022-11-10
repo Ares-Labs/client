@@ -11,10 +11,18 @@ const QUERIES_PREFIX = "queries";
 /**
  * @typedef {Object} Events
  * @property {string} ALL
- *
+ * @property {string} ALERTS
+ */
+
+/**
  * @typedef {Object} Queries
  * @property {string} ADD_PROPERTY
- *
+ * @property {string} REMOVE_PROPERTY
+ * @property {string} GET_PROPERTY
+ * @property {string} GET_ALLOWED_USERS
+ */
+
+/**
  * @typedef {Object} EventBusMessage
  * @property {string} type
  * @property {string} address
@@ -28,6 +36,7 @@ const QUERIES_PREFIX = "queries";
  */
 const EVENT_TYPE = {
   ALL: `${EVENTS_PREFIX}.all`,
+  ALERTS: `${EVENTS_PREFIX}.alerts`,
 };
 
 /**
@@ -37,6 +46,9 @@ const EVENT_TYPE = {
  */
 const QUERY_TYPE = {
   ADD_PROPERTY: `${QUERIES_PREFIX}.add-property`,
+  REMOVE_PROPERTY: `${QUERIES_PREFIX}.remove-property`,
+  GET_PROPERTY: `${QUERIES_PREFIX}.get-property`,
+  GET_ALLOWED_USERS: `${QUERIES_PREFIX}.get-allowed-users`,
 };
 
 /**
@@ -131,11 +143,11 @@ class Gateway {
 
       this.#executeQuery(OUTBOUND_CHNL, "session", { id: this.#id }).then(
         () => {
+          this.#connIsReady = true;
           Object.keys(this.#subscribers)
             .filter((event) => event !== this.allEvents)
-            .forEach((event) => this.send("subscribe", { id: event }));
+            .forEach((event) => this.#subscribe(event));
 
-          this.#connIsReady = true;
           this.#onReadyEvents.forEach((event) => event());
         }
       );
@@ -186,6 +198,22 @@ class Gateway {
    */
   get queries() {
     return this.#queries;
+  }
+
+  /**
+   * Send a subscribe event to the event bus.
+   *
+   * @param {string} event The event to subscribe to.
+   * @returns {void}
+   */
+  #subscribe(event) {
+    this.#requiresConnection();
+
+    if (event === this.allEvents) {
+      return;
+    }
+
+    this.send("subscribe", { id: event, clientId: this.#id });
   }
 
   /**
@@ -315,8 +343,8 @@ class Gateway {
     if (this.#subscribers[event] === undefined) {
       this.#subscribers[event] = [];
 
-      if (event !== this.allEvents) {
-        this.send("subscribe", { id: event });
+      if (event !== this.allEvents && this.#connIsReady) {
+        this.#subscribe(event);
       }
     }
   }

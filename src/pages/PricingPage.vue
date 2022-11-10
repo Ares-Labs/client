@@ -1,12 +1,5 @@
-<script>
+<script setup>
 import Header from "@/components/Header/Header.vue";
-
-export default {
-  components: {
-    Header,
-  }
-};
-
 </script>
 
 <template>
@@ -102,7 +95,6 @@ h1 {
   display: flex;
   justify-content: center;
   font-size: 2rem;
-  margin-top: 5rem;
 }
 
 h4 {

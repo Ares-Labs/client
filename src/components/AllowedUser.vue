@@ -1,7 +1,4 @@
-<script>
-export default {
-  name: 'AllowedUser'
-};
+<script setup>
 const allowedUserList = [];
 
 function deleteUser(user) {

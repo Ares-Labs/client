@@ -1,17 +1,8 @@
-<script>
+<script setup>
 import Property from "@/components/Property/Property.vue";
 import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
 import AddProperty from "@/components/Property/AddProperty.vue";
 import AwaitingProperty from "@/components/Property/AwaitingProperty.vue";
-
-export default {
-  components: {
-    AwaitingProperty,
-    AddProperty,
-    HeaderWithoutLinks,
-    Property,
-  }
-};
 </script>
 
 <template>

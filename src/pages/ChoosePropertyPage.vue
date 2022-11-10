@@ -19,9 +19,7 @@ export default {
   <div class="wrapper">
     <main>
       <div class="flex">
-        <router-link to="/manage-property"> <!-- TODO: add this for other components -->
-          <property name="Howest University"></property>
-        </router-link>
+        <property name="Howest University" route="/manage-property"></property>
         <property name="Wall Street"></property>
         <property name="Space Station"></property>
         <property name="Mining Station"></property>

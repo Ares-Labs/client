@@ -56,6 +56,7 @@ header {
       transition: transform ease 0.5s;
       font-size: 1.25rem;
       color: black;
+      font-weight: bold;
     }
 
     p:hover {

@@ -28,7 +28,7 @@ export default {
   font-size: 2rem;
   box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
   transition: transform ease 0.5s;
-  background: #e8e8e8 url("src/assets/media/options.svg") no-repeat 95% 15%;
+  background: #e8e8e8 url("../../assets/media/options.svg") no-repeat 95% 15%;
   background-size: 0.4rem;
 }
 

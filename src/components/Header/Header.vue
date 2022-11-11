@@ -15,7 +15,7 @@
       <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
     </div>
     <router-link to="/profile">
-      <img src="src/assets/media/profile.svg" alt="profile">
+      <img src="../../assets/media/profile.svg" alt="profile">
     </router-link>
   </header>
 </template>

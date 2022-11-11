@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(['name'])
+const props = defineProps(['name']);
 </script>
 
 <template>
@@ -9,7 +9,7 @@ const props = defineProps(['name'])
     /></router-link>
     <h1>{{props.name}}</h1>
     <router-link to="/profile">
-      <img src="src/assets/media/profile.svg" alt="profile">
+      <img src="../../assets/media/profile.svg" alt="profile">
     </router-link>
   </header>
 </template>

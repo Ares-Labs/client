@@ -7,7 +7,7 @@ import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
   <div class="wrapper">
     <main>
       <div class="vert">
-        <img src="src/assets/media/profile.svg" alt="profile">
+        <img src="../assets/media/profile.svg" alt="profile">
         <p><strong>ID:</strong> d2b840a9</p>
       </div>
 

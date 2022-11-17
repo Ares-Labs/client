@@ -5,14 +5,15 @@ const props = defineProps({
   show: Boolean
 })
 
-function click() {
-  console.log("clicked");
+function click(e) {
+  e.target.closest("div").classList.add("hidden");
+  e.target.closest("div").classList.remove("property");
 }
 </script>
 
 <template>
 <div class="property">
-    <img src="../../assets/media/options.svg" alt="options" id="options" @click="click" v-if="show === true">
+    <img src="../../assets/media/bin.svg" alt="options" id="delete" @click="click" v-if="show === true">
     <div v-else>-</div>
   <router-link :to="`${route}`">{{name}}</router-link>
 </div>
@@ -21,10 +22,15 @@ function click() {
 <style lang="scss" scoped>
 @import "src/assets/css/mixins";
 
+.hidden {
+  display: none;
+}
+
 .property {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: normal;
   border: solid black 0.1rem;
   width: 20rem;
   height: 12rem;
@@ -39,20 +45,22 @@ function click() {
   background-size: 0.4rem;
 
   a {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
   }
 
   div {
     opacity: 0;
-  }
-
-  #options {
     width: 0.5rem;
-    margin-left: 90%;
     margin-top: 0.5rem;
   }
 
-  #options:hover {
+  #delete {
+    width: 2rem;
+    margin-left: 80%;
+    margin-top: 0.5rem;
+  }
+
+  #delete:hover {
     cursor: pointer;
   }
 

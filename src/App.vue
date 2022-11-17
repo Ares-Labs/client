@@ -40,7 +40,7 @@ const exampleUsage = async () => {
     userId: "bedb80fc-55f3-11ed-b681-07688aa63f8a",
   });
 
-  for (var i = 1; i < 4; i++) {
+  for (let i = 1; i < 4; i++) {
     const { id: cameraId } = await Gateway.execute(
       Gateway.queries.ADD_EQUIPMENT_PROPERTY,
       {
@@ -50,7 +50,7 @@ const exampleUsage = async () => {
       }
     );
 
-    for (var j = 0; j < 3; j++) {
+    for (let j = 0; j < 3; j++) {
       await Gateway.execute(Gateway.queries.ADD_VISITOR, {
         propertyId: prop.id,
         userId: "bedb80fc-55f3-11ed-b681-07688aa63f8a",

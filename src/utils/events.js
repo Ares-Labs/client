@@ -18,12 +18,15 @@ const QUERIES_PREFIX = "queries";
  * @property {string} AUTH_ENTRIES
  * @property {string} PROPERTY_STATUS_CHANGE
  * @property {string} PROPERTY_EQUIPMENT_CHANGE
- */
+ * @property {string} REQUESTED_REMOVE_PROPERTY
+ 
 
 /**
  * @typedef {Object} Queries
  * @property {string} GET_USER
+ * @property {string} GET_USER_PROPERTIES
  * @property {string} GET_EQUIPMENT_TYPES
+ * @property {string} DISPATCH_DRONE
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
@@ -33,6 +36,10 @@ const QUERIES_PREFIX = "queries";
  * @property {string} ADD_EQUIPMENT_PROPERTY
  * @property {string} REMOVE_EQUIPMENT_PROPERTY
  * @property {string} GET_EQUIPMENT_PROPERTY
+ * @property {string} CHANGE_PROPERTY_TIER
+ * @property {string} REQUEST_REMOVE_PROPERTY
+ * @property {string} GET_REQUESTED_REMOVE_PROPERTIES
+ * @property {string} APPROVE_REMOVE_PROPERTY
  * @property {string} GET_ALLOWED_USERS
  * @property {string} ADD_ALLOWED_USER
  * @property {string} REMOVE_ALLOWED_USER
@@ -68,6 +75,7 @@ const EVENT_TYPE = {
   AUTH_ENTRIES: "auth-entries",
   PROPERTY_STATUS_CHANGE: "property-status-change",
   PROPERTY_EQUIPMENT_CHANGE: "property-equipment-change",
+  REQUESTED_REMOVE_PROPERTY: "requested-remove-property",
 };
 
 /**
@@ -77,7 +85,9 @@ const EVENT_TYPE = {
  */
 const QUERY_TYPE = {
   GET_USER: "get-user",
+  GET_USER_PROPERTIES: "get-user-properties",
   GET_EQUIPMENT_TYPES: "get-equipment-types",
+  DISPATCH_DRONE: "dispatch-drone",
 
   ADD_PROPERTY: "add-property",
   REMOVE_PROPERTY: "remove-property",
@@ -88,6 +98,11 @@ const QUERY_TYPE = {
   ADD_EQUIPMENT_PROPERTY: "add-equipment-property",
   REMOVE_EQUIPMENT_PROPERTY: "remove-equipment-property",
   GET_EQUIPMENT_PROPERTY: "get-equipment-property",
+  CHANGE_PROPERTY_TIER: "change-property-tier",
+
+  REQUEST_REMOVE_PROPERTY: "request-remove-property",
+  GET_REQUESTED_REMOVE_PROPERTIES: "get-requested-remove-properties",
+  APPROVE_REMOVE_PROPERTY: "approve-remove-property",
 
   GET_ALLOWED_USERS: "get-allowed-users",
   ADD_ALLOWED_USER: "add-allowed-user",

@@ -73,6 +73,7 @@ img {
     flex-direction: column;
     margin: 0 2rem 0 1rem;
   }
+
 }
 
 .actions {
@@ -108,20 +109,18 @@ img {
   }
 }
 
-.main-noti div {
-  p:first-child {
+.main-noti div p:first-child {
     font-weight: bold;
     margin-bottom: 0.4rem;
+}
 
-  }
-  p:last-child {
+.main-noti div p:last-child {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 20rem;
     max-height: 3rem;
     font-size: 0.9rem;
-  }
 }
 
 .actions div img {

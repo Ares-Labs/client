@@ -2,6 +2,7 @@
 const props = defineProps({
   name: String,
   route: String,
+  show: Boolean
 })
 
 function click() {
@@ -11,8 +12,9 @@ function click() {
 
 <template>
 <div class="property">
-    <img src="../../assets/media/options.svg" alt="options" id="options" @click="click">
-  <router-link :to="`${props.route}`">{{props.name}}</router-link>
+    <img src="../../assets/media/options.svg" alt="options" id="options" @click="click" v-if="show === true">
+    <div v-else>-</div>
+  <router-link :to="`${route}`">{{name}}</router-link>
 </div>
 </template>
 
@@ -38,6 +40,10 @@ function click() {
 
   a {
     margin-top: 3rem;
+  }
+
+  div {
+    opacity: 0;
   }
 
   #options {

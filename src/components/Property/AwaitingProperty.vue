@@ -1,9 +1,5 @@
 <script setup>
 import Property from "@/components/Property/Property.vue";
-
-const props = defineProps({
-  name: String,
-});
 </script>
 
 <template>

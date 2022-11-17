@@ -11,6 +11,7 @@ import AddUserPage from "./pages/AddUserPage.vue";
 import AddPropertyPage from "./pages/AddPropertyPage.vue";
 import { createApp } from "vue";
 import PricingPage from "./pages/PricingPage.vue";
+import ProfilePage from "./pages/ProfilePage.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -19,7 +20,8 @@ const routes = [
   { path: "/manage-property", component: ManagePropertyPage },
   { path: "/add-user", component: AddUserPage},
   { path: "/add-property", component: AddPropertyPage},
-  { path: "/pricing", component: PricingPage}
+  { path: "/pricing", component: PricingPage},
+  { path: "/profile", component: ProfilePage}
 ];
 
 const router = createRouter({

@@ -9,8 +9,8 @@ const props = defineProps({
 
 <template>
   <div v-if="urgent" class="urgent">
-    <div class="main-noti">
-      <img src="src/assets/media/profile.svg" alt="profile">
+    <div>
+      <img src="../assets/media/profile.svg" alt="profile">
       <div>
         <p>{{ name }}</p>
         <p>{{ description }}</p>
@@ -19,11 +19,11 @@ const props = defineProps({
     </div>
     <div class="actions">
       <div>
-        <img src="src/assets/media/phone.svg" alt="phone-icon">
+        <img src="../assets/media/phone.svg" alt="phone-icon">
         <p>Call authorities</p>
       </div>
       <div>
-        <img src="src/assets/media/view.svg" alt="arrow-left">
+        <img src="../assets/media/view.svg" alt="arrow-left">
         <p>View Live</p>
       </div>
     </div>

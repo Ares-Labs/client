@@ -12,7 +12,7 @@ import Header from "@/components/Header/Header.vue";
           <div class="flex">
             <div>
               <p>Choose your property location on the map</p>
-              <img src="src/images/map.jpg" alt="map">
+              <img src="../images/map.jpg" alt="map">
               <label for="name">Name of your property</label>
               <input type="text" id="name" name="name" autocomplete="off">
               <label for="tier">Tier or protection</label>

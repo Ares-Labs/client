@@ -109,7 +109,7 @@ h4 {
 article {
   display: flex;
   justify-content: center;
-
+  margin-bottom: 7rem;
 }
 
 #optimum-plan-wrapper {

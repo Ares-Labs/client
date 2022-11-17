@@ -1,6 +1,6 @@
 <script setup>
 import Header from "../components/Header/Header.vue";
-import AllowedUser from "../components/AllowedUser.vue";
+import AllowedUser from "../components/users/AllowedUser.vue";
 </script>
 
 <template>

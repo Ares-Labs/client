@@ -10,11 +10,18 @@ import Notification from "../components/Notification.vue";
     <h1>Live data</h1>
     <div id="flex-container">
       <div id="camera-container">
-        <LiveCamera/>
+        <LiveCamera />
         <button>switch cam</button>
       </div>
       <div id="notification-center">
+
         <Notification name="El Criminel" description="STEALING" time="NOW" urgent/>
+        <Notification name="El bean" description="looking respectfully" time="5 mins ago"/>
+        <Notification name="El mista" description="petting your child" time="43 mins ago"/>
+        <Notification name="Bapiste" description="sleeping in the backyard" time="45 mins ago"/>
+        <Notification name="El crazy person" description="BOMBING THE DOOR" time="1h ago" urgent/>
+        <Notification name="Alberto" description="depressingly looking" time="2h ago"/>
+
       </div>
     </div>
   </main>
@@ -31,9 +38,9 @@ h1 {
 #camera-container {
   display: flex;
   flex-direction: column;
-
   img {
-    width: 45rem;
+    height: 35rem;
+    width: 60rem;
     margin-bottom: 3rem;
   }
 
@@ -49,7 +56,9 @@ h1 {
 }
 
 #notification-center {
-
+  height: 35rem;
+  padding: 0 1rem;
+  overflow-y: auto;
 }
 
 </style>

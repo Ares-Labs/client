@@ -90,6 +90,14 @@ const exampleUsage = async () => {
     userId: Gateway.clientId,
   });
   console.log(user);
+
+  const user_properties = await Gateway.execute(
+    Gateway.queries.GET_USER_PROPERTIES,
+    {
+      userId: Gateway.clientId,
+    }
+  );
+  console.log(user_properties);
 };
 
 Gateway.onReady(exampleUsage);

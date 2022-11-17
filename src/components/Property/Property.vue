@@ -1,13 +1,18 @@
-<script>
-export default {
-  name: "Property",
-  props: ['name', 'route']
-};
+<script setup>
+const props = defineProps({
+  name: String,
+  route: String,
+})
+
+function click() {
+  console.log("clicked");
+}
 </script>
 
 <template>
 <div class="property">
-  <router-link :to="`${route}`">{{name}}</router-link>
+    <img src="../../assets/media/options.svg" alt="options" id="options" @click="click">
+  <router-link :to="`${props.route}`">{{props.name}}</router-link>
 </div>
 </template>
 
@@ -16,8 +21,8 @@ export default {
 
 .property {
   display: flex;
-  align-items:center;
-  justify-content:center;
+  flex-direction: column;
+  align-items: center;
   border: solid black 0.1rem;
   width: 20rem;
   height: 12rem;
@@ -28,8 +33,23 @@ export default {
   font-size: 2rem;
   box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
   transition: transform ease 0.5s;
-  background: #e8e8e8 url("../../assets/media/options.svg") no-repeat 95% 15%;
+  background: #e8e8e8;
   background-size: 0.4rem;
+
+  a {
+    margin-top: 3rem;
+  }
+
+  #options {
+    width: 0.5rem;
+    margin-left: 90%;
+    margin-top: 0.5rem;
+  }
+
+  #options:hover {
+    cursor: pointer;
+  }
+
 }
 
 .property:hover {

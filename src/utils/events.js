@@ -12,14 +12,39 @@ const QUERIES_PREFIX = "queries";
  * @typedef {Object} Events
  * @property {string} ALL
  * @property {string} ALERTS
+ * @property {string} WEEKLY_VISITORS
+ * @property {string} GET_CRIMES_IN_AREA
+ * @property {string} SCANNED_VISITORS
+ * @property {string} AUTH_ENTRIES
+ * @property {string} PROPERTY_STATUS_CHANGE
+ * @property {string} PROPERTY_EQUIPMENT_CHANGE
  */
 
 /**
  * @typedef {Object} Queries
+ * @property {string} GET_USER
+ * @property {string} GET_EQUIPMENT_TYPES
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
+ * @property {string} CHANGE_PROPERTY_STATUS
+ * @property {string} CHANGE_PROPERTY_SIZE
+ * @property {string} GET_PENDING_PROPERTIES
+ * @property {string} ADD_EQUIPMENT_PROPERTY
+ * @property {string} REMOVE_EQUIPMENT_PROPERTY
+ * @property {string} GET_EQUIPMENT_PROPERTY
  * @property {string} GET_ALLOWED_USERS
+ * @property {string} ADD_ALLOWED_USER
+ * @property {string} REMOVE_ALLOWED_USER
+ * @property {string} GET_ALERTS
+ * @property {string} ADD_ALERTS
+ * @property {string} GET_WEEKLY_VISITORS
+ * @property {string} ADD_VISITOR
+ * @property {string} GET_SCANNED_VISITORS
+ * @property {string} GET_CRIMES_IN_AREA
+ * @property {string} ADD_CRIME
+ * @property {string} GET_AUTH_ENTRIES
+ * @property {string} ADD_AUTH_ENTRY
  */
 
 /**
@@ -35,8 +60,14 @@ const QUERIES_PREFIX = "queries";
  * @type {Events}
  */
 const EVENT_TYPE = {
-  ALL: `${EVENTS_PREFIX}.all`,
-  ALERTS: `${EVENTS_PREFIX}.alerts`,
+  ALL: "all",
+  ALERTS: "alerts",
+  WEEKLY_VISITORS: "visits",
+  GET_CRIMES_IN_AREA: "crimes",
+  SCANNED_VISITORS: "scanned",
+  AUTH_ENTRIES: "auth-entries",
+  PROPERTY_STATUS_CHANGE: "property-status-change",
+  PROPERTY_EQUIPMENT_CHANGE: "property-equipment-change",
 };
 
 /**
@@ -45,11 +76,45 @@ const EVENT_TYPE = {
  * @type {Queries}
  */
 const QUERY_TYPE = {
-  ADD_PROPERTY: `${QUERIES_PREFIX}.add-property`,
-  REMOVE_PROPERTY: `${QUERIES_PREFIX}.remove-property`,
-  GET_PROPERTY: `${QUERIES_PREFIX}.get-property`,
-  GET_ALLOWED_USERS: `${QUERIES_PREFIX}.get-allowed-users`,
+  GET_USER: "get-user",
+  GET_EQUIPMENT_TYPES: "get-equipment-types",
+
+  ADD_PROPERTY: "add-property",
+  REMOVE_PROPERTY: "remove-property",
+  GET_PROPERTY: "get-property",
+  CHANGE_PROPERTY_STATUS: "change-property-status",
+  CHANGE_PROPERTY_SIZE: "change-property-size",
+  GET_PENDING_PROPERTIES: "get-pending-properties",
+  ADD_EQUIPMENT_PROPERTY: "add-equipment-property",
+  REMOVE_EQUIPMENT_PROPERTY: "remove-equipment-property",
+  GET_EQUIPMENT_PROPERTY: "get-equipment-property",
+
+  GET_ALLOWED_USERS: "get-allowed-users",
+  ADD_ALLOWED_USER: "add-allowed-user",
+  REMOVE_ALLOWED_USER: "remove-allowed-user",
+
+  GET_ALERTS: "get-alerts",
+  ADD_ALERTS: "add-alert",
+
+  GET_WEEKLY_VISITORS: "get-weekly-visitors",
+  ADD_VISITOR: "add-visitor",
+  GET_SCANNED_VISITORS: "get-scanned-visitors",
+
+  GET_CRIMES_IN_AREA: "get-crimes-in-area",
+  ADD_CRIME: "add-crime",
+
+  GET_AUTH_ENTRIES: "get-auth-entries",
+  ADD_AUTH_ENTRY: "add-auth-entry",
 };
+
+// Add some prefixes
+Object.keys(QUERY_TYPE).forEach(
+  (key) => (QUERY_TYPE[key] = `${QUERIES_PREFIX}.${QUERY_TYPE[key]}`)
+);
+
+Object.keys(EVENT_TYPE).forEach(
+  (key) => (EVENT_TYPE[key] = `${EVENTS_PREFIX}.${EVENT_TYPE[key]}`)
+);
 
 /**
  * Handle the WebSocket connection to the event bus.
@@ -198,6 +263,15 @@ class Gateway {
    */
   get queries() {
     return this.#queries;
+  }
+
+  /**
+   * Get the current connection its client id.
+   *
+   * @returns {string} The current connection its client id.
+   */
+  get clientId() {
+    return this.#id;
   }
 
   /**
@@ -429,7 +503,7 @@ class Gateway {
    * @template T
    * @returns {Promise<T>} The response from the server.
    */
-  execute(query, data) {
+  execute(query, data = {}) {
     if (!Object.values(this.queries).includes(query)) {
       throw new Error(`Query '${query}' is not a valid query`);
     }

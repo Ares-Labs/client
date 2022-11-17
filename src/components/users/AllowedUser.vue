@@ -10,7 +10,7 @@ function deleteUser(user) {
 <template>
   <div id="allowedUser">
     <div id="userinfo">
-      <img src="src/assets/media/profile.svg" alt="user-icon">
+      <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
         <p> Mr.Bean </p>
         <p> ID: 4cc-4b03-9c3f66e3 </p>

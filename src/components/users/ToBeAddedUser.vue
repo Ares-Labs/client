@@ -5,13 +5,13 @@
 <template>
   <div class="to-be-added-user">
     <div class="to-be-added-user-info">
-      <img src="src/assets/media/profile.svg" alt="user-icon">
+      <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
         <p> Mr.Bean </p>
         <p> ID: 4cc-4b03-9c3f66e3 </p>
       </div>
     </div>
-    <img src="src/assets/media/plus-icon.svg" alt="plus">
+    <img src="/src/assets/media/plus-icon.svg" alt="plus">
   </div>
 </template>
 

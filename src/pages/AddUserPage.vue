@@ -67,7 +67,7 @@ input, label {
   margin-bottom: 2rem;
 }
 
-article>div {
+article > div {
   height: 35rem;
   padding: 0 1rem;
   overflow-y: auto;
@@ -80,20 +80,11 @@ article>div {
   height: 35rem;
   padding: 0 1rem;
   overflow-y: auto;
-
-  div {
-    box-shadow: black -0.5rem 0.5rem 0.3rem 0.01rem;
-  }
 }
 
-#blacklist {
-
-  h2 {
+#blacklist h2 {
     text-align: end;
   }
-
-
-}
 
 #blacklist > div {
   height: 35rem;
@@ -105,5 +96,8 @@ article>div {
   }
 }
 
+#recent-ppl > div div {
+  box-shadow: black -0.5rem 0.5rem 0.3rem 0.01rem;
+}
 
 </style>

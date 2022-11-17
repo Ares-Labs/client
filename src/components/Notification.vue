@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
   <div v-if="urgent" class="urgent">
-    <div>
+    <div class="main-noti">
       <img src="../assets/media/profile.svg" alt="profile">
       <div>
         <p>{{ name }}</p>

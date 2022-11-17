@@ -7,8 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <property name="Awaiting approval" class="awaiting">
-  </property>
+  <Property name="Awaiting approval" class="awaiting"/>
 </template>
 
 <style lang="scss" scoped>

@@ -112,73 +112,10 @@ article {
   margin-bottom: 7rem;
 }
 
-#optimum-plan-wrapper {
-  border-radius: 0 0.3rem 0.3rem 0;
-}
-
-#basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
-  border: solid black;
-  border-left: none;
-
-  div:first-of-type {
-    background-color: #e8e8e8;
-    text-align: center;
-    padding: 1rem 6rem;
-
-    div {
-      display: flex;
-      font-size: 2rem;
-      font-weight: bold;
-
-      img {
-        width: 2rem;
-        margin-right: 0.2rem;
-      }
-    }
-
-    p:nth-child(3) {
-      opacity: 40%;
-    }
-  }
-}
-
 .selected {
   background-color: black;
   color: white;
 }
-
-#select-plan-wrapper {
-  border: solid black;
-  border-radius: 0.3rem 0 0 0.3rem;
-  padding: 3rem 3rem 2rem 3rem;
-
-  h2 {
-    margin-bottom: 1rem;
-  }
-
-  div:first-of-type {
-    display: flex;
-    margin-bottom: 3.75rem;
-    border: solid black 0.2rem;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-
-    p:last-of-type {
-      margin-left: 0.5rem;
-      padding-left: 0.5rem;
-      border-left: solid black;
-    }
-  }
-
-  div:last-of-type {
-    p {
-      margin-bottom: 3rem;
-      border-bottom: solid black 0.1rem;
-      padding-bottom: 0.5rem;
-    }
-  }
-}
-
 
 .checked-or-not {
   display: flex;
@@ -196,5 +133,68 @@ button {
   display: flex;
   margin: 1rem auto 1rem auto;
   text-align: center;
+}
+
+#optimum-plan-wrapper {
+  border-radius: 0 0.3rem 0.3rem 0;
+}
+
+#basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
+  border: solid black;
+  border-left: none;
+}
+
+#select-plan-wrapper {
+  border: solid black;
+  border-radius: 0.3rem 0 0 0.3rem;
+  padding: 3rem 3rem 2rem 3rem;
+}
+
+#select-plan-wrapper h2 {
+    margin-bottom: 1rem;
+}
+
+#select-plan-wrapper div:last-of-type {
+  p {
+    margin-bottom: 3rem;
+    border-bottom: solid black 0.1rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+#select-plan-wrapper div:first-of-type {
+    display: flex;
+    margin-bottom: 3.75rem;
+    border: solid black 0.2rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+
+    p:last-of-type {
+      margin-left: 0.5rem;
+      padding-left: 0.5rem;
+      border-left: solid black;
+    }
+  }
+
+#basic-plan-wrapper div:first-of-type,
+#premium-plan-wrapper div:first-of-type,
+#optimum-plan-wrapper div:first-of-type {
+  background-color: #e8e8e8;
+  text-align: center;
+  padding: 1rem 6rem;
+
+  p:nth-child(3) {
+    opacity: 40%;
+  }
+
+  div {
+    display: flex;
+    font-size: 2rem;
+    font-weight: bold;
+    img {
+      width: 2rem;
+      margin-right: 0.2rem;
+    }
+  }
 }
 </style>

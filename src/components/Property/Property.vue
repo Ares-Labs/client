@@ -20,7 +20,7 @@ function hide(e) {
 </template>
 
 <style lang="scss" scoped>
-@imp
+
 @import "src/assets/css/mixins";
 
 .hidden {

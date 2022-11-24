@@ -3,6 +3,13 @@ import Header from "../components/Header/Header.vue";
 import LiveCamera from "../components/LiveCamera.vue";
 import Notification from "../components/Notification.vue";
 
+let cameras = 1;
+function switchCamera() {
+  console.log(cameras);
+  cameras++;
+  cameras = cameras % 3;
+  return cameras;
+}
 </script>
 <template>
   <Header/>
@@ -10,8 +17,8 @@ import Notification from "../components/Notification.vue";
     <h1>Live data</h1>
     <div id="flex-container">
       <div id="camera-container">
-        <LiveCamera />
-        <button>switch cam</button>
+        <LiveCamera camera="{{switchCamera}}"/>
+        <button @click="switchCamera">switch cam</button>
       </div>
       <div id="notification-center">
 

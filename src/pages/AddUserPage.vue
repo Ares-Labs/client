@@ -9,16 +9,15 @@ import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
     <aside id="recent-ppl" aria-label="recent-ppl">
       <h2>Recent People</h2>
       <div>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
       </div>
     </aside>
 

@@ -120,4 +120,12 @@ a,
 router-link {
   text-decoration: none;
 }
+
+.hiddenRemove {
+  display: none;
+}
+
+.hiddenVisibility {
+  visibility: hidden;
+}
 </style>

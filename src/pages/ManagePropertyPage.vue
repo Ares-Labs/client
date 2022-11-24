@@ -9,7 +9,8 @@ import AllowedUser from "../components/users/AllowedUser.vue";
     <h1>Currently allowed users</h1>
 
     <div id="allowedUserContainer">
-      <AllowedUser/>
+      <AllowedUser name="Mr.Bean" identity="4cc-4b03-9c3f66e3"/>
+      <AllowedUser name="Mr.Bean" identity="4cc-4b03-9c3f66e3"/>
       <div id="addNewAllowedUser">
         <router-link to="/add-user">
           <img src="../assets/media/plus-icon.svg" alt="plus">

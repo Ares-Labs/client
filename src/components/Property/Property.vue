@@ -36,4 +36,9 @@ export default {
   @include hover;
 }
 
+.pending {
+  border: green dashed;
+  background-image: none;
+}
+
 </style>

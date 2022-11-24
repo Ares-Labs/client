@@ -119,5 +119,6 @@ Gateway.subscribe(Gateway.events.ALERTS, (data) => {
 a,
 router-link {
   text-decoration: none;
+  text-transform: capitalize;
 }
 </style>

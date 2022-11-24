@@ -21,19 +21,23 @@ Gateway.onReady(() => {
   <div class="wrapper">
     <main>
       <div class="flex">
-        <p v-if="!properties">Loading</p>
-        <property
-          v-for="property in properties"
-          :key="property.id"
-          :name="property.location"
-          :class="property.status.toLowerCase()"
-          :route="`/manage-property/${property.id}`"
-        ></property>
-        <property name="Howest University" route="/manage-property"></property>
-        <property name="Wall Street"></property>
-        <property name="Space Station"></property>
-        <property name="Mining Station"></property>
-        <add-property></add-property>
+        <template v-if="!properties.length">
+          <p>Loading...</p>
+        </template>
+        <template v-else>
+          <property
+              v-for="property in properties"
+              :key="property.id"
+              :name="property.location"
+              :class="property.status.toLowerCase()"
+              :route="`/manage-property/${property.id}`"
+          ></property>
+          <property name="Howest University" route="/manage-property"></property>
+          <property name="Wall Street"></property>
+          <property name="Space Station"></property>
+          <property name="Mining Station"></property>
+          <add-property></add-property>
+        </template>
       </div>
     </main>
   </div>

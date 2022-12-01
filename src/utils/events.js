@@ -21,7 +21,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} PROPERTY_STATUS_CHANGE
  * @property {string} PROPERTY_EQUIPMENT_CHANGE
  * @property {string} REQUESTED_REMOVE_PROPERTY
- 
+*/
 
 /**
  * @typedef {Object} Queries

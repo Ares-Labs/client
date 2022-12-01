@@ -10,11 +10,11 @@ import AwaitingProperty from "@/components/Property/AwaitingProperty.vue";
   <div class="wrapper">
     <main>
       <div class="flex">
-        <property name="Howest University" route="/manage-property"></property>
-        <property name="Wall Street"></property>
-        <property name="Space Station"></property>
-        <property name="Mining Station"></property>
-        <awaiting-property name="Something"></awaiting-property>
+        <property name="Howest University" route="/manage-property" show="show"></property>
+        <property name="Wall Street" show="show"></property>
+        <property name="Space Station" show="show"></property>
+        <property name="Mining Station" show="show"></property>
+        <awaiting-property></awaiting-property>
         <add-property></add-property>
       </div>
     </main>

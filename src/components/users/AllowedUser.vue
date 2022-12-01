@@ -6,9 +6,9 @@ const props = defineProps({
   identity: String,
 });
 
-async function deleteUser(name, id) {
+function deleteUser(name, id) {
   console.log(name, id);
-  await Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
+  Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
     name: name,
     identity: id,
   });

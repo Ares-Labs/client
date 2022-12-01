@@ -1,11 +1,17 @@
 <script setup>
+import Gateway from "../../utils/events";
+
 const props = defineProps({
   name: String,
   identity: String,
 });
 
-function addUser(e) {
-
+function addUser(name, id) {
+  console.log(name, id);
+  Gateway.execute(Gateway.queries.ADD_ALLOWED_USER, {
+    name: name,
+    identity: id,
+  });
 }
 </script>
 
@@ -18,7 +24,7 @@ function addUser(e) {
         <p> ID: {{identity}} </p>
       </div>
     </div>
-    <a @click="addUser"><img src="/src/assets/media/plus-icon.svg" alt="plus"></a>
+    <a @click="addUser(name, identity)"><img src="/src/assets/media/plus-icon.svg" alt="plus"></a>
   </div>
 </template>
 

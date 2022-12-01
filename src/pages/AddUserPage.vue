@@ -26,7 +26,7 @@ import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
       <label for="search-users">Search:</label>
       <input id="search-users" type="search" placeholder="El criminel">
       <div>
-        <ToBeAddedUser/>
+        <ToBeAddedUser identity="4aa-44b3-9c6f66e453" name="Sabine"/>
         <ToBeAddedUser/>
         <ToBeAddedUser/>
         <ToBeAddedUser/>

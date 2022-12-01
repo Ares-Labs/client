@@ -5,8 +5,10 @@ import Gateway from "../utils/events";
 import {onMounted, onUpdated} from "vue";
 
 const allowedUserList = [];
-onMounted(getAllowedUsers);
-onUpdated(getAllowedUsers);
+
+onMounted(getAllowedUsers); // DOMContentLoaded
+setTimeout(getAllowedUsers, 2000); // execute every 2 seconds
+
 function getAllowedUsers() {
   Gateway.onReady(() => {
     Gateway.execute(Gateway.queries.GET_ALLOWED_USERS, {

@@ -6,7 +6,11 @@ if (!Gateway.isInitialized) {
   const defaultId = "9a0fbbc6-55f3-11ed-82ca-9313c9a89e82";
   const id = localStorage.getItem("id") || defaultId;
 
-  Gateway.init(id);
+  try {
+    Gateway.init(id);
+  } catch (e) {
+    console.error("Failed to initialize gateway", e);
+  }
 }
 
 const exampleUsage = async () => {

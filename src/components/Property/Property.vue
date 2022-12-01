@@ -3,7 +3,7 @@ const props = defineProps({
   name: String,
   route: String,
   show: Boolean
-})
+});
 
 function hide(e) {
   e.target.closest("div").classList.add("hidden");
@@ -70,8 +70,6 @@ function hide(e) {
 .property:hover {
   @include hover;
 }
-
-"src/assets/css/mixins";
 
 .hidden {
   display: none;

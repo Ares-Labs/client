@@ -1,23 +1,17 @@
 <script setup>
-const allowedUserList = [];
-
 import Gateway from "../../utils/events.js";
+
 const props = defineProps({
   name: String,
   identity: String,
 });
 
-//await Gateway.execute(Gateway.queries.GET-ALLOWED-USER);
-
-async function deleteUser(e) {
-  //api call
-  /*
-  await Gateway.execute(Gateway.queries.remove-allowed-user, {
-    name: {name},
-    identity: {identity},
+async function deleteUser(name, id) {
+  console.log(name, id);
+  await Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
+    name: name,
+    identity: id,
   });
-  */
-  e.target.closest(".allowedUser").outerHTML="";
 }
 </script>
 
@@ -26,11 +20,11 @@ async function deleteUser(e) {
     <div class="userinfo">
       <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
-        <p> {{name}} </p>
-        <p> ID: {{identity}} </p>
+        <p> {{ name }} </p>
+        <p> ID: {{ identity }} </p>
       </div>
     </div>
-    <button @click="deleteUser">Delete user</button>
+    <button @click="deleteUser(name, identity)">Delete user</button>
   </div>
 </template>
 

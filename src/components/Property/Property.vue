@@ -3,7 +3,7 @@ const props = defineProps({
   name: String,
   route: String,
   show: Boolean
-})
+});
 
 function hide(e) {
   e.target.closest("div").classList.add("hidden");

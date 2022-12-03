@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 const INBOUND_CHNL = "events.to.martians";
 const OUTBOUND_CHNL = "events.from.martians";
 const EVENTBUS_PATH = import.meta.env.PROD
-  ? "https://project-ii.ti.howest.be/mars-06/api/events"
+  ? "https://project-ii.ti.howest.be/mars-06/events"
   : "http://localhost:8080/events";
 
 const EVENTS_PREFIX = "events";

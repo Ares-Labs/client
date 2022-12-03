@@ -1,21 +1,24 @@
 <script setup>
+// Get the last path parameter from the url if It's not in localstorage
+const propertyBeingManaged = parseInt(window.location.pathname.split("/").pop());
 
 </script>
 
 <template>
   <header>
-    <router-link to="/"
-      ><img src="../../assets/media/ares-labs-logo.png" alt="ares-labs-logo"
-    /></router-link>
+    <router-link to="/">
+      <img src="../../assets/media/ares-labs-logo.png" alt="ares-labs-logo" />
+    </router-link>
     <div>
-      <router-link to="/manage-property"><p>Manage Property</p></router-link>
-      <router-link to="/live-data"><p>Live Data</p></router-link>
+<!--      Add a router link to /manage-property with the lastPath at the end-->
+      <router-link :to="'/manage-property/' + propertyBeingManaged"><p>Manage Property</p></router-link>
+      <router-link :to="'/live-data/' + propertyBeingManaged"><p>Live Data</p></router-link>
       <router-link to="#"><p>Map</p></router-link>
       <router-link to="#"><p>Statistics</p></router-link>
       <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
     </div>
     <router-link to="/profile">
-      <img src="../../assets/media/profile.svg" alt="profile">
+      <img src="../../assets/media/profile.svg" alt="profile" />
     </router-link>
   </header>
 </template>

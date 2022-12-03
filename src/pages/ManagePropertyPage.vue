@@ -1,6 +1,7 @@
 <script setup>
 import Header from "../components/Header/Header.vue";
 import AllowedUser from "../components/users/AllowedUser.vue";
+
 import Gateway from "../utils/events";
 import {onMounted, onUpdated} from "vue";
 
@@ -18,6 +19,10 @@ function getAllowedUsers() {
     });
   });
 }
+
+const propertyBeingManaged = window.location.pathname.split("/").pop();
+// save to localstorage
+localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
 </script>
 
 <template>

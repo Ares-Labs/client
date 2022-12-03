@@ -71,6 +71,8 @@ function hide(e) {
   @include hover;
 }
 
+
+// merge conflict start
 .hidden {
   display: none;
 }
@@ -117,6 +119,11 @@ function hide(e) {
 
 .property:hover {
   @include hover;
+}
+// merge conflict end
+.pending {
+  border: green dashed;
+  background-image: none;
 }
 
 </style>

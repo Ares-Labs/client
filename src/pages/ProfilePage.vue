@@ -10,6 +10,7 @@ const user = ref({
   name: "",
   id: ""
 });
+
 function getUser() {
   Gateway.onReady(() => {
     Gateway.execute(Gateway.queries.GET_USER, {

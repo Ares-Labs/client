@@ -11,8 +11,8 @@ function getUser() {
     Gateway.execute(Gateway.queries.GET_USER, {
       userId: Gateway.clientId,
     }).then((data) => {
-      document.querySelector("#id").innerHTML = `<strong>ID:</strong> ${data.id}`
-      document.querySelector("#name").innerHTML = `<strong>Name:</strong> ${data.fullName}`
+      document.querySelector("p").innerHTML = `<strong>ID:</strong> ${data.id}`
+      document.querySelector("h2").innerText = `${data.fullName}`
     });
   });
 }
@@ -23,41 +23,23 @@ function getUser() {
   <HeaderWithoutLinks name="User Profile"></HeaderWithoutLinks>
   <div class="wrapper">
     <main>
-      <div class="vert">
-        <img src="../assets/media/profile.svg" alt="profile">
-        <p id="name"></p>
-        <p id="id"></p>
-      </div>
-
-      <div class="hor">
+      <div class="card">
+        <img src="../assets/media/profile.svg" alt="User">
         <div class="vert">
-          <p><strong>Payment method:</strong></p>
-          <p>0xD12fFe8b82b5978178da0aECdEED11f5808B38ed</p>
+          <h2></h2>
+          <p></p>
+          <p><strong>Payment:</strong> 0xD12fFe8b82b5978178da0aECd</p>
         </div>
-
-        <div class="vert">
-          <p><strong>Subscription Tier:</strong></p>
-          <p>Optimum</p>
+        <div class="hor">
+          <button>
+            Update payment method
+          </button>
+          <button>
+            <router-link to="/pricing">
+              Update subscription
+            </router-link>
+          </button>
         </div>
-      </div>
-
-      <div class="hor">
-        <div class="vert">
-          <p><strong>Remaining Period:</strong></p>
-          <p>22 days</p>
-        </div>
-      </div>
-
-      <div class="hor">
-        <button>
-          Update payment method
-        </button>
-
-        <button>
-          <router-link to="/pricing">
-            Update subscription
-          </router-link>
-        </button>
       </div>
     </main>
   </div>
@@ -68,39 +50,41 @@ function getUser() {
 
 @import "src/assets/css/mixins";
 
+button {
+  @include button;
+  margin-bottom: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
 img {
   width: 15rem;
   height: 15rem;
 }
 
-button {
-  @include button;
-}
-
-.wrapper {
-  width: 60%;
-  margin: -5rem auto 5rem;
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 24rem;
+  margin: auto;
+  text-align: center;
 }
 
 .vert {
-  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto auto 2rem;
   text-align: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .hor {
   display: flex;
   justify-content: space-around;
   text-align: center;
-}
-
-.vert {
-  p {
-    margin-bottom: 1rem;
-  }
+  flex-wrap: wrap;
 }
 
 </style>

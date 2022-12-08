@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "sonar-scanner": "^3.1.0",
+    "usemodal-vue3": "^0.3.7",
     "uuid": "^9.0.0",
     "vertx3-eventbus-client": "^3.9.4",
     "vnu-jar": "^20.2.28",

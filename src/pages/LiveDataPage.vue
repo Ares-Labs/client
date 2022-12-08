@@ -21,8 +21,8 @@ if (!urlEndsWithNumber) {
   }
 }
 
-let propertyId;
-console.log("test");
+let propertyId = ref(0);
+
 if (urlEndsWithNumber) {
   propertyId = urlEndsWithNumber[0];
 } else {
@@ -30,10 +30,12 @@ if (urlEndsWithNumber) {
 }
 propertyId = parseInt(propertyId);
 // Get the property from the database
+// This can be used to get the live updates from the database
 Gateway.onReady(() =>
   Gateway.execute(Gateway.queries.GET_PROPERTY, {
     propertyId: propertyId,
   }).then((data) => {
+    console.log("Property:");
     console.log(data);
   })
 );
@@ -45,7 +47,6 @@ function switchCamera() {
   if (camera.value === 4) {
     camera.value = 0;
   }
-  console.log(camera.value);
 }
 </script>
 <template>

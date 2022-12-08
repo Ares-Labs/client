@@ -52,8 +52,11 @@ function getUser() {
         <button>
           Update payment method
         </button>
+
         <button>
-          Update subscription
+          <router-link to="/pricing">
+            Update subscription
+          </router-link>
         </button>
       </div>
     </main>
@@ -63,13 +66,15 @@ function getUser() {
 
 <style lang="scss" scoped>
 
+@import "src/assets/css/mixins";
+
 img {
   width: 15rem;
   height: 15rem;
 }
 
 button {
-  margin: auto auto 2rem;
+  @include button;
 }
 
 .wrapper {
@@ -89,6 +94,7 @@ button {
 .hor {
   display: flex;
   justify-content: space-between;
+  text-align: center;
 }
 
 .vert {

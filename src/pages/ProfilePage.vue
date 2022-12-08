@@ -1,5 +1,22 @@
 <script setup>
 import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
+import Gateway from "../utils/events";
+import {onMounted, onUpdated} from "vue";
+
+onMounted(getUser);
+onUpdated(getUser);
+
+function getUser() {
+  Gateway.onReady(() => {
+    Gateway.execute(Gateway.queries.GET_USER, {
+      userId: Gateway.clientId,
+    }).then((data) => {
+      document.querySelector("#id").innerHTML = `<strong>ID:</strong> ${data.id}`
+      document.querySelector("#name").innerHTML = `<strong>Name:</strong> ${data.fullName}`
+    });
+  });
+}
+
 </script>
 
 <template>
@@ -8,7 +25,8 @@ import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
     <main>
       <div class="vert">
         <img src="../assets/media/profile.svg" alt="profile">
-        <p><strong>ID:</strong> d2b840a9</p>
+        <p id="name"></p>
+        <p id="id"></p>
       </div>
 
       <div class="hor">
@@ -65,11 +83,18 @@ button {
   flex-direction: column;
   align-items: center;
   margin: auto auto 2rem;
+  text-align: center;
 }
 
 .hor {
   display: flex;
   justify-content: space-between;
+}
+
+.vert {
+  p {
+    margin-bottom: 1rem;
+  }
 }
 
 </style>

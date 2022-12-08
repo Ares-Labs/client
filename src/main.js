@@ -20,15 +20,16 @@ const routes = [
   { path: "/live-data/:id", component: LiveDataPage },
   { path: "/manage-property", component: ManagePropertyPage },
   { path: "/manage-property/:id", component: ManagePropertyPage },
-  { path: "/add-user", component: AddUserPage},
-  { path: "/add-property", component: AddPropertyPage},
-  { path: "/pricing", component: PricingPage},
-  { path: "/profile", component: ProfilePage}
+  { path: "/add-user", component: AddUserPage },
+  { path: "/add-property", component: AddPropertyPage },
+  { path: "/pricing", component: PricingPage },
+  { path: "/profile", component: ProfilePage },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: routes,
+  // Set history as /mars-06/ if its production but as / if its development
+    history: createWebHistory(process.env.NODE_ENV === "production" ? "/mars-06/" : "/"),
+  routes,
 });
 
 const app = createApp(App);

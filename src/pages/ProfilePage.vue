@@ -1,18 +1,22 @@
 <script setup>
 import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
 import Gateway from "../utils/events";
-import {onMounted, onUpdated} from "vue";
+import { onMounted, onUpdated, ref } from "vue";
 
 onMounted(getUser);
 onUpdated(getUser);
 
+const user = ref({
+  name: "",
+  id: ""
+});
 function getUser() {
   Gateway.onReady(() => {
     Gateway.execute(Gateway.queries.GET_USER, {
       userId: Gateway.clientId,
     }).then((data) => {
-      document.querySelector("p").innerHTML = `<strong>ID:</strong> ${data.id}`
-      document.querySelector("h2").innerText = `${data.fullName}`
+      user.value.name = data.fullName;
+      user.value.id = data.id;
     });
   });
 }
@@ -26,8 +30,8 @@ function getUser() {
       <div class="card">
         <img src="../assets/media/profile.svg" alt="User">
         <div class="vert">
-          <h2></h2>
-          <p></p>
+          <h2>{{ user.name }}</h2>
+          <p>{{ user.id }}</p>
           <p><strong>Payment:</strong> 0xD12fFe8b82b5978178da0aECd</p>
         </div>
         <div class="hor">

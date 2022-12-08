@@ -4,7 +4,6 @@ import LiveCamera from "../components/LiveCamera.vue";
 import Notification from "../components/Notification.vue";
 import {useRouter} from "vue-router";
 import Gateway from "../utils/events";
-import property from "@/components/Property/Property.vue";
 
 // Check if the path ends with a number if not redirect to choose-property
 const router = useRouter();
@@ -84,6 +83,9 @@ Gateway.onReady(() =>
 </template>
 
 <style lang="scss" scoped>
+
+@import "src/assets/css/mixins";
+
 h1 {
   display: flex;
   justify-content: center;
@@ -103,6 +105,7 @@ h1 {
 
   button {
     width: 7rem;
+    @include button;
   }
 }
 

@@ -78,8 +78,8 @@ button {
 }
 
 .wrapper {
-  width: 50%;
-  margin: auto auto 5rem;
+  width: 60%;
+  margin: -5rem auto 5rem;
 }
 
 .vert {
@@ -93,7 +93,7 @@ button {
 
 .hor {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   text-align: center;
 }
 

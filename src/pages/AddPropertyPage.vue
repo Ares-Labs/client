@@ -36,6 +36,8 @@ import Header from "@/components/Header/Header.vue";
 
 <style lang="scss" scoped>
 
+@import "src/assets/css/mixins";
+
 legend {
   text-align: center;
   font-weight: bold;
@@ -68,6 +70,7 @@ textarea {
 input[type='submit'] {
   width: initial;
   float: right;
+  @include button;
 }
 
 .wrapper {

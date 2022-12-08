@@ -1,5 +1,18 @@
 <script setup>
+import Gateway from "../../utils/events";
 
+const props = defineProps({
+  name: String,
+  identity: String,
+});
+
+function addUser(name, id) {
+  console.log(name, id);
+  Gateway.execute(Gateway.queries.ADD_ALLOWED_USER, {
+    name: name,
+    identity: id,
+  });
+}
 </script>
 
 <template>
@@ -7,11 +20,11 @@
     <div class="to-be-added-user-info">
       <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
-        <p> Mr.Bean </p>
-        <p> ID: 4cc-4b03-9c3f66e3 </p>
+        <p> {{name}} </p>
+        <p> ID: {{identity}} </p>
       </div>
     </div>
-    <img src="/src/assets/media/plus-icon.svg" alt="plus">
+    <a @click="addUser(name, identity)"><img src="/src/assets/media/plus-icon.svg" alt="plus"></a>
   </div>
 </template>
 
@@ -47,12 +60,12 @@ img {
   padding-left: 0.3rem;
 }
 
-button {
-  display: flex;
-  border: 0.1rem solid black;
-  border-radius: 9rem;
-  background-color: red;
-  color: white;
-  margin-top: 1.5rem;
+a {
+
+  transition: transform .2s;
+}
+
+a:hover {
+  transform: scale(1.25);
 }
 </style>

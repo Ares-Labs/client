@@ -9,16 +9,15 @@ import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
     <aside id="recent-ppl" aria-label="recent-ppl">
       <h2>Recent People</h2>
       <div>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
       </div>
     </aside>
 
@@ -27,7 +26,7 @@ import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
       <label for="search-users">Search:</label>
       <input id="search-users" type="search" placeholder="El criminel">
       <div>
-        <ToBeAddedUser/>
+        <ToBeAddedUser identity="4aa-44b3-9c6f66e453" name="Sabine"/>
         <ToBeAddedUser/>
         <ToBeAddedUser/>
         <ToBeAddedUser/>

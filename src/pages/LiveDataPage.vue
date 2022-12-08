@@ -2,14 +2,16 @@
 import Header from "../components/Header/Header.vue";
 import LiveCamera from "../components/LiveCamera.vue";
 import Notification from "../components/Notification.vue";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 import Gateway from "../utils/events";
-import property from "@/components/Property/Property.vue";
+import { ref } from "vue";
 
 // Check if the path ends with a number if not redirect to choose-property
 const router = useRouter();
 const urlEndsWithNumber = router.currentRoute.value.path.match(/\d+$/);
-const localstoragePropertyBeingManaged = localStorage.getItem("propertyBeingManaged");
+const localstoragePropertyBeingManaged = localStorage.getItem(
+  "propertyBeingManaged"
+);
 if (!urlEndsWithNumber) {
   // Check localstorage and redirect
   if (localstoragePropertyBeingManaged) {
@@ -20,7 +22,7 @@ if (!urlEndsWithNumber) {
 }
 
 let propertyId;
-
+console.log("test");
 if (urlEndsWithNumber) {
   propertyId = urlEndsWithNumber[0];
 } else {
@@ -29,18 +31,21 @@ if (urlEndsWithNumber) {
 propertyId = parseInt(propertyId);
 // Get the property from the database
 Gateway.onReady(() =>
-    Gateway.execute(Gateway.queries.GET_PROPERTY, {
-      propertyId: propertyId,
-    }).then((data) => {
-      console.log(data);
-    }));
+  Gateway.execute(Gateway.queries.GET_PROPERTY, {
+    propertyId: propertyId,
+  }).then((data) => {
+    console.log(data);
+  })
+);
 
-let cameras = 1;
+let camera = ref(0);
+
 function switchCamera() {
-  cameras++;
-  if (cameras > 3) {
-    cameras = 1;
+  camera.value++;
+  if (camera.value === 4) {
+    camera.value = 0;
   }
+  console.log(camera.value);
 }
 </script>
 <template>
@@ -49,7 +54,7 @@ function switchCamera() {
     <h1>Live data</h1>
     <div id="flex-container">
       <div id="camera-container">
-        <LiveCamera camera="{{switchCamera}}"/>
+        <LiveCamera :camera="camera" />
         <button @click="switchCamera">switch cam</button>
       </div>
       <div id="notification-center">

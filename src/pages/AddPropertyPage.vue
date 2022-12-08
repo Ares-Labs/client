@@ -1,31 +1,69 @@
 <script setup>
 import Header from "@/components/Header/Header.vue";
+import Gateway from "@/utils/events";
+import { ref } from "vue";
+
+const location = ref("");
+const tier = ref(0);
+const reason = ref("");
+const x = ref(0);
+const y = ref(0);
+
+function submitRequest() {
+  console.log(typeof tier.value);
+  Gateway.onReady(() => {
+    Gateway.execute(Gateway.queries.ADD_PROPERTY, {
+      location: location.value,
+      clientId: Gateway.clientId,
+      description: reason.value,
+      x: x.value,
+      y: y.value,
+      tier: parseInt(tier.value),
+    }).then((response) => {
+      console.log(response);
+    });
+  });
+}
 </script>
 
 <template>
   <Header></Header>
   <div class="wrapper">
     <main>
-      <form>
+      <form @submit.prevent="submitRequest">
         <fieldset>
           <legend>Request to add property</legend>
           <div class="flex">
             <div>
               <p>Choose your property location on the map</p>
-              <img src="../images/map.jpg" alt="map">
-              <label for="name">Name of your property</label>
-              <input type="text" id="name" name="name" autocomplete="off">
-              <label for="tier">Tier or protection</label>
-              <select id="tier" name="tier">
-                <option value="Basic">Basic</option>
-                <option value="Premium">Premium</option>
-                <option value="Optimum">Optimum</option>
+              <img src="../images/map.jpg" alt="map" />
+              <label for="name">Name of your property *</label>
+              <input
+                v-model="location"
+                type="text"
+                id="name"
+                name="name"
+                autocomplete="off"
+                required
+              />
+              <label for="tier">Tier or protection *</label>
+              <select v-model="tier" id="tier" name="tier" required>
+                <option value="1">Basic</option>
+                <option value="2">Premium</option>
+                <option value="3">Optimum</option>
               </select>
             </div>
             <div>
-              <label for="reason">What is the reason you want to add this property?</label>
-              <textarea name="reason" id="reason" autocomplete="off"></textarea>
-              <input type="submit" value="Submit">
+              <label for="reason"
+                >What is the reason you want to add this property?</label
+              >
+              <textarea
+                v-model="reason"
+                name="reason"
+                id="reason"
+                autocomplete="off"
+              ></textarea>
+              <input type="submit" value="Submit" />
             </div>
           </div>
         </fieldset>
@@ -35,7 +73,6 @@ import Header from "@/components/Header/Header.vue";
 </template>
 
 <style lang="scss" scoped>
-
 legend {
   text-align: center;
   font-weight: bold;
@@ -43,7 +80,8 @@ legend {
   margin: auto auto 5rem;
 }
 
-input, select {
+input,
+select {
   display: block;
   width: 100%;
   padding: 0;
@@ -65,7 +103,7 @@ textarea {
   resize: none;
 }
 
-input[type='submit'] {
+input[type="submit"] {
   width: initial;
   float: right;
 }
@@ -79,6 +117,7 @@ input[type='submit'] {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
   * {
     margin-bottom: 1rem;
   }

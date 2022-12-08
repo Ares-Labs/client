@@ -12,6 +12,7 @@ import AddPropertyPage from "./pages/AddPropertyPage.vue";
 import { createApp } from "vue";
 import PricingPage from "./pages/PricingPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
+import StatisticsPage from "./pages/StatisticsPage.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -24,14 +25,12 @@ const routes = [
   { path: "/add-property", component: AddPropertyPage },
   { path: "/pricing", component: PricingPage },
   { path: "/profile", component: ProfilePage },
+  { path: "/statistics", component: StatisticsPage },
 ];
 
 const router = createRouter({
   // Set history as /mars-06/ if its production but as / if its development
-  history: createWebHistory(
-    process.env.NODE_ENV === "production" ? "/mars-06/" : "/"
-  ),
-
+    history: createWebHistory(process.env.NODE_ENV === "production" ? "/mars-06/" : "/"),
   routes,
 });
 

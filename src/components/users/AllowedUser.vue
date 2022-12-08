@@ -1,27 +1,36 @@
 <script setup>
-const allowedUserList = [];
+import Gateway from "../../utils/events.js";
 
-function deleteUser(user) {
-  //todo functionality to delete user (button @click already there)
-  console.log('hi');
+const props = defineProps({
+  name: String,
+  identity: String,
+});
+
+function deleteUser(name, id) {
+  console.log(name, id);
+  Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
+    name: name,
+    identity: id,
+  });
 }
 </script>
 
 <template>
-  <div id="allowedUser">
-    <div id="userinfo">
+  <div class="allowedUser">
+    <div class="userinfo">
       <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
-        <p> Mr.Bean </p>
-        <p> ID: 4cc-4b03-9c3f66e3 </p>
+        <p> {{ name }} </p>
+        <p> ID: {{ identity }} </p>
       </div>
     </div>
-    <button @click="deleteUser()">Delete user</button>
+    <button @click="deleteUser(name, identity)">Delete user</button>
   </div>
 </template>
 
 <style lang="scss" scoped>
-#allowedUser {
+
+.allowedUser {
   border: solid black 0.1rem;
   width: 15rem;
   height: 5rem;
@@ -40,7 +49,7 @@ function deleteUser(user) {
   }
 }
 
-#userinfo {
+.userinfo {
   display: flex;
 }
 
@@ -57,6 +66,10 @@ button {
   background-color: red;
   color: white;
   margin-top: 1.5rem;
+}
+
+button:hover {
+  background-color: #852d26;
 }
 
 </style>

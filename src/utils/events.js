@@ -23,6 +23,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} REQUESTED_REMOVE_PROPERTY
 */
 
+
 /**
  * @typedef {Object} Queries
  * @property {string} GET_USER

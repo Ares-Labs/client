@@ -37,9 +37,8 @@ Gateway.onReady(() =>
 
 let cameras = 1;
 function switchCamera() {
-  if (cameras === 1) {
-    cameras = 2;
-  } else {
+  cameras++;
+  if (cameras > 3) {
     cameras = 1;
   }
 }

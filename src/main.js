@@ -1,5 +1,6 @@
 import "./assets/css/reset.css";
 
+import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 import App from "./App.vue";
@@ -9,10 +10,10 @@ import LiveDataPage from "./pages/LiveDataPage.vue";
 import ManagePropertyPage from "./pages/ManagePropertyPage.vue";
 import AddUserPage from "./pages/AddUserPage.vue";
 import AddPropertyPage from "./pages/AddPropertyPage.vue";
-import { createApp } from "vue";
 import PricingPage from "./pages/PricingPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
 import StatisticsPage from "./pages/StatisticsPage.vue";
+import AdminHomePage from "./pages/AdminHomePage.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -26,11 +27,14 @@ const routes = [
   { path: "/pricing", component: PricingPage },
   { path: "/profile", component: ProfilePage },
   { path: "/statistics", component: StatisticsPage },
+  { path: "/admin/home", component: AdminHomePage },
 ];
 
 const router = createRouter({
   // Set history as /mars-06/ if its production but as / if its development
-    history: createWebHistory(process.env.NODE_ENV === "production" ? "/mars-06/" : "/"),
+  history: createWebHistory(
+    process.env.NODE_ENV === "production" ? "/mars-06/" : "/"
+  ),
   routes,
 });
 

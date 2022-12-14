@@ -1,16 +1,7 @@
 <script setup>
 import Header from "@/components/Header/Header.vue";
 import Gateway from "@/utils/events";
-import { Modal, useModal } from "usemodal-vue3";
-import { reactive, ref } from "vue";
-
-
-let isVisible = ref(false);
-let setModal = useModal({
-  success: 1,
-  error: 2
-});
-let modalVisible = reactive({});
+import { ref } from "vue";
 
 const location = ref("");
 const tier = ref(0);
@@ -29,10 +20,8 @@ function submitRequest() {
       tier: parseInt(tier.value),
     }).then((response) => {
       if (response.success) {
-        modalVisible = setModal('success', true);
         console.log("Property added");
       } else {
-        modalVisible = setModal('error', true);
         console.log("Property not added");
       }
     });
@@ -83,12 +72,6 @@ function submitRequest() {
         </fieldset>
       </form>
     </main>
-    <Modal name="success" v-model:visible="isVisible" closable='false' title="Confirmation">
-      <div>Success</div>
-    </Modal>
-    <Modal name="error" v-model:visible="isVisible" closable='false' title="Confirmation">
-      <div>Error</div>
-    </Modal>
   </div>
 </template>
 

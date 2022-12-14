@@ -29,20 +29,17 @@ function submitRequest() {
         // Show popup
         togglePopup();
         success.value = true;
-        console.log("Property added");
+        document.querySelector(".popup-close").addEventListener("click", togglePopup);
       } else {
         // Show popup
         togglePopup();
         error.value = true;
-        console.log("Property not added");
+        document.querySelector(".popup-close").addEventListener("click", togglePopup);
       }
     });
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector(".popup-close").addEventListener("click", togglePopup);
-});
 </script>
 
 <template>
@@ -96,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Property not added</p>
           </div>
 
-          <button class="popup-close">Close Popup</button>
+          <button class="popup-close">Ok</button>
         </div>
       </div>
     </main>
@@ -175,6 +172,15 @@ input[type="submit"] {
     background: #fff;
     padding: 32px;
   }
+}
+
+.popup-close {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 1rem;
+
 }
 
 .hidden {

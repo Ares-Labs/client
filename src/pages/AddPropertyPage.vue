@@ -8,6 +8,12 @@ const tier = ref(0);
 const reason = ref("");
 const x = ref(0);
 const y = ref(0);
+const success = ref(false);
+const error = ref(false);
+
+function togglePopup() {
+  document.querySelector(".popup").classList.toggle("hidden");
+}
 
 function submitRequest() {
   Gateway.onReady(() => {
@@ -20,13 +26,23 @@ function submitRequest() {
       tier: parseInt(tier.value),
     }).then((response) => {
       if (response.success) {
+        // Show popup
+        togglePopup();
+        success.value = true;
         console.log("Property added");
       } else {
+        // Show popup
+        togglePopup();
+        error.value = true;
         console.log("Property not added");
       }
     });
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".popup-close").addEventListener("click", togglePopup);
+});
 </script>
 
 <template>
@@ -71,6 +87,18 @@ function submitRequest() {
           </div>
         </fieldset>
       </form>
+      <div class="popup hidden">
+        <div class="popup-inner">
+          <div v-if="success">
+            <p>Property added successfully</p>
+          </div>
+          <div v-if="error">
+            <p>Property not added</p>
+          </div>
+
+          <button class="popup-close">Close Popup</button>
+        </div>
+      </div>
     </main>
   </div>
 </template>
@@ -128,5 +156,28 @@ input[type="submit"] {
 
 #reason {
   margin-bottom: 7.5rem;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .popup-inner {
+    background: #fff;
+    padding: 32px;
+  }
+}
+
+.hidden {
+  display: none;
 }
 </style>

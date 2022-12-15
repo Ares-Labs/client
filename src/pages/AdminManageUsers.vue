@@ -12,6 +12,7 @@ const isFetching = ref(true);
 
 const selectedUser = ref(null);
 const selectedUserProperties = ref(null);
+const isFetchingUserProperties = ref(false);
 
 const updateUsers = () => {
   Gateway.onReady(async () => {
@@ -34,6 +35,7 @@ const updateSearch = (e) => {
 
 const setSelectedUser = async (user) => {
   selectedUser.value = user;
+  isFetchingUserProperties.value = true;
   const { properties: data } = await Gateway.execute(
     Gateway.queries.GET_USER_PROPERTIES,
     {
@@ -42,6 +44,12 @@ const setSelectedUser = async (user) => {
   );
 
   selectedUserProperties.value = data;
+  isFetchingUserProperties.value = false;
+};
+
+const clearSelectedUser = () => {
+  selectedUser.value = null;
+  selectedUserProperties.value = null;
 };
 
 updateUsers();
@@ -52,15 +60,23 @@ updateUsers();
     <div>
       <h3>{{ selectedUser.fullName }}</h3>
       <p>{{ selectedUser.id }}</p>
-      <button @click="selectedUser = null">
+      <button @click="clearSelectedUser">
         <img alt="Close popup" src="../assets/media/fullscreen-exit.svg" />
       </button>
+      <div v-if="isFetchingUserProperties" class="center">
+        <orbit-spinner :animation-duration="1200" :size="64" color="#1d3557" />
+      </div>
+      <div v-else-if="!isFetchingUserProperties && !selectedUserProperties">
+        <p>User does not have properties.</p>
+      </div>
       <div
         v-for="property in selectedUserProperties"
         :key="property.id"
         class="property"
+        v-else
       >
         <p>{{ property.location }}</p>
+        <!-- TODO: Wrap a router-link around this -->
         <img alt="info" src="../assets/media/info.svg" />
       </div>
     </div>
@@ -265,6 +281,12 @@ main {
       p {
         width: 100%;
       }
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

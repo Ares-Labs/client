@@ -101,6 +101,9 @@ function submitRequest() {
 </template>
 
 <style lang="scss" scoped>
+
+@import "src/assets/css/mixins";
+
 legend {
   text-align: center;
   font-weight: bold;
@@ -131,9 +134,10 @@ textarea {
   resize: none;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   width: initial;
   float: right;
+  @include button;
 }
 
 .wrapper {

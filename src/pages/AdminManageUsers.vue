@@ -36,10 +36,12 @@ updateUsers();
   <div id="wrapper">
     <AdminNavbar />
     <main>
-      <h1>Manage users</h1>
-      <div>
-        <img alt="search" src="../assets/media/magnifying-glass.svg" />
-        <input placeholder="Search" type="text" @input="updateSearch" />
+      <div class="title">
+        <h1>Manage users</h1>
+        <div class="search">
+          <img alt="search" src="../assets/media/magnifying-glass.svg" />
+          <input placeholder="Search" type="text" @input="updateSearch" />
+        </div>
       </div>
 
       <div id="data">
@@ -87,6 +89,33 @@ main {
     font-size: $font-size-lg;
     font-weight: 700;
     color: $dark;
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+
+    .search {
+      display: flex;
+      align-items: center;
+      border: 0.2rem solid $dark;
+      border-radius: $border-radius;
+      padding: 0.1rem 0.5rem;
+
+      input {
+        width: 20rem;
+        height: 2.5rem;
+        padding: 0 1rem;
+        color: $dark;
+        background-color: $secondary;
+        border: none;
+        border-radius: $border-radius;
+        outline: none;
+        font-size: $font-size-base;
+      }
+    }
   }
 }
 

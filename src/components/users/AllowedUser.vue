@@ -11,7 +11,7 @@ function deleteUser(id) {
     Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
       propertyId: propertyBeingManaged,
       userId: id,
-    }).then(getAllowedUsers);
+    });
   });
 }
 
@@ -70,6 +70,10 @@ button {
 
 button:hover {
   background-color: #852d26;
+}
+
+.hidden {
+  display: none;
 }
 
 </style>

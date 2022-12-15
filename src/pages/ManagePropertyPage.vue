@@ -3,10 +3,11 @@ import Header from "../components/Header/Header.vue";
 import AllowedUser from "../components/users/AllowedUser.vue";
 
 import Gateway from "../utils/events";
-import { ref } from "vue";
+import { onUpdated, ref } from "vue";
 
 const allowedUserList = ref([]);
 const propertyBeingManaged = window.location.pathname.split("/").pop();
+onUpdated(getAllowedUsers);
 
 function getAllowedUsers() {
   Gateway.onReady(async () => {

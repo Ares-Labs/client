@@ -13,7 +13,7 @@ import AddPropertyPage from "./pages/AddPropertyPage.vue";
 import PricingPage from "./pages/PricingPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
 import StatisticsPage from "./pages/StatisticsPage.vue";
-import AdminHomePage from "./pages/AdminHomePage.vue";
+import AdminManageUsers from "./pages/AdminManageUsers.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -27,7 +27,8 @@ const routes = [
   { path: "/pricing", component: PricingPage },
   { path: "/profile", component: ProfilePage },
   { path: "/statistics", component: StatisticsPage },
-  { path: "/admin/home", component: AdminHomePage },
+  { path: "/admin", redirect: "/admin/users" }, // Temporary redirect
+  { path: "/admin/users", component: AdminManageUsers },
 ];
 
 const router = createRouter({

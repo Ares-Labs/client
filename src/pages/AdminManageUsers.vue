@@ -4,4 +4,5 @@ import AdminNavbar from "../components/AdminNavbar.vue";
 
 <template>
   <AdminNavbar />
+  <div>Test</div>
 </template>

@@ -29,13 +29,11 @@ Gateway.onReady(() => {
               v-for="property in properties"
               :key="property.id"
               :name="property.location"
+              :tier="property.tier"
               :class="property.status.toLowerCase()"
               :route="`/manage-property/${property.id}`"
           ></property>
-          <property name="Howest University" route="/manage-property"></property>
-          <property name="Wall Street"></property>
-          <property name="Space Station"></property>
-          <property name="Mining Station"></property>
+          <property name="Howest University" route="/manage-property" tier=3></property>
           <add-property></add-property>
         </template>
       </div>

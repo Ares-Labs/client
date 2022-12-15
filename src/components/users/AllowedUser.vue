@@ -1,27 +1,41 @@
 <script setup>
-const allowedUserList = [];
+import Gateway from "../../utils/events.js";
 
-function deleteUser(user) {
-  //todo functionality to delete user (button @click already there)
-  console.log('hi');
+const props = defineProps({
+  name: String,
+  identity: String,
+});
+
+function deleteUser(id) {
+  Gateway.onReady( () => {
+    Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
+      propertyId: propertyBeingManaged,
+      userId: id,
+    });
+  });
 }
+
+const propertyBeingManaged = window.location.pathname.split("/").pop();
 </script>
 
 <template>
-  <div id="allowedUser">
-    <div id="userinfo">
+  <div class="allowedUser">
+    <div class="userinfo">
       <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
-        <p> Mr.Bean </p>
-        <p> ID: 4cc-4b03-9c3f66e3 </p>
+        <p> {{ name }} </p>
+        <p> ID: {{ identity }} </p>
+        <button @click="deleteUser(identity)">Delete user</button>
       </div>
     </div>
-    <button @click="deleteUser()">Delete user</button>
   </div>
 </template>
 
 <style lang="scss" scoped>
-#allowedUser {
+
+@import "src/assets/css/mixins";
+
+.allowedUser {
   border: solid black 0.1rem;
   width: 15rem;
   height: 5rem;
@@ -40,7 +54,7 @@ function deleteUser(user) {
   }
 }
 
-#userinfo {
+.userinfo {
   display: flex;
 }
 
@@ -51,12 +65,15 @@ img {
 }
 
 button {
-  display: flex;
-  border: 0.1rem solid black;
-  border-radius: 9rem;
-  background-color: red;
-  color: white;
-  margin-top: 1.5rem;
+  @include button;
+}
+
+button:hover {
+  background-color: #852d26;
+}
+
+.hidden {
+  display: none;
 }
 
 </style>

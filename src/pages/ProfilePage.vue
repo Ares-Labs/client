@@ -1,42 +1,50 @@
 <script setup>
 import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
+import Gateway from "../utils/events";
+import { onMounted, onUpdated, ref } from "vue";
+
+onMounted(getUser);
+onUpdated(getUser);
+
+const user = ref({
+  name: "",
+  id: ""
+});
+
+function getUser() {
+  Gateway.onReady(() => {
+    Gateway.execute(Gateway.queries.GET_USER, {
+      userId: Gateway.clientId,
+    }).then((data) => {
+      user.value.name = data.fullName;
+      user.value.id = data.id;
+    });
+  });
+}
+
 </script>
 
 <template>
   <HeaderWithoutLinks name="User Profile"></HeaderWithoutLinks>
   <div class="wrapper">
     <main>
-      <div class="vert">
-        <img src="../assets/media/profile.svg" alt="profile">
-        <p><strong>ID:</strong> d2b840a9</p>
-      </div>
-
-      <div class="hor">
+      <div class="card">
+        <img src="../assets/media/profile.svg" alt="User">
         <div class="vert">
-          <p><strong>Payment method:</strong></p>
-          <p>0xD12fFe8b82b5978178da0aECdEED11f5808B38ed</p>
+          <h2>{{ user.name }}</h2>
+          <p>{{ user.id }}</p>
+          <p><strong>Payment:</strong> 0xD12fFe8b82b5978178da0aECd</p>
         </div>
-
-        <div class="vert">
-          <p><strong>Subscription Tier:</strong></p>
-          <p>Optimum</p>
+        <div class="hor">
+          <button>
+            Update payment method
+          </button>
+          <button>
+            <router-link to="/pricing">
+              Update subscription
+            </router-link>
+          </button>
         </div>
-      </div>
-
-      <div class="hor">
-        <div class="vert">
-          <p><strong>Remaining Period:</strong></p>
-          <p>22 days</p>
-        </div>
-      </div>
-
-      <div class="hor">
-        <button>
-          Update payment method
-        </button>
-        <button>
-          Update subscription
-        </button>
       </div>
     </main>
   </div>
@@ -45,31 +53,43 @@ import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
 
 <style lang="scss" scoped>
 
+@import "src/assets/css/mixins";
+
+button {
+  @include button;
+  margin-bottom: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
 img {
   width: 15rem;
   height: 15rem;
 }
 
-button {
-  margin: auto auto 2rem;
-}
-
-.wrapper {
-  width: 50%;
-  margin: auto auto 5rem;
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 24rem;
+  margin: auto;
+  text-align: center;
 }
 
 .vert {
-  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto auto 2rem;
+  text-align: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .hor {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  text-align: center;
+  flex-wrap: wrap;
 }
 
 </style>

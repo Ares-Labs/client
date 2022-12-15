@@ -39,12 +39,12 @@ import Header from "@/components/Header/Header.vue";
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button>SELECT PLAN</button>
+        <button>Select Plan</button>
 
       </div>
       <div id="premium-plan-wrapper">
         <p class="hidden">current</p>
-        <p>BEST VALUE</p>
+        <p>Select Plan</p>
         <div>
           <h3>Premium</h3>
           <div>
@@ -60,7 +60,7 @@ import Header from "@/components/Header/Header.vue";
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button>SELECT PLAN</button>
+        <button>Select Plan</button>
       </div>
       <div id="optimum-plan-wrapper">
         <p>current</p>
@@ -79,7 +79,7 @@ import Header from "@/components/Header/Header.vue";
           <img src="../images/checkmark.png" alt="checkmark"/>
           <img src="../images/checkmark.png" alt="checkmark"/>
         </div>
-        <button>SELECT PLAN</button>
+        <button>Select Plan</button>
 
       </div>
     </article>
@@ -87,6 +87,9 @@ import Header from "@/components/Header/Header.vue";
 </template>
 
 <style lang="scss" scoped>
+
+@import "src/assets/css/mixins";
+
 .hidden {
   display: none;
 }
@@ -130,6 +133,7 @@ article {
 }
 
 button {
+  @include button;
   display: flex;
   margin: 1rem auto 1rem auto;
   text-align: center;

@@ -2,10 +2,26 @@
 import Header from "../components/Header/Header.vue";
 import AllowedUser from "../components/users/AllowedUser.vue";
 
-const propertyBeingManaged = window.location.pathname.split("/").pop();
-// save to localstorage
-localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
+import Gateway from "../utils/events";
+import { onUpdated, ref } from "vue";
 
+const allowedUserList = ref([]);
+const propertyBeingManaged = window.location.pathname.split("/").pop();
+onUpdated(getAllowedUsers);
+
+function getAllowedUsers() {
+  Gateway.onReady(async () => {
+    const data = await Gateway.execute(Gateway.queries.GET_ALLOWED_USERS, {
+      userId: Gateway.clientId,
+      propertyId: propertyBeingManaged
+    })
+    allowedUserList.value = (Object.entries(data.allowedUsers).
+    map(([key, value]) => ({ identity: key, name: value })));
+  });
+}
+
+getAllowedUsers();
+localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
 </script>
 
 <template>
@@ -14,9 +30,12 @@ localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
     <h1>Currently allowed users</h1>
 
     <div id="allowedUserContainer">
-      <AllowedUser/>
+      <AllowedUser v-for="user in allowedUserList"
+                   :name="user.name"
+                   :identity="user.identity"
+      ></AllowedUser>
       <div id="addNewAllowedUser">
-        <router-link to="/add-user">
+        <router-link :to="{ path: '/add-user/' + propertyBeingManaged }">
           <img src="../assets/media/plus-icon.svg" alt="plus">
         </router-link>
       </div>

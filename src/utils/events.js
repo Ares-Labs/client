@@ -21,11 +21,12 @@ const QUERIES_PREFIX = "queries";
  * @property {string} PROPERTY_STATUS_CHANGE
  * @property {string} PROPERTY_EQUIPMENT_CHANGE
  * @property {string} REQUESTED_REMOVE_PROPERTY
-*/
+ */
 
 /**
  * @typedef {Object} Queries
  * @property {string} GET_USER
+ * @property {string} GET_USERS
  * @property {string} GET_USER_PROPERTIES
  * @property {string} GET_EQUIPMENT_TYPES
  * @property {string} DISPATCH_DRONE
@@ -87,6 +88,7 @@ const EVENT_TYPE = {
  */
 const QUERY_TYPE = {
   GET_USER: "get-user",
+  GET_USERS: "get-users",
   GET_USER_PROPERTIES: "get-user-properties",
   GET_EQUIPMENT_TYPES: "get-equipment-types",
   DISPATCH_DRONE: "dispatch-drone",

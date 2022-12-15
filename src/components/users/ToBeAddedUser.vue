@@ -1,5 +1,21 @@
 <script setup>
+import Gateway from "../../utils/events";
 
+const props = defineProps({
+  name: String,
+  identity: String,
+});
+
+function addUser(id) {
+  Gateway.onReady( () => {
+    Gateway.execute(Gateway.queries.ADD_ALLOWED_USER, {
+      propertyId: propertyBeingManaged,
+      userId: id
+    }).then(response => console.log(response))
+  });
+}
+
+const propertyBeingManaged = window.location.pathname.split("/").pop();
 </script>
 
 <template>
@@ -7,11 +23,11 @@
     <div class="to-be-added-user-info">
       <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
-        <p> Mr.Bean </p>
-        <p> ID: 4cc-4b03-9c3f66e3 </p>
+        <p> {{name}} </p>
+        <p> ID: {{identity}} </p>
       </div>
     </div>
-    <img src="/src/assets/media/plus-icon.svg" alt="plus">
+    <a @click="addUser(identity)"><img src="/src/assets/media/plus-icon.svg" alt="plus"></a>
   </div>
 </template>
 
@@ -27,6 +43,7 @@
   margin-bottom: 1.5rem;
   border-radius: 1rem;
   background-color: #e8e8e8;
+
   div {
     div {
       p:last-child {
@@ -34,6 +51,14 @@
         margin-top: 0.1rem;
       }
     }
+  }
+
+  a {
+    margin-right: 1rem;
+  }
+
+  a:hover {
+    cursor: pointer;
   }
 }
 
@@ -43,16 +68,14 @@
 
 img {
   width: 2rem;
-  margin-right: 1rem;
   padding-left: 0.3rem;
 }
 
-button {
-  display: flex;
-  border: 0.1rem solid black;
-  border-radius: 9rem;
-  background-color: red;
-  color: white;
-  margin-top: 1.5rem;
+a {
+  transition: transform .2s;
+}
+
+a:hover {
+  transform: scale(1.25);
 }
 </style>

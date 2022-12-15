@@ -43,6 +43,7 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
   margin-bottom: 1.5rem;
   border-radius: 1rem;
   background-color: #e8e8e8;
+
   div {
     div {
       p:last-child {
@@ -50,6 +51,14 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
         margin-top: 0.1rem;
       }
     }
+  }
+
+  a {
+    margin-right: 1rem;
+  }
+
+  a:hover {
+    cursor: pointer;
   }
 }
 
@@ -59,12 +68,10 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
 
 img {
   width: 2rem;
-  margin-right: 1rem;
   padding-left: 0.3rem;
 }
 
 a {
-
   transition: transform .2s;
 }
 

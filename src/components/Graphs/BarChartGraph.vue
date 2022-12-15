@@ -1,71 +1,52 @@
-<script>
-import {Bar} from 'vue-chartjs';
-import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js';
+<script setup>
+import Chart from 'chart.js/auto';
 import Gateway from "../../utils/events.js";
+import {onMounted} from "vue";
+import {CategoryScale} from 'chart.js';
 
+Chart.register(CategoryScale);
 
+let crimeDay = [];
+let crimeCount = [];
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
-
-export default {
-  name: 'BarChart',
-  components: {Bar},
-  computed: {
-    myStyles() {
-      return {
-        height: '50vh',
-        width: '25vw',
-      };
-    }
-  },
-  data: () => ({
-    loaded: false,
-    chartData: {
-      labels: [],
-      datasets: [{
-          label: 'Daily crimes',
-          data: [1],
-          backgroundColor: '#4e73df',
-          hoverBackgroundColor: '#2e59d9',
-          borderColor: '#4e73df',
-        },
-      ],
-    },
-    chartOptions: {
-      responsive: false,
-    },
-  }),
-
-  async mounted() {
-    this.loaded = false
-    console.log(this.chartData);
-    try {
-      Gateway.onReady(() => {
-        Gateway.execute(Gateway.queries.GET_CRIMES_IN_AREA, {
-          userId: Gateway.clientId,
-          propertyId: "5",
-        }).then((data) => {
-          let crimeDay = [];
-          let crimeCount = [];
-
-          data.crimes.forEach(crime => {
-            crimeDay.push(crime.day);
-            crimeCount.push(crime.count);
-          });
-          this.chartData.labels.push(crimeDay);
-          this.chartData.datasets[0].data.push(crimeCount);
-        });
-        this.loaded = true
-      }, 1000);
-    } catch (err) {
-      console.error("Failed to get crimes", err);
-    }
-
-  }
-}
+Gateway.onReady(() => {
+  Gateway.execute(Gateway.queries.GET_CRIMES_IN_AREA, {
+    userId: Gateway.clientId,
+    propertyId: "5",
+  }).then((data) => {
+    data.crimes.forEach(crime => {
+      crimeDay.push("day " + crime.day);
+      crimeCount.push(crime.count);
+    });
+  });
+}, 1000);
 
 console.log(crimeDay);
 
+const data = {
+  labels: crimeDay,
+  datasets: [{
+    label: "daily crimes",
+    backgroundColor: "#f87979",
+    data: crimeCount
+  }]
+};
+
+const config = {
+  type: "line",
+  data: data,
+  options: {},
+};
+
+onMounted(() => {
+  try {
+    const chart = new Chart(document.querySelector(".daily-crimes"), config);
+  } catch (e) {
+    console.error("Failed to initialize chart", e);
+  }
+});
+
+console.log(data);
 /*
 export default {
   name: 'BarChartGraph',
@@ -94,26 +75,17 @@ export default {
 };
 */
 
-Gateway.onReady(() => {
-  Gateway.execute(Gateway.queries.GET_CRIMES_IN_AREA, {
-    userId: Gateway.clientId,
-    propertyId: "5",
-  }).then((data) => {
-    data.crimes.forEach(crime => {
-      console.log(crime);
-    });
-  });
-}, 1000);
+
 </script>
 <template>
-  <Bar
-      id="my-chart-id"
-      :style="myStyles"
-      :options="chartOptions"
-      :data="chartData"
-  />
+  <div>
+    <h2>daily crimes</h2>
+    <canvas class="daily-crimes"></canvas>
+  </div>
 </template>
 
 <style scoped>
-
+h2 {
+  display: block;
+}
 </style>

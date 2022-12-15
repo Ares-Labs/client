@@ -8,10 +8,6 @@ import BarChartGraph from "../components/Graphs/BarChartGraph.vue";
   <Header/>
   <div class="graphs">
     <BarChartGraph/>
-    <BarChartGraph/>
-    <BarChartGraph/>
-    <BarChartGraph/>
-    <BarChartGraph/>
   </div>
 
 

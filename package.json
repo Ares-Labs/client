@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "chart.js": "^4.0.1",
+    "epic-spinners": "^2.0.0",
     "sonar-scanner": "^3.1.0",
     "uuid": "^9.0.0",
     "vertx3-eventbus-client": "^3.9.4",

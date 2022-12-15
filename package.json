@@ -17,6 +17,7 @@
     "validate-local-win": "npm run validate-html && npm run validate-sonar-local-win"
   },
   "dependencies": {
+    "ol": "^7.1.0",
     "sonar-scanner": "^3.1.0",
     "uuid": "^9.0.0",
     "vertx3-eventbus-client": "^3.9.4",

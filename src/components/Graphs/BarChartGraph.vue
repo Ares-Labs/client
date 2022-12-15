@@ -4,6 +4,7 @@ import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Lin
 import Gateway from "../../utils/events.js";
 
 
+
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 export default {
@@ -19,7 +20,17 @@ export default {
   },
   data: () => ({
     loaded: false,
-    chartData: null,
+    chartData: {
+      labels: [],
+      datasets: [{
+          label: 'Daily crimes',
+          data: [1],
+          backgroundColor: '#4e73df',
+          hoverBackgroundColor: '#2e59d9',
+          borderColor: '#4e73df',
+        },
+      ],
+    },
     chartOptions: {
       responsive: false,
     },
@@ -34,25 +45,26 @@ export default {
           userId: Gateway.clientId,
           propertyId: "5",
         }).then((data) => {
+          let crimeDay = [];
+          let crimeCount = [];
+
           data.crimes.forEach(crime => {
-            this.chartData = {
-              labels: [crime.day + ","],
-              datasets: [{
-                label: 'Crimes',
-                backgroundColor: '#f87979',
-                data: [crime.count + ","]
-              }]
-            }
+            crimeDay.push(crime.day);
+            crimeCount.push(crime.count);
           });
+          this.chartData.labels.push(crimeDay);
+          this.chartData.datasets[0].data.push(crimeCount);
         });
         this.loaded = true
       }, 1000);
     } catch (err) {
       console.error("Failed to get crimes", err);
     }
+
   }
 }
 
+console.log(crimeDay);
 
 /*
 export default {
@@ -70,7 +82,9 @@ export default {
     return {
       chartData: {
         labels: ['January', 'February', 'March'],
-        datasets: [{label: "Monthly visitors", data: [40, 20, 12]}]
+        datasets: [{
+        label: "Monthly visitors",
+        data: [40, 20, 12]}]
       },
       chartOptions: {
         responsive: false

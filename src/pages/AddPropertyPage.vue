@@ -16,30 +16,27 @@ function togglePopup() {
 }
 
 function submitRequest() {
-  Gateway.onReady(() => {
-    Gateway.execute(Gateway.queries.ADD_PROPERTY, {
+  Gateway.onReady(async () => {
+    const response = await Gateway.execute(Gateway.queries.ADD_PROPERTY, {
       location: location.value,
       clientId: Gateway.clientId,
       description: reason.value,
       x: x.value,
       y: y.value,
       tier: parseInt(tier.value),
-    }).then((response) => {
-      if (response.success) {
-        // Show popup
-        togglePopup();
-        success.value = true;
-        document.querySelector(".popup-close").addEventListener("click", togglePopup);
-      } else {
-        // Show popup
-        togglePopup();
-        error.value = true;
-        document.querySelector(".popup-close").addEventListener("click", togglePopup);
-      }
     });
+
+    if (response.success) {
+      // Show popup
+      togglePopup();
+      success.value = true;
+    } else {
+      // Show popup
+      togglePopup();
+      error.value = true;
+    }
   });
 }
-
 </script>
 
 <template>
@@ -93,7 +90,7 @@ function submitRequest() {
             <p>Property not added</p>
           </div>
 
-          <button class="popup-close">Ok</button>
+          <router-link class="popup-close" to="/"><p>Ok</p></router-link>
         </div>
       </div>
     </main>
@@ -101,7 +98,6 @@ function submitRequest() {
 </template>
 
 <style lang="scss" scoped>
-
 @import "src/assets/css/mixins";
 
 legend {
@@ -134,7 +130,7 @@ textarea {
   resize: none;
 }
 
-input[type='submit'] {
+input[type="submit"] {
   width: initial;
   float: right;
   @include button;
@@ -184,7 +180,14 @@ input[type='submit'] {
   margin-right: auto;
   display: block;
   margin-top: 1rem;
+  text-align: center;
+  border: black solid 0.1rem;
+  border-radius: 0.25rem;
+}
 
+.popup-close:hover {
+  background-color: #000;
+  color: #fff;
 }
 
 .hidden {

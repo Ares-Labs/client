@@ -42,13 +42,6 @@
   </header>
 </template>
 
-<style lang="scss">
-#app {
-  display: grid;
-  grid-template-columns: min-content 1fr;
-}
-</style>
-
 <style lang="scss" scoped>
 @import "/src/assets/css/admin-styles";
 

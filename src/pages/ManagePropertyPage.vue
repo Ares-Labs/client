@@ -40,7 +40,7 @@ localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
       <AllowedUser name="Mr.Bean" identity="4cc-4b03-9c3f66e3"/>
       <AllowedUser name="Samantha" identity="4cc-4b03-9c3f66e3"/>
       <div id="addNewAllowedUser">
-        <router-link to="/add-user">
+        <router-link :to="{ path: '/add-user/' + propertyBeingManaged }">
           <img src="../assets/media/plus-icon.svg" alt="plus">
         </router-link>
       </div>

@@ -23,6 +23,7 @@ const routes = [
   { path: "/manage-property", component: ManagePropertyPage },
   { path: "/manage-property/:id", component: ManagePropertyPage },
   { path: "/add-user", component: AddUserPage },
+  { path: "/add-user/:id", component: AddUserPage },
   { path: "/add-property", component: AddPropertyPage },
   { path: "/pricing", component: PricingPage },
   { path: "/profile", component: ProfilePage },

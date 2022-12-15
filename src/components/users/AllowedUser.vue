@@ -9,11 +9,13 @@ const props = defineProps({
 function deleteUser(id) {
   Gateway.onReady( () => {
     Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
-      propertyId: localStorage.getItem("propertyBeingManaged"),
+      propertyId: propertyBeingManaged,
       userId: id,
     }).then(response => console.log(response))
   });
 }
+
+const propertyBeingManaged = window.location.pathname.split("/").pop();
 </script>
 
 <template>
@@ -25,7 +27,7 @@ function deleteUser(id) {
         <p> ID: {{ identity }} </p>
       </div>
     </div>
-    <button @click="deleteUser(name, identity)">Delete user</button>
+    <button @click="deleteUser(identity)">Delete user</button>
   </div>
 </template>
 

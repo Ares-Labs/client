@@ -6,13 +6,16 @@ const props = defineProps({
   identity: String,
 });
 
-function addUser(name, id) {
-  console.log(name, id);
-  Gateway.execute(Gateway.queries.ADD_ALLOWED_USER, {
-    name: name,
-    identity: id,
+function addUser(id) {
+  Gateway.onReady( () => {
+    Gateway.execute(Gateway.queries.ADD_ALLOWED_USER, {
+      propertyId: propertyBeingManaged,
+      userId: id
+    }).then(response => console.log(response))
   });
 }
+
+const propertyBeingManaged = window.location.pathname.split("/").pop();
 </script>
 
 <template>
@@ -24,7 +27,7 @@ function addUser(name, id) {
         <p> ID: {{identity}} </p>
       </div>
     </div>
-    <a @click="addUser(name, identity)"><img src="/src/assets/media/plus-icon.svg" alt="plus"></a>
+    <a @click="addUser(identity)"><img src="/src/assets/media/plus-icon.svg" alt="plus"></a>
   </div>
 </template>
 

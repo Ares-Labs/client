@@ -1,6 +1,8 @@
 <script setup>
 import Header from "../components/Header/Header.vue";
 import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
+
+const propertyBeingManaged = window.location.pathname.split("/").pop();
 </script>
 
 <template>
@@ -9,15 +11,11 @@ import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
     <aside id="recent-ppl" aria-label="recent-ppl">
       <h2>Recent People</h2>
       <div>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="Mr.Bean"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e1" name="Alice"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e2" name="Bob"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="John"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e4" name="James"/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e5" name="Brad"/>
       </div>
     </aside>
 
@@ -26,17 +24,14 @@ import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
       <label for="search-users">Search:</label>
       <input id="search-users" type="search" placeholder="El criminel">
       <div>
-        <ToBeAddedUser identity="4aa-44b3-9c6f66e453" name="Sabine"/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e6" name="Sabine"/>
       </div>
     </article>
 
     <aside id="blacklist" aria-label="blacklist">
       <h2>Blacklist</h2>
       <div>
-        <ToBeAddedUser/>
+        <ToBeAddedUser identity="4cc-4b03-9c3f66e6" name="Chris"/>
       </div>
     </aside>
   </main>

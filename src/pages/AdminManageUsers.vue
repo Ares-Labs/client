@@ -10,6 +10,9 @@ const search = ref("");
 const hasFetched = ref(false);
 const isFetching = ref(true);
 
+const selectedUser = ref(null);
+const selectedUserProperties = ref(null);
+
 const updateUsers = () => {
   Gateway.onReady(async () => {
     isFetching.value = true;
@@ -29,10 +32,39 @@ const updateSearch = (e) => {
   updateUsers();
 };
 
+const setSelectedUser = async (user) => {
+  selectedUser.value = user;
+  const { properties: data } = await Gateway.execute(
+    Gateway.queries.GET_USER_PROPERTIES,
+    {
+      userId: user.id,
+    }
+  );
+
+  selectedUserProperties.value = data;
+};
+
 updateUsers();
 </script>
 
 <template>
+  <div v-if="!!selectedUser" class="popup">
+    <div>
+      <h3>{{ selectedUser.fullName }}</h3>
+      <p>{{ selectedUser.id }}</p>
+      <button @click="selectedUser = null">
+        <img alt="Close popup" src="../assets/media/fullscreen-exit.svg" />
+      </button>
+      <div
+        v-for="property in selectedUserProperties"
+        :key="property.id"
+        class="property"
+      >
+        <p>{{ property.location }}</p>
+        <img alt="info" src="../assets/media/info.svg" />
+      </div>
+    </div>
+  </div>
   <div id="wrapper">
     <AdminNavbar />
     <main>
@@ -61,7 +93,11 @@ updateUsers();
         <div v-for="user in users" v-else :key="user.id" class="fetch">
           <p>{{ user.id }}</p>
           <p>{{ user.fullName }}</p>
-          <img alt="info" src="../assets/media/info.svg" />
+          <img
+            alt="info"
+            src="../assets/media/info.svg"
+            @click="() => setSelectedUser(user)"
+          />
         </div>
       </div>
     </main>
@@ -159,6 +195,76 @@ main {
     p {
       font-size: $font-size-base;
       color: $dark;
+    }
+
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
+.popup {
+  z-index: 100;
+  background-color: rgba($dark, 0.75);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    position: relative;
+    width: 70%;
+    padding: 2rem 3rem;
+    background-color: $secondary;
+    border-radius: $border-radius;
+
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: 700;
+    }
+
+    h3,
+    p {
+      text-align: center;
+      color: $dark;
+    }
+
+    > p {
+      font-size: $font-size-base;
+      color: $normal;
+      margin-bottom: 3rem;
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+    }
+
+    .property {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: $border-radius;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1.5rem;
+      border: 0.25rem solid $dark;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      p {
+        width: 100%;
+      }
     }
   }
 }

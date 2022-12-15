@@ -11,7 +11,7 @@ function deleteUser(id) {
     Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
       propertyId: propertyBeingManaged,
       userId: id,
-    }).then(response => console.log(response))
+    }).then(getAllowedUsers);
   });
 }
 
@@ -25,13 +25,15 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
       <div>
         <p> {{ name }} </p>
         <p> ID: {{ identity }} </p>
+        <button @click="deleteUser(identity)">Delete user</button>
       </div>
     </div>
-    <button @click="deleteUser(identity)">Delete user</button>
   </div>
 </template>
 
 <style lang="scss" scoped>
+
+@import "src/assets/css/mixins";
 
 .allowedUser {
   border: solid black 0.1rem;
@@ -63,12 +65,7 @@ img {
 }
 
 button {
-  display: flex;
-  border: 0.1rem solid black;
-  border-radius: 9rem;
-  background-color: red;
-  color: white;
-  margin-top: 1.5rem;
+  @include button;
 }
 
 button:hover {

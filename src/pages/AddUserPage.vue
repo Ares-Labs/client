@@ -11,11 +11,7 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
     <aside id="recent-ppl" aria-label="recent-ppl">
       <h2>Recent People</h2>
       <div>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e1" name="Alice"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e2" name="Bob"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e3" name="John"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e4" name="James"/>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e5" name="Brad"/>
+        <ToBeAddedUser identity="9a0fbbc6-55f3-11ed-82ca-9313c9a89e82" name="John Doe"/>
       </div>
     </aside>
 
@@ -24,14 +20,14 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
       <label for="search-users">Search:</label>
       <input id="search-users" type="search" placeholder="El criminel">
       <div>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e6" name="Sabine"/>
+        <ToBeAddedUser identity="b66e49ae-55f3-11ed-a877-6f6036c8577a" name="Jane Doe"/>
       </div>
     </article>
 
     <aside id="blacklist" aria-label="blacklist">
       <h2>Blacklist</h2>
       <div>
-        <ToBeAddedUser identity="4cc-4b03-9c3f66e6" name="Chris"/>
+        <ToBeAddedUser identity="bedb80fc-55f3-11ed-b681-07688aa63f8a" name="Frankenstein"/>
       </div>
     </aside>
   </main>

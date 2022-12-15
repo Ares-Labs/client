@@ -97,6 +97,9 @@ function switchCamera() {
 </template>
 
 <style lang="scss" scoped>
+
+@import "src/assets/css/mixins";
+
 h1 {
   display: flex;
   justify-content: center;
@@ -116,6 +119,7 @@ h1 {
 
   button {
     width: 7rem;
+    @include button;
   }
 }
 

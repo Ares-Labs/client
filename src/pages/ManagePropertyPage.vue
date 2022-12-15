@@ -8,12 +8,14 @@ import {onMounted, onUpdated} from "vue";
 const allowedUserList = [];
 
 onMounted(getAllowedUsers); // DOMContentLoaded
+onUpdated(getAllowedUsers);
 setTimeout(getAllowedUsers, 2000); // execute every 2 seconds
 
 function getAllowedUsers() {
   Gateway.onReady(() => {
     Gateway.execute(Gateway.queries.GET_ALLOWED_USERS, {
       userId: Gateway.clientId,
+      propertyId: propertyBeingManaged
     }).then((data) => {
       allowedUserList.value = data.properties;
     });

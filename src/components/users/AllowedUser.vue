@@ -6,11 +6,12 @@ const props = defineProps({
   identity: String,
 });
 
-function deleteUser(name, id) {
-  console.log(name, id);
-  Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
-    name: name,
-    identity: id,
+function deleteUser(id) {
+  Gateway.onReady( () => {
+    Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
+      propertyId: localStorage.getItem("propertyBeingManaged"),
+      userId: id,
+    }).then(response => console.log(response))
   });
 }
 </script>

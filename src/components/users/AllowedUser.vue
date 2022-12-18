@@ -6,13 +6,16 @@ const props = defineProps({
   identity: String,
 });
 
-function deleteUser(name, id) {
-  console.log(name, id);
-  Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
-    name: name,
-    identity: id,
+function deleteUser(id) {
+  Gateway.onReady( () => {
+    Gateway.execute(Gateway.queries.REMOVE_ALLOWED_USER, {
+      propertyId: propertyBeingManaged,
+      userId: id,
+    });
   });
 }
+
+const propertyBeingManaged = window.location.pathname.split("/").pop();
 </script>
 
 <template>
@@ -22,13 +25,15 @@ function deleteUser(name, id) {
       <div>
         <p> {{ name }} </p>
         <p> ID: {{ identity }} </p>
+        <button @click="deleteUser(identity)">Delete user</button>
       </div>
     </div>
-    <button @click="deleteUser(name, identity)">Delete user</button>
   </div>
 </template>
 
 <style lang="scss" scoped>
+
+@import "src/assets/css/mixins";
 
 .allowedUser {
   border: solid black 0.1rem;
@@ -60,16 +65,15 @@ img {
 }
 
 button {
-  display: flex;
-  border: 0.1rem solid black;
-  border-radius: 9rem;
-  background-color: red;
-  color: white;
-  margin-top: 1.5rem;
+  @include button;
 }
 
 button:hover {
   background-color: #852d26;
+}
+
+.hidden {
+  display: none;
 }
 
 </style>

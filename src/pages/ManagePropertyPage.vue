@@ -3,25 +3,24 @@ import Header from "../components/Header/Header.vue";
 import AllowedUser from "../components/users/AllowedUser.vue";
 
 import Gateway from "../utils/events";
-import {onMounted, onUpdated} from "vue";
+import { onUpdated, ref } from "vue";
 
-const allowedUserList = [];
-
-onMounted(getAllowedUsers); // DOMContentLoaded
-setTimeout(getAllowedUsers, 2000); // execute every 2 seconds
+const allowedUserList = ref([]);
+const propertyBeingManaged = window.location.pathname.split("/").pop();
+onUpdated(getAllowedUsers);
 
 function getAllowedUsers() {
-  Gateway.onReady(() => {
-    Gateway.execute(Gateway.queries.GET_ALLOWED_USERS, {
+  Gateway.onReady(async () => {
+    const data = await Gateway.execute(Gateway.queries.GET_ALLOWED_USERS, {
       userId: Gateway.clientId,
-    }).then((data) => {
-      allowedUserList.value = data.properties;
-    });
+      propertyId: propertyBeingManaged
+    })
+    allowedUserList.value = (Object.entries(data.allowedUsers).
+    map(([key, value]) => ({ identity: key, name: value })));
   });
 }
 
-const propertyBeingManaged = window.location.pathname.split("/").pop();
-// save to localstorage
+getAllowedUsers();
 localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
 </script>
 
@@ -33,12 +32,10 @@ localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
     <div id="allowedUserContainer">
       <AllowedUser v-for="user in allowedUserList"
                    :name="user.name"
-                   :identity="user.id"
+                   :identity="user.identity"
       ></AllowedUser>
-      <AllowedUser name="Mr.Bean" identity="4cc-4b03-9c3f66e3"/>
-      <AllowedUser name="Samantha" identity="4cc-4b03-9c3f66e3"/>
       <div id="addNewAllowedUser">
-        <router-link to="/add-user">
+        <router-link :to="{ path: '/add-user/' + propertyBeingManaged }">
           <img src="../assets/media/plus-icon.svg" alt="plus">
         </router-link>
       </div>

@@ -19,14 +19,13 @@ Gateway.onReady(() => {
       crimeCount.push(crime.count);
     });
   });
-}, 1000);
+});
 
-console.log(crimeDay);
 
 const data = {
   labels: crimeDay,
   datasets: [{
-    label: "daily crimes",
+    label: "Number of Daily Crimes",
     backgroundColor: "#f87979",
     data: crimeCount
   }]
@@ -49,8 +48,8 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    <h2>daily crimes</h2>
-    <canvas class="daily-crimes"></canvas>
+    <h2>Daily Crimes in the area</h2>
+    <canvas class="daily-crimes" width="500" height="300"></canvas>
   </div>
 </template>
 

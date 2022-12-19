@@ -2,6 +2,7 @@
 import Header from "../components/Header/Header.vue";
 import BarChartGraph from "../components/Graphs/BarChartGraph.vue";
 import DailyCrimeLineGraph from "../components/Graphs/DailyCrimeLineGraph.vue";
+import AuthVisitorsGraph from "../components/Graphs/AuthVisitorsGraph.vue";
 
 </script>
 
@@ -10,6 +11,7 @@ import DailyCrimeLineGraph from "../components/Graphs/DailyCrimeLineGraph.vue";
   <div class="graphs">
     <BarChartGraph/>
     <daily-crime-line-graph/>
+    <AuthVisitorsGraph/>
   </div>
 
 

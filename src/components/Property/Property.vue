@@ -36,7 +36,7 @@ function hide(e) {
   flex-direction: column;
   align-items: center;
   justify-content: normal;
-  border: 0.25rem solid $black;
+  border: 0.25rem solid $dark;
   width: 20rem;
   height: 12rem;
   padding: 0.3rem;

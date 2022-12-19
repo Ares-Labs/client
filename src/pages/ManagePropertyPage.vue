@@ -62,8 +62,7 @@ h1 {
 }
 
 #addNewAllowedUser {
-
-  border: solid black 0.1rem;
+  border: 0.15rem solid $dark;
   width: 15rem;
   height: 5rem;
   padding: 0.3rem;

@@ -1,4 +1,5 @@
 <script>
+import Header from "@/components/Header/Header.vue";
 import MapContainer from "../components/MapContainer.vue";
 //import Edit from './components/Edit'
 //import Inspect from './components/Inspect'
@@ -6,6 +7,7 @@ import MapContainer from "../components/MapContainer.vue";
 export default {
   name: "MainPage",
   components: {
+    Header,
     MapContainer,
   },
   data: () => ({
@@ -33,7 +35,8 @@ export default {
 </script>
 
 <template>
-  <div id="app">
+  <Header></Header>
+  <div id="MapPage">
     <div class="cell cell-map">
       <MapContainer
         :geojson="geojson"
@@ -56,7 +59,7 @@ body {
   margin: 0;
 }
 
-#app {
+#MapPage {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   height: 100%;
   display: grid;
@@ -65,6 +68,7 @@ body {
   grid-gap: 1rem;
   padding: 1rem;
   box-sizing: border-box;
+  height: 35rem;
 }
 
 .cell {
@@ -76,6 +80,7 @@ body {
   grid-column: 1;
   grid-row-start: 1;
   grid-row-end: 3;
+  height: 35rem;
 }
 
 .cell-edit {

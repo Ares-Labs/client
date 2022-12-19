@@ -35,7 +35,7 @@ export default {
       layers: [
         new TileLayer({
           source: new XYZSource({
-            url: 'https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/all/{z}/{x}/{y}.png'
+            url: "https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/all/{z}/{x}/{y}.png",
           }),
         }),
         this.vectorLayer,
@@ -70,4 +70,3 @@ export default {
   },
 };
 </script>
-

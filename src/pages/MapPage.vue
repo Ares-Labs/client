@@ -33,7 +33,6 @@ export default {
     <div class="map-container">
       <MapContainer
         :geojson="geojson"
-        v-on:select="selected = $event"
       ></MapContainer>
     </div>
   </div>

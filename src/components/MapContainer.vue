@@ -46,25 +46,11 @@ export default {
         constrainResolution: true,
       }),
     });
-
-    this.olMap.on("pointermove", (event) => {
-      const hovered = this.olMap.forEachFeatureAtPixel(
-        event.pixel,
-        (feature) => feature
-      );
-      if (hovered !== this.selectedFeature) {
-        this.$set(this, "selectedFeature", hovered);
-      }
-    });
-
     this.updateSource(this.geojson);
   },
   watch: {
     geojson(value) {
       this.updateSource(value);
-    },
-    selectedFeature(value) {
-      this.$emit("select", value);
     },
   },
   methods: {

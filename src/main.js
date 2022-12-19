@@ -30,7 +30,7 @@ const routes = [
   { path: "/add-property", component: AddPropertyPage },
   { path: "/pricing", component: PricingPage },
   { path: "/profile", component: ProfilePage },
-    {path: "/map-page", component: MapPage}
+    {path: "/map-page", component: MapPage},
   { path: "/statistics", component: StatisticsPage },
   { path: "/admin", redirect: "/admin/users" }, // Temporary redirect
   { path: "/admin/users", component: AdminManageUsers },

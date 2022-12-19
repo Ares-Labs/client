@@ -43,7 +43,7 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
   margin: 3rem;
   border-radius: 1rem;
   background-color: #e8e8e8;
-
+  box-shadow: black 0 0.5rem 0.3rem 0.01rem;
   div {
     div {
       p:last-child {

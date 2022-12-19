@@ -69,7 +69,7 @@ h1 {
   margin: 3rem;
   border-radius: 1rem;
   background-color: #e8e8e8;
-
+  box-shadow: black 0 0.5rem 0.3rem 0.01rem;
   img {
     display: block;
     align-items: center;

@@ -25,7 +25,6 @@
     "vertx3-eventbus-client": "^3.9.4",
     "vnu-jar": "^22.9.29",
     "vue": "^3.2.41",
-    "vue-openlayers": "^0.5.6",
     "vue-chartjs": "^5.0.1",
     "vue-router": "^4.1.6"
   },

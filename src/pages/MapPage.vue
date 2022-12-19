@@ -35,7 +35,7 @@ export default {
 </script>
 
 <template>
-  <Header></Header>
+  <Header/>
   <div id="MapPage">
     <div class="cell cell-map">
       <MapContainer

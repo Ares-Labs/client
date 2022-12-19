@@ -49,7 +49,7 @@ const config = {
       x: {
         type: 'time',
         time: {
-          unit: 'day'
+          unit: 'day' //change x axis to days delete scales to get back to normal todo: parse date
         }
       }
     }

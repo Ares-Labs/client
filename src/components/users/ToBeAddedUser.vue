@@ -86,6 +86,7 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
 img {
   width: 2rem;
   padding-left: 0.3rem;
+  margin-right: 1rem;
 }
 
 .btn {

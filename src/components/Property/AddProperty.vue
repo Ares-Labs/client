@@ -11,7 +11,7 @@ import Property from "@/components/Property/Property.vue";
 
 <style lang="scss" scoped>
 .add {
-  background: url("../../assets/media/add.svg") no-repeat center;
+  background: url("../../assets/media/plus-icon.svg") no-repeat center;
   background-size: 5rem;
 }
 </style>

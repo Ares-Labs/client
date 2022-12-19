@@ -15,15 +15,16 @@ const props = defineProps(['name']);
 </template>
 
 <style lang="scss" scoped>
-$hover-color: #e8e8e8;
+@import "src/assets/css/app";
 
 header {
   display: flex;
   justify-content: space-between;
   padding: 1.5rem 10% 1.5rem 10%;
-  box-shadow: black 0.1rem 0.1rem 0.7rem 0.1rem;
+  box-shadow: $black 0.1rem 0.1rem 0.7rem 0.1rem;
   margin-bottom: 10rem;
   align-items: center;
+  background: linear-gradient(30deg, $normal, $light);
 
   h1 {
     font-size: 2rem;

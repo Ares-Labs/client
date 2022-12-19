@@ -105,6 +105,40 @@ const handleRouteData = async () => {
 
 Gateway.onReady(handleRouteData);
 updateProperties();
+
+const syncPropertySize = async () => {
+  await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_SIZE, {
+    propertyId: selectedProperty.value.id,
+    width: selectedProperty.value.width,
+    height: selectedProperty.value.height,
+  });
+};
+
+const syncPropertyCoordinates = async () => {
+  await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_COORDINATES, {
+    propertyId: selectedProperty.value.id,
+    x: selectedProperty.value.x,
+    y: selectedProperty.value.y,
+  });
+};
+
+const syncPropertyTier = async () => {
+  await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_TIER, {
+    propertyId: selectedProperty.value.id,
+    tier: parseInt(selectedProperty.value.tier),
+  });
+};
+
+const removeEquipment = async (equipmentId) => {
+  selectedProperty.value.equipment = selectedProperty.value.equipment.filter(
+    (e) => e.id !== equipmentId
+  );
+
+  await Gateway.execute(Gateway.queries.REMOVE_EQUIPMENT_PROPERTY, {
+    equipmentId,
+    propertyId: selectedProperty.value.id,
+  });
+};
 </script>
 
 <template>
@@ -120,7 +154,7 @@ updateProperties();
       <p class="description">{{ selectedProperty.description }}</p>
       <button class="dispatch-drone">
         <img alt="" src="@/assets/media/dispatch-drone.svg" />
-        <span> Dispatch drone </span>
+        <span>Dispatch drone</span>
       </button>
       <div class="data-field">
         <h4>Owner:</h4>
@@ -129,19 +163,35 @@ updateProperties();
       <div class="double-field">
         <div class="data-field">
           <h4>Location x:</h4>
-          <p>{{ selectedProperty.x }}</p>
+          <input
+            v-model="selectedProperty.x"
+            type="number"
+            @input="syncPropertyCoordinates"
+          />
         </div>
         <div class="data-field">
           <h4>Location y:</h4>
-          <p>{{ selectedProperty.y }}</p>
+          <input
+            v-model="selectedProperty.y"
+            type="number"
+            @input="syncPropertyCoordinates"
+          />
         </div>
         <div class="data-field">
           <h4>Width:</h4>
-          <p>{{ selectedProperty.width }}</p>
+          <input
+            v-model="selectedProperty.width"
+            type="number"
+            @input="syncPropertySize"
+          />
         </div>
         <div class="data-field">
           <h4>Height:</h4>
-          <p>{{ selectedProperty.height }}</p>
+          <input
+            v-model="selectedProperty.height"
+            type="number"
+            @input="syncPropertySize"
+          />
         </div>
       </div>
       <div class="data-field">
@@ -150,10 +200,15 @@ updateProperties();
       </div>
       <div class="data-field">
         <h4>Tier:</h4>
-        <select id="tier" name="tier">
-          <option value="BASIC">Basic</option>
-          <option value="PREMIUM">Premium</option>
-          <option value="OPTIMUM">Optimum</option>
+        <select
+          id="tier"
+          v-model="selectedProperty.tier"
+          name="tier"
+          @change="syncPropertyTier"
+        >
+          <option value="1">Basic</option>
+          <option value="2">Premium</option>
+          <option value="3">Optimum</option>
         </select>
       </div>
       <h4 class="equipment-title">Installed Equipment</h4>
@@ -165,7 +220,12 @@ updateProperties();
         >
           <p>{{ equipment.name }} | {{ equipment.description }}</p>
           <!--          <img alt="Change type" src="../assets/media/drop-down.svg" />-->
-          <img class="remove" alt="Remove" src="../assets/media/remove.svg" />
+          <img
+            alt="Remove"
+            @click="() => removeEquipment(equipment.id)"
+            class="remove"
+            src="../assets/media/remove.svg"
+          />
         </div>
         <button class="add-equipment">
           <img alt="Add equipment" src="../assets/media/add-small.svg" />
@@ -397,6 +457,7 @@ main {
       align-items: center;
       padding-bottom: 0.5rem;
 
+      input,
       #tier,
       p {
         display: block;
@@ -406,6 +467,17 @@ main {
         border-radius: $border-radius;
         padding: 0.25rem 0.5rem;
         color: $dark;
+      }
+
+      input {
+        background-color: $secondary;
+        -moz-appearance: textfield;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
       }
     }
 

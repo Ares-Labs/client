@@ -40,6 +40,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} SEARCH_REMOVAL_PROPERTIES
  * @property {string} CHANGE_PROPERTY_STATUS
  * @property {string} CHANGE_PROPERTY_SIZE
+ * @property {string} CHANGE_PROPERTY_COORDINATES
  * @property {string} GET_PENDING_PROPERTIES
  * @property {string} ADD_EQUIPMENT_PROPERTY
  * @property {string} REMOVE_EQUIPMENT_PROPERTY
@@ -106,6 +107,7 @@ const QUERY_TYPE = {
   GET_PROPERTIES: "get-properties",
   CHANGE_PROPERTY_STATUS: "change-property-status",
   CHANGE_PROPERTY_SIZE: "change-property-size",
+  CHANGE_PROPERTY_COORDINATES: "change-property-coordinates",
   GET_PENDING_PROPERTIES: "get-pending-properties",
   ADD_EQUIPMENT_PROPERTY: "add-equipment-property",
   REMOVE_EQUIPMENT_PROPERTY: "remove-equipment-property",

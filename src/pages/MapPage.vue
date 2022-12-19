@@ -1,8 +1,6 @@
 <script>
 import Header from "@/components/Header/Header.vue";
 import MapContainer from "../components/MapContainer.vue";
-//import Edit from './components/Edit'
-//import Inspect from './components/Inspect'
 
 export default {
   name: "MainPage",
@@ -21,12 +19,7 @@ export default {
       geometry: {
         type: "Polygon",
         coordinates: [
-          [
-            [-27.0703125, 43.58039085560784],
-            [-28.125, 23.563987128451217],
-            [-10.8984375, 32.84267363195431],
-            [-27.0703125, 43.58039085560784],
-          ],
+          [[-3,3],[-3,8],[-8,8],[-8,3]],[[4,3], [4,8], [-1,8], [-1,3]],[[11,3], [11,8], [6,8], [6,3]], [[18,3], [18,8], [13,8], [13,3]]
         ],
       },
     },
@@ -37,18 +30,12 @@ export default {
 <template>
   <Header/>
   <div id="MapPage">
-    <div class="cell cell-map">
+    <div class="map-container">
       <MapContainer
         :geojson="geojson"
         v-on:select="selected = $event"
       ></MapContainer>
     </div>
-    <!--<div class="cell cell-edit">
-      <Edit :geojson="geojson" v-on:change="geojson = $event"></Edit>
-    </div>
-    <div class="cell cell-inspect">
-      <Inspect :feature="selected"></Inspect>
-    </div>-->
   </div>
 </template>
 
@@ -60,36 +47,14 @@ body {
 }
 
 #MapPage {
+  margin: -4.5rem;
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 100vh;
-  grid-auto-rows: 1fr;
-  grid-gap: 1rem;
-  padding: 1rem;
-  box-sizing: border-box;
-  height: 35rem;
 }
 
-.cell {
-  border-radius: 4px;
-  background-color: lightgrey;
+
+.map-container {
+  height: 43rem;
+
 }
 
-.cell-map {
-  grid-column: 1;
-  grid-row-start: 1;
-  grid-row-end: 3;
-  height: 35rem;
-}
-
-.cell-edit {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.cell-inspect {
-  grid-column: 2;
-  grid-row: 2;
-}
 </style>

@@ -41,13 +41,13 @@ export default {
         this.vectorLayer,
       ],
       view: new View({
-        zoom: 0,
+        zoom: 2,
         center: [0, 0],
         constrainResolution: true,
       }),
     });
 
-    /*this.olMap.on("pointermove", (event) => {
+    this.olMap.on("pointermove", (event) => {
       const hovered = this.olMap.forEachFeatureAtPixel(
         event.pixel,
         (feature) => feature
@@ -57,7 +57,7 @@ export default {
       }
     });
 
-    this.updateSource(this.geojson);*/
+    this.updateSource(this.geojson);
   },
   watch: {
     geojson(value) {

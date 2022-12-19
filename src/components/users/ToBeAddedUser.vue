@@ -43,6 +43,8 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
 </template>
 
 <style lang="scss" scoped>
+@import "src/assets/css/mixins";
+
 .to-be-added-user {
   display: flex;
   justify-content: space-between;
@@ -87,11 +89,7 @@ img {
 }
 
 .btn {
-  transition: transform .2s;
-}
-
-.btn:hover {
-  transform: scale(1.25);
+  @include img-hover;
 }
 
 </style>

@@ -13,8 +13,10 @@ import AddPropertyPage from "./pages/AddPropertyPage.vue";
 import PricingPage from "./pages/PricingPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
 import StatisticsPage from "./pages/StatisticsPage.vue";
+import MapPage from "./pages/MapPage.vue";
 import AdminManageUsers from "./pages/AdminManageUsers.vue";
 import AdminManageProperties from "./pages/AdminManageProperties.vue";
+import AdminManageDrones from "./pages/AdminManageDrones.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -28,6 +30,7 @@ const routes = [
   { path: "/add-property", component: AddPropertyPage },
   { path: "/pricing", component: PricingPage },
   { path: "/profile", component: ProfilePage },
+  { path: "/map-page", component: MapPage },
   { path: "/statistics", component: StatisticsPage },
   { path: "/admin", redirect: "/admin/users" }, // Temporary redirect
   {
@@ -40,6 +43,7 @@ const routes = [
     path: "/admin/users/:id",
     component: AdminManageUsers,
   },
+  { path: "/admin/drones", component: AdminManageDrones },
   {
     name: "AdminManageProperties",
     path: "/admin/properties",

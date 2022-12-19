@@ -3,30 +3,34 @@ import Gateway from "@/utils/events";
 import AdminNavbar from "../components/AdminNavbar.vue";
 import { OrbitSpinner } from "epic-spinners";
 import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
 
-const users = ref([]);
+const drones = ref([]);
 const search = ref("");
 
 const hasFetched = ref(false);
 const isFetching = ref(true);
 
-const selectedUser = ref(null);
-const selectedUserProperties = ref(null);
-const isFetchingUserProperties = ref(false);
+function recallDrone(id) {
+  Gateway.onReady(async () => {
+    await Gateway.execute(Gateway.queries.RECALL_DRONE, {
+      droneId: id,
+    });
+  });
+}
 
-const route = useRoute();
-const router = useRouter();
-
-const updateUsers = () => {
+const updateDrones = () => {
   Gateway.onReady(async () => {
     isFetching.value = true;
-    const { users: data } = await Gateway.execute(Gateway.queries.GET_USERS, {
-      search: search.value,
-      page: 1,
-      limit: 10,
-    });
-    users.value = data;
+    const { drones: data } = await Gateway.execute(
+      Gateway.queries.GET_DISPATCHED_DRONES,
+      {
+        search: search.value,
+        page: 1,
+        limit: 10,
+      }
+    );
+    console.log(data);
+    drones.value = data;
     isFetching.value = false;
     hasFetched.value = true;
   });
@@ -34,84 +38,22 @@ const updateUsers = () => {
 
 const updateSearch = (e) => {
   search.value = e.target.value;
-  updateUsers();
+  updateDrones();
 };
 
-const setSelectedUser = async (user) => {
-  if (!route.params.id) {
-    await router.push({
-      name: "AdminManageUsersParams",
-      params: { id: user.id },
-    });
-  }
+updateDrones();
 
-  selectedUser.value = user;
-  isFetchingUserProperties.value = true;
-  const { properties: data } = await Gateway.execute(
-    Gateway.queries.GET_USER_PROPERTIES,
-    {
-      userId: user.id,
-    }
-  );
+Gateway.subscribe(Gateway.events.DRONE_DISPATCHED, updateDrones);
+Gateway.subscribe(Gateway.events.DRONE_RECALLED, updateDrones);
 
-  selectedUserProperties.value = data;
-  isFetchingUserProperties.value = false;
-};
-
-const clearSelectedUser = async () => {
-  await router.push({ name: "AdminManageUsers" });
-  selectedUser.value = null;
-  selectedUserProperties.value = null;
-};
-
-const handleRouteData = async () => {
-  const userId = route.params.id;
-
-  if (!userId) return;
-
-  const user = await Gateway.execute(Gateway.queries.GET_USER, { userId });
-  await setSelectedUser(user);
-};
-
-Gateway.onReady(handleRouteData);
-updateUsers();
 </script>
 
 <template>
-  <div v-if="!!selectedUser" class="popup">
-    <div>
-      <h3>{{ selectedUser.fullName }}</h3>
-      <p>{{ selectedUser.id }}</p>
-      <button @click="clearSelectedUser">
-        <img alt="Close popup" src="../assets/media/fullscreen-exit.svg" />
-      </button>
-      <div v-if="isFetchingUserProperties" class="center">
-        <orbit-spinner :animation-duration="1200" :size="64" color="#1d3557" />
-      </div>
-      <div
-        v-else-if="
-          !isFetchingUserProperties && selectedUserProperties.length === 0
-        "
-      >
-        <p>User does not have properties.</p>
-      </div>
-      <div
-        v-for="property in selectedUserProperties"
-        v-else
-        :key="property.id"
-        class="property"
-      >
-        <p>{{ property.location }}</p>
-        <!-- TODO: Wrap a router-link around this -->
-        <img alt="info" src="../assets/media/info.svg" />
-      </div>
-    </div>
-  </div>
   <div id="wrapper">
     <AdminNavbar />
     <main>
       <div class="title">
-        <h1>Manage users</h1>
+        <h1>Dispatched Drones</h1>
         <div class="search">
           <img alt="search" src="../assets/media/magnifying-glass.svg" />
           <input placeholder="Search" type="text" @input="updateSearch" />
@@ -120,10 +62,10 @@ updateUsers();
 
       <div id="data">
         <div
-          v-if="hasFetched && !isFetching && users.length === 0"
+          v-if="hasFetched && !isFetching && drones.length === 0"
           class="center big-text"
         >
-          <h2>No matching users found</h2>
+          <h2>No matching drones found</h2>
         </div>
         <div v-else-if="isFetching" class="center">
           <orbit-spinner
@@ -132,16 +74,14 @@ updateUsers();
             color="#F1FAEE"
           />
         </div>
-        <div
-          v-for="user in users"
-          v-else
-          :key="user.id"
-          class="fetch"
-          @click="() => setSelectedUser(user)"
-        >
-          <p>{{ user.id }}</p>
-          <p>{{ user.fullName }}</p>
-          <img alt="info" src="../assets/media/info.svg" />
+        <div v-for="drone in drones" v-else :key="drone.id" class="fetch">
+          <p>{{ drone.id }}</p>
+          <p>{{ drone.description }}</p>
+          <img
+            alt="info"
+            src="../assets/media/return.svg"
+            @click="() => recallDrone(drone.id)"
+          />
         </div>
       </div>
     </main>
@@ -225,8 +165,6 @@ main {
     display: grid;
     grid-template-columns: max-content 1fr min-content;
     grid-gap: 1rem;
-
-    cursor: pointer;
 
     background-color: $secondary;
     border-radius: $border-radius;

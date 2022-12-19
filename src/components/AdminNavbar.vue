@@ -35,7 +35,7 @@
         />
       </router-link>
 
-      <router-link to="/admin/drone">
+      <router-link to="/admin/drones">
         <img alt="dispatch-drone" src="../assets/media/dispatch-drone.svg" />
       </router-link>
     </nav>

@@ -13,7 +13,7 @@ const propertyBeingManaged = parseInt(window.location.pathname.split("/").pop())
 <!--      Add a router link to /manage-property with the lastPath at the end-->
       <router-link :to="'/manage-property/' + propertyBeingManaged"><p>Manage Property</p></router-link>
       <router-link :to="'/live-data/' + propertyBeingManaged"><p>Live Data</p></router-link>
-      <router-link to="#"><p>Map</p></router-link>
+      <router-link to="/map-page"><p>Map</p></router-link>
       <router-link to="/statistics"><p>Statistics</p></router-link>
       <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
     </div>
@@ -24,13 +24,16 @@ const propertyBeingManaged = parseInt(window.location.pathname.split("/").pop())
 </template>
 
 <style lang="scss" scoped>
+@import "src/assets/css/app";
+
 header {
   display: flex;
   justify-content: space-between;
   padding: 1.5rem 10% 1.5rem 10%;
-  box-shadow: black 0.1rem 0.1rem 0.7rem 0.1rem;
+  box-shadow: $black 0.1rem 0.1rem 0.7rem 0.1rem;
   margin-bottom: 5rem;
   height: 3rem;
+  background: linear-gradient(30deg, $normal, $light);
 
   div {
     display: flex;
@@ -42,7 +45,7 @@ header {
       height: 100%;
       transition: transform ease 0.5s;
       font-size: 1.25rem;
-      color: black;
+      color: $dark;
       font-weight: bold;
     }
 

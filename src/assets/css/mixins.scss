@@ -4,6 +4,13 @@
   transform: translate(0, 5px);
 }
 
+@mixin img-hover {
+  transition: transform .2s;
+  &:hover {
+    transform: scale(1.25);
+  }
+}
+
 @mixin button() {
   appearance: none;
   background-color: #FAFBFC;

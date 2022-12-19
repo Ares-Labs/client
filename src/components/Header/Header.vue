@@ -13,7 +13,7 @@ const propertyBeingManaged = parseInt(window.location.pathname.split("/").pop())
 <!--      Add a router link to /manage-property with the lastPath at the end-->
       <router-link :to="'/manage-property/' + propertyBeingManaged"><p>Manage Property</p></router-link>
       <router-link :to="'/live-data/' + propertyBeingManaged"><p>Live Data</p></router-link>
-      <router-link to="#"><p>Map</p></router-link>
+      <router-link to="/map-page"><p>Map</p></router-link>
       <router-link to="/statistics"><p>Statistics</p></router-link>
       <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
     </div>

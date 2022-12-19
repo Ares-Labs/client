@@ -10,7 +10,7 @@ import OSM from "ol/source/OSM";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON";
-
+import XYZSource from "ol/source/XYZ";
 import "ol/ol.css";
 
 export default {
@@ -35,7 +35,9 @@ export default {
       target: this.$refs["map-root"],
       layers: [
         new TileLayer({
-          source: new OSM(),
+          source: new XYZSource({
+            url: 'https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/all/{z}/{x}/{y}.png'
+          }),
         }),
         this.vectorLayer,
       ],

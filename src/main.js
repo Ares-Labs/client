@@ -1,5 +1,6 @@
 import "./assets/css/reset.css";
 
+import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 import App from "./App.vue";
@@ -9,10 +10,13 @@ import LiveDataPage from "./pages/LiveDataPage.vue";
 import ManagePropertyPage from "./pages/ManagePropertyPage.vue";
 import AddUserPage from "./pages/AddUserPage.vue";
 import AddPropertyPage from "./pages/AddPropertyPage.vue";
-import { createApp } from "vue";
 import PricingPage from "./pages/PricingPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
+
 import MapPage from "./pages/MapPage.vue";
+import StatisticsPage from "./pages/StatisticsPage.vue";
+import AdminManageUsers from "./pages/AdminManageUsers.vue";
+
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -22,10 +26,14 @@ const routes = [
   { path: "/manage-property", component: ManagePropertyPage },
   { path: "/manage-property/:id", component: ManagePropertyPage },
   { path: "/add-user", component: AddUserPage },
+  { path: "/add-user/:id", component: AddUserPage },
   { path: "/add-property", component: AddPropertyPage },
   { path: "/pricing", component: PricingPage },
   { path: "/profile", component: ProfilePage },
     {path: "/map-page", component: MapPage}
+  { path: "/statistics", component: StatisticsPage },
+  { path: "/admin", redirect: "/admin/users" }, // Temporary redirect
+  { path: "/admin/users", component: AdminManageUsers },
 ];
 
 const router = createRouter({
@@ -33,7 +41,6 @@ const router = createRouter({
   history: createWebHistory(
     process.env.NODE_ENV === "production" ? "/mars-06/" : "/"
   ),
-
   routes,
 });
 

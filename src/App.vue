@@ -134,4 +134,12 @@ router-link {
   text-decoration: none;
   text-transform: capitalize;
 }
+
+.hiddenRemove {
+  display: none;
+}
+
+.hiddenVisibility {
+  visibility: hidden;
+}
 </style>

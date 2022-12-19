@@ -21,17 +21,22 @@ const QUERIES_PREFIX = "queries";
  * @property {string} PROPERTY_STATUS_CHANGE
  * @property {string} PROPERTY_EQUIPMENT_CHANGE
  * @property {string} REQUESTED_REMOVE_PROPERTY
-*/
+ */
 
 /**
  * @typedef {Object} Queries
  * @property {string} GET_USER
+ * @property {string} GET_USERS
  * @property {string} GET_USER_PROPERTIES
  * @property {string} GET_EQUIPMENT_TYPES
  * @property {string} DISPATCH_DRONE
+ * @property {string} GET_DISPATCHED_DRONES
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
+ * @property {string} GET_PROPERTIES
+ * @property {string} SEARCH_PENDING_PROPERTIES
+ * @property {string} SEARCH_REMOVAL_PROPERTIES
  * @property {string} CHANGE_PROPERTY_STATUS
  * @property {string} CHANGE_PROPERTY_SIZE
  * @property {string} GET_PENDING_PROPERTIES
@@ -87,13 +92,16 @@ const EVENT_TYPE = {
  */
 const QUERY_TYPE = {
   GET_USER: "get-user",
+  GET_USERS: "get-users",
   GET_USER_PROPERTIES: "get-user-properties",
   GET_EQUIPMENT_TYPES: "get-equipment-types",
   DISPATCH_DRONE: "dispatch-drone",
+  GET_DISPATCHED_DRONES: "get-dispatched-drones",
 
   ADD_PROPERTY: "add-property",
   REMOVE_PROPERTY: "remove-property",
   GET_PROPERTY: "get-property",
+  GET_PROPERTIES: "get-properties",
   CHANGE_PROPERTY_STATUS: "change-property-status",
   CHANGE_PROPERTY_SIZE: "change-property-size",
   GET_PENDING_PROPERTIES: "get-pending-properties",
@@ -105,6 +113,8 @@ const QUERY_TYPE = {
   REQUEST_REMOVE_PROPERTY: "request-remove-property",
   GET_REQUESTED_REMOVE_PROPERTIES: "get-requested-remove-properties",
   APPROVE_REMOVE_PROPERTY: "approve-remove-property",
+  SEARCH_PENDING_PROPERTIES: "search-pending-properties",
+  SEARCH_REMOVAL_PROPERTIES: "search-removal-properties",
 
   GET_ALLOWED_USERS: "get-allowed-users",
   ADD_ALLOWED_USER: "add-allowed-user",

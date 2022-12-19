@@ -1,6 +1,8 @@
 <script setup>
 import Header from "../components/Header/Header.vue";
 import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
+
+const propertyBeingManaged = window.location.pathname.split("/").pop();
 </script>
 
 <template>
@@ -9,16 +11,7 @@ import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
     <aside id="recent-ppl" aria-label="recent-ppl">
       <h2>Recent People</h2>
       <div>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
+        <ToBeAddedUser identity="9a0fbbc6-55f3-11ed-82ca-9313c9a89e82" name="John Doe"/>
       </div>
     </aside>
 
@@ -27,17 +20,14 @@ import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
       <label for="search-users">Search:</label>
       <input id="search-users" type="search" placeholder="El criminel">
       <div>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
-        <ToBeAddedUser/>
+        <ToBeAddedUser identity="b66e49ae-55f3-11ed-a877-6f6036c8577a" name="Jane Doe"/>
       </div>
     </article>
 
     <aside id="blacklist" aria-label="blacklist">
       <h2>Blacklist</h2>
       <div>
-        <ToBeAddedUser/>
+        <ToBeAddedUser identity="bedb80fc-55f3-11ed-b681-07688aa63f8a" name="Frankenstein"/>
       </div>
     </aside>
   </main>

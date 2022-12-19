@@ -15,7 +15,6 @@ function recallDrone(id) {
     await Gateway.execute(Gateway.queries.RECALL_DRONE, {
       droneId: id,
     });
-    updateDrones();
   });
 }
 

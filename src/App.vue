@@ -1,6 +1,6 @@
 <script setup>
 import Gateway from "./utils/events";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 
 if (!Gateway.isInitialized) {
   const defaultId = "9a0fbbc6-55f3-11ed-82ca-9313c9a89e82";
@@ -105,7 +105,7 @@ const exampleUsage = async () => {
   console.log(user_properties);
 };
 
-Gateway.onReady(exampleUsage);
+// Gateway.onReady(exampleUsage);
 
 Gateway.subscribe(Gateway.events.ALERTS, (data) => {
   console.log("Received alert:", data);
@@ -117,7 +117,6 @@ const urlEndsWithNumber = window.location.pathname.split("/").pop();
 if (urlEndsWithNumber) {
   localStorage.setItem("propertyBeingManaged", parseInt(urlEndsWithNumber));
 }
-
 </script>
 
 <template>

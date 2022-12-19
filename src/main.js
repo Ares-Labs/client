@@ -14,6 +14,7 @@ import PricingPage from "./pages/PricingPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
 import StatisticsPage from "./pages/StatisticsPage.vue";
 import AdminManageUsers from "./pages/AdminManageUsers.vue";
+import AdminManageProperties from "./pages/AdminManageProperties.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -29,7 +30,17 @@ const routes = [
   { path: "/profile", component: ProfilePage },
   { path: "/statistics", component: StatisticsPage },
   { path: "/admin", redirect: "/admin/users" }, // Temporary redirect
-  { path: "/admin/users", component: AdminManageUsers },
+  {
+    name: "AdminManageUsers",
+    path: "/admin/users",
+    component: AdminManageUsers,
+  },
+  {
+    name: "AdminManageUsersParams",
+    path: "/admin/users/:id",
+    component: AdminManageUsers,
+  },
+  { path: "/admin/properties", component: AdminManageProperties },
 ];
 
 const router = createRouter({

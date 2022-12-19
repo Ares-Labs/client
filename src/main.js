@@ -40,7 +40,16 @@ const routes = [
     path: "/admin/users/:id",
     component: AdminManageUsers,
   },
-  { path: "/admin/properties", component: AdminManageProperties },
+  {
+    name: "AdminManageProperties",
+    path: "/admin/properties",
+    component: AdminManageProperties,
+  },
+  {
+    name: "AdminManagePropertiesParams",
+    path: "/admin/properties/:id",
+    component: AdminManageProperties,
+  },
 ];
 
 const router = createRouter({

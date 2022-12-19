@@ -34,6 +34,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
+ * @property {string} GET_PROPERTY_DETAILED
  * @property {string} GET_PROPERTIES
  * @property {string} SEARCH_PENDING_PROPERTIES
  * @property {string} SEARCH_REMOVAL_PROPERTIES
@@ -101,6 +102,7 @@ const QUERY_TYPE = {
   ADD_PROPERTY: "add-property",
   REMOVE_PROPERTY: "remove-property",
   GET_PROPERTY: "get-property",
+  GET_PROPERTY_DETAILED: "get-property-detailed",
   GET_PROPERTIES: "get-properties",
   CHANGE_PROPERTY_STATUS: "change-property-status",
   CHANGE_PROPERTY_SIZE: "change-property-size",
@@ -211,42 +213,6 @@ class Gateway {
   }
 
   /**
-   * Define the id of the user that is currently "signed in".
-   *
-   * @param {string} id The ID of the user
-   * @returns {void}
-   */
-  init(id) {
-    if (this.#isInitialized) {
-      throw new Error("Gateway is already initialized");
-    }
-
-    this.#id = id;
-    this.#isInitialized = true;
-    this.#eb = new EventBus(this.#url);
-    this.#subscribers = {};
-    this.#requestIdentifiers = {};
-    this.#inbound = `${INBOUND_CHNL}.${this.#id}`;
-    this.#outbound = `${OUTBOUND_CHNL}.${this.#id}`;
-
-    this.#eb.onopen = () => {
-      this.#isConnectionOpen = true;
-      this.#registerHandler(this.#inbound, this.#onMessage);
-
-      this.#executeQuery(OUTBOUND_CHNL, "session", { id: this.#id }).then(
-        () => {
-          this.#connIsReady = true;
-          Object.keys(this.#subscribers)
-            .filter((event) => event !== this.allEvents)
-            .forEach((event) => this.#subscribe(event));
-
-          this.#onReadyEvents.forEach((event) => event());
-        }
-      );
-    };
-  }
-
-  /**
    * Get whether the Gateway has been initialized.
    *
    * @returns {boolean} Whether the Gateway has been initialized.
@@ -299,6 +265,42 @@ class Gateway {
    */
   get clientId() {
     return this.#id;
+  }
+
+  /**
+   * Define the id of the user that is currently "signed in".
+   *
+   * @param {string} id The ID of the user
+   * @returns {void}
+   */
+  init(id) {
+    if (this.#isInitialized) {
+      throw new Error("Gateway is already initialized");
+    }
+
+    this.#id = id;
+    this.#isInitialized = true;
+    this.#eb = new EventBus(this.#url);
+    this.#subscribers = {};
+    this.#requestIdentifiers = {};
+    this.#inbound = `${INBOUND_CHNL}.${this.#id}`;
+    this.#outbound = `${OUTBOUND_CHNL}.${this.#id}`;
+
+    this.#eb.onopen = () => {
+      this.#isConnectionOpen = true;
+      this.#registerHandler(this.#inbound, this.#onMessage);
+
+      this.#executeQuery(OUTBOUND_CHNL, "session", { id: this.#id }).then(
+        () => {
+          this.#connIsReady = true;
+          Object.keys(this.#subscribers)
+            .filter((event) => event !== this.allEvents)
+            .forEach((event) => this.#subscribe(event));
+
+          this.#onReadyEvents.forEach((event) => event());
+        }
+      );
+    };
   }
 
   /**

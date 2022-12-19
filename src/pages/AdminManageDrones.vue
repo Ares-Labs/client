@@ -10,6 +10,15 @@ const search = ref("");
 const hasFetched = ref(false);
 const isFetching = ref(true);
 
+function recallDrone(id) {
+  Gateway.onReady(async () => {
+    await Gateway.execute(Gateway.queries.RECALL_DRONE, {
+      droneId: id,
+    });
+    updateDrones();
+  });
+}
+
 const updateDrones = () => {
   Gateway.onReady(async () => {
     isFetching.value = true;
@@ -64,7 +73,12 @@ updateDrones();
         </div>
         <div v-for="drone in drones" v-else :key="drone.id" class="fetch">
           <p>{{ drone.id }}</p>
-          <img alt="info" src="../assets/media/return.svg" />
+          <p>{{ drone.description }}</p>
+          <img
+            alt="info"
+            src="../assets/media/return.svg"
+            @click="() => recallDrone(drone.id)"
+          />
         </div>
       </div>
     </main>

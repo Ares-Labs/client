@@ -31,6 +31,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} GET_EQUIPMENT_TYPES
  * @property {string} DISPATCH_DRONE
  * @property {string} GET_DISPATCHED_DRONES
+ * @property {string} RECALL_DRONE
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
@@ -97,6 +98,7 @@ const QUERY_TYPE = {
   GET_EQUIPMENT_TYPES: "get-equipment-types",
   DISPATCH_DRONE: "dispatch-drone",
   GET_DISPATCHED_DRONES: "get-dispatched-drones",
+  RECALL_DRONE: "recall-drone",
 
   ADD_PROPERTY: "add-property",
   REMOVE_PROPERTY: "remove-property",

@@ -24,17 +24,15 @@ const updatePendingProperties = () => {
   Gateway.onReady(async () => {
     isFetching.value = true;
     const { properties: data } = await Gateway.execute(
-      Gateway.queries.GET_PENDING_PROPERTIES,
+      Gateway.queries.SEARCH_PENDING_PROPERTIES,
       {
         search: search.value,
         page: 1,
         limit: 10,
       }
-    ).then((res) => {
-      console.log(res);
-      properties.value = res;
-      return res;
-    });
+    );
+    console.log(data);
+    properties.value = data;
     isFetching.value = false;
     hasFetched.value = true;
   });
@@ -49,6 +47,9 @@ Gateway.subscribe(
   Gateway.events.PROPERTY_STATUS_CHANGE,
   updatePendingProperties
 );
+
+updatePendingProperties();
+
 </script>
 
 <template>

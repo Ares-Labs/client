@@ -43,6 +43,9 @@ const updateSearch = (e) => {
 };
 
 updateDrones();
+
+Gateway.subscribe(Gateway.events.DRONE_DISPATCHED, updateDrones);
+
 </script>
 
 <template>

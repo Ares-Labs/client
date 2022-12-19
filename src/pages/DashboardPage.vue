@@ -6,11 +6,21 @@ import HeaderWithoutLinks from "../components/Header/HeaderWithoutLinks.vue";
   <div class="wrapper">
     <main>
       <div>
-        <router-link to="/choose-property"><p>Manage Property</p></router-link>
-        <router-link to="/live-data"><p>Live Data</p></router-link>
-        <router-link to="/statistics"><p>Statistics</p></router-link>
-        <router-link to="/"><p>Map</p></router-link>
-        <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
+        <div class="link">
+          <router-link to="/choose-property"><p>Manage Property</p></router-link>
+        </div>
+        <div class="link">
+          <router-link to="/live-data"><p>Live Data</p></router-link>
+        </div>
+        <div class="link">
+          <router-link to="/statistics"><p>Statistics</p></router-link>
+        </div>
+        <div class="link">
+          <router-link to="/"><p>Map</p></router-link>
+        </div>
+        <div class="link">
+          <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
+        </div>
       </div>
     </main>
   </div>
@@ -18,8 +28,7 @@ import HeaderWithoutLinks from "../components/Header/HeaderWithoutLinks.vue";
 
 <style lang="scss" scoped>
 @import "src/assets/css/mixins.scss";
-
-$hover-color: #e8e8e8;
+@import "src/assets/css/app";
 
 .wrapper {
   width: 90%;
@@ -38,15 +47,21 @@ main {
   }
 
   p {
-    border: solid black;
-    padding: 6rem 9rem;
-    box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
-    transition: transform ease 0.5s;
-    border-radius: 0.3rem;
+    color: $dark;
+    font-weight: bold;
+    font-size: 2rem;
   }
 
-  p:hover {
-    @include hover;
+  .link {
+    border: 0.25rem solid $black;
+    padding: 6rem 7rem;
+    border-radius: $border-radius;
+    transition: transform ease 0.5s;
+    box-shadow: rgba(17, 17, 26, 0.1) 0 1px 0, rgba(17, 17, 26, 0.1) 0 8px 24px, rgba(17, 17, 26, 0.1) 0 16px 48px;
+    background: linear-gradient(20deg, $normal, $light);
+    &:hover {
+      @include hover;
+    }
   }
 }
 </style>

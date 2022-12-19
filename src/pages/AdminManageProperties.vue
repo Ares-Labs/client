@@ -38,6 +38,7 @@ const search = ref("");
 
 /** @type {DetailedProperty} */
 const selectedProperty = ref(null);
+const propertyDrones = ref([]);
 
 const hasFetched = ref(false);
 const isFetching = ref(true);
@@ -81,11 +82,20 @@ const setSelectedProperty = async (property) => {
   isFetching.value = true;
   selectedProperty.value = await getProperty(property.id);
   isFetching.value = false;
+  await updateDrones(property.id);
+};
+
+const updateDrones = async (propertyId) => {
+  propertyDrones.value = await Gateway.execute(
+    Gateway.queries.GET_FREE_DRONES,
+    { propertyId }
+  ).drones;
 };
 
 const clearSelectedProperty = async () => {
   await router.push({ name: "AdminManageProperties" });
   selectedProperty.value = null;
+  propertyDrones.value = [];
 };
 
 Gateway.onReady(async () => {
@@ -139,6 +149,14 @@ const removeEquipment = async (equipmentId) => {
     propertyId: selectedProperty.value.id,
   });
 };
+
+const dispatchDrone = async () => {
+  await Gateway.execute(Gateway.queries.DISPATCH_DRONE, {
+    propertyId: selectedProperty.value.id,
+  });
+
+  await updateDrones(selectedProperty.value.id);
+};
 </script>
 
 <template>
@@ -152,7 +170,15 @@ const removeEquipment = async (equipmentId) => {
       <h3>{{ selectedProperty.location }}</h3>
       <p>{{ selectedProperty.id }}</p>
       <p class="description">{{ selectedProperty.description }}</p>
-      <button class="dispatch-drone">
+      <!-- TODO: Resolve issue that it doesn't hide properly -->
+      <button
+        :class="{
+          'no-drones-available':
+            propertyDrones?.length !== undefined && propertyDrones.length === 0,
+        }"
+        class="dispatch-drone"
+        @click="dispatchDrone"
+      >
         <img alt="" src="@/assets/media/dispatch-drone.svg" />
         <span>Dispatch drone</span>
       </button>
@@ -222,9 +248,9 @@ const removeEquipment = async (equipmentId) => {
           <!--          <img alt="Change type" src="../assets/media/drop-down.svg" />-->
           <img
             alt="Remove"
-            @click="() => removeEquipment(equipment.id)"
             class="remove"
             src="../assets/media/remove.svg"
+            @click="() => removeEquipment(equipment.id)"
           />
         </div>
         <button class="add-equipment">
@@ -432,6 +458,11 @@ main {
       align-items: center;
       cursor: pointer;
 
+      &.no-drones-available {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
       span {
         color: $secondary;
         text-transform: uppercase;
@@ -463,10 +494,14 @@ main {
         display: block;
         text-align: left;
         font-weight: 700;
-        border: 0.2rem solid $dark;
         border-radius: $border-radius;
         padding: 0.25rem 0.5rem;
         color: $dark;
+      }
+
+      input,
+      #tier {
+        border: 0.2rem solid $dark;
       }
 
       input {

@@ -6,21 +6,11 @@ import HeaderWithoutLinks from "../components/Header/HeaderWithoutLinks.vue";
   <div class="wrapper">
     <main>
       <div>
-        <div class="link">
-          <router-link to="/choose-property"><p>Manage Property</p></router-link>
-        </div>
-        <div class="link">
-          <router-link to="/live-data"><p>Live Data</p></router-link>
-        </div>
-        <div class="link">
-          <router-link to="/statistics"><p>Statistics</p></router-link>
-        </div>
-        <div class="link">
-          <router-link to="/"><p>Map</p></router-link>
-        </div>
-        <div class="link">
-          <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
-        </div>
+        <router-link to="/choose-property"><p>Manage Property</p></router-link>
+        <router-link to="/live-data"><p>Live Data</p></router-link>
+        <router-link to="/statistics"><p>Statistics</p></router-link>
+        <router-link to="/map-page"><p>Map</p></router-link>
+        <router-link to="/pricing"><p>Pricing / Upgrade</p></router-link>
       </div>
     </main>
   </div>
@@ -50,10 +40,8 @@ main {
     color: $dark;
     font-weight: bold;
     font-size: 2rem;
-  }
 
-  .link {
-    border: 0.25rem solid $black;
+    border: 0.25rem solid $dark;
     padding: 6rem 7rem;
     border-radius: $border-radius;
     transition: transform ease 0.5s;

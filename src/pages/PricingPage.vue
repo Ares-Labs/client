@@ -90,11 +90,6 @@ import Header from "@/components/Header/Header.vue";
 
 @import "src/assets/css/mixins";
 
-main {
-  width: 90%;
-  margin: auto;
-}
-
 h1 {
   display: flex;
   justify-content: center;
@@ -113,7 +108,7 @@ h4 {
 article {
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
+  padding-bottom: 7rem;
 }
 
 .selected {

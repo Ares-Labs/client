@@ -1,17 +1,25 @@
 <script setup>
 import Gateway from "../../utils/events";
+import { ref } from "vue";
 
 const props = defineProps({
   name: String,
   identity: String,
 });
 
+const added = ref(false);
+
 function addUser(id) {
   Gateway.onReady( () => {
     Gateway.execute(Gateway.queries.ADD_ALLOWED_USER, {
       propertyId: propertyBeingManaged,
       userId: id
-    }).then(response => console.log(response))
+    }).then(response => {
+      console.log(response);
+      if (response.success) {
+        added.value = true
+      }
+    })
   });
 }
 
@@ -19,7 +27,7 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
 </script>
 
 <template>
-  <div class="to-be-added-user">
+  <div class="to-be-added-user" :class="{added: added}">
     <div class="to-be-added-user-info">
       <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
@@ -27,7 +35,10 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
         <p> ID: {{identity}} </p>
       </div>
     </div>
-    <a @click="addUser(identity)"><img src="/src/assets/media/plus-icon.svg" alt="plus"></a>
+    <a @click="() => !added ? addUser(identity) : null" :class="{btn: !added}">
+      <img v-if="added" src="/src/images/checkmark.png" alt="added">
+      <img v-else src="/src/assets/media/plus-icon.svg" alt="plus">
+    </a>
   </div>
 </template>
 
@@ -62,6 +73,10 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
   }
 }
 
+.added {
+  background-color: #0BDA51;
+}
+
 .to-be-added-user-info {
   display: flex;
 }
@@ -71,11 +86,12 @@ img {
   padding-left: 0.3rem;
 }
 
-a {
+.btn {
   transition: transform .2s;
 }
 
-a:hover {
+.btn:hover {
   transform: scale(1.25);
 }
+
 </style>

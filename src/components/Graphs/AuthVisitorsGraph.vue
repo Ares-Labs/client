@@ -9,13 +9,14 @@ Chart.register(CategoryScale);
 let userList = [];
 let accessTime = [];
 
+
 Gateway.onReady(() => {
   Gateway.execute(Gateway.queries.GET_AUTH_ENTRIES, {
     userId: Gateway.clientId,
     propertyId: 2,
   }).then((data) => {
     console.log(data.authEntries);
-
+    console.log(data.authEntries.length);
     data.authEntries.forEach(auth => {
       console.log(auth.user_id);
 
@@ -30,6 +31,7 @@ Gateway.onReady(() => {
   });
 });
 
+
 const data = {
   labels: userList,
   datasets: [{
@@ -40,7 +42,7 @@ const data = {
 };
 
 const config = {
-  type: "pie",
+  type: "line",
   data: data,
   options: {},
 };
@@ -48,11 +50,10 @@ const config = {
 onMounted(() => {
   try {
     const chart = new Chart(document.querySelector("#auth-visitors-graph"), config);
-  } catch (e) {
-    console.error("Failed to initialize chart", e);
+  } catch (err) {
+    console.error("Failed to initialize chart", err);
   }
 });
-
 
 // get date and time from timestamp
 function getDateTimeFromTimestamp(timestamp) {
@@ -90,7 +91,7 @@ function getDateTimeFromTimestamp(timestamp) {
 <template>
   <div>
     <h2>Authenticated Visitors That entered</h2>
-    <canvas id="auth-visitors-graph"></canvas>
+    <canvas id="auth-visitors-graph" width="400" height="500"></canvas>
   </div>
 </template>
 

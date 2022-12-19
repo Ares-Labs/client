@@ -6,7 +6,6 @@
 import View from "ol/View";
 import Map from "ol/Map";
 import TileLayer from "ol/layer/Tile";
-import OSM from "ol/source/OSM";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON";
@@ -48,7 +47,7 @@ export default {
       }),
     });
 
-    this.olMap.on("pointermove", (event) => {
+    /*this.olMap.on("pointermove", (event) => {
       const hovered = this.olMap.forEachFeatureAtPixel(
         event.pixel,
         (feature) => feature
@@ -58,7 +57,7 @@ export default {
       }
     });
 
-    this.updateSource(this.geojson);
+    this.updateSource(this.geojson);*/
   },
   watch: {
     geojson(value) {

@@ -43,12 +43,12 @@ export default {
         v-on:select="selected = $event"
       ></MapContainer>
     </div>
-    <div class="cell cell-edit">
+    <!--<div class="cell cell-edit">
       <Edit :geojson="geojson" v-on:change="geojson = $event"></Edit>
     </div>
     <div class="cell cell-inspect">
       <Inspect :feature="selected"></Inspect>
-    </div>
+    </div>-->
   </div>
 </template>
 

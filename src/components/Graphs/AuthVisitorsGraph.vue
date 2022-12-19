@@ -24,7 +24,7 @@ Gateway.onReady(() => {
         userId: auth.user_id,
       }).then((data) => {
         userList.push(data.fullName);
-        accessTime.push(getDateTimeFromTimestamp(auth.timestamp));
+        accessTime.push(auth.timestamp);
       });
 
     })
@@ -33,18 +33,27 @@ Gateway.onReady(() => {
 
 
 const data = {
-  labels: userList,
+  labels: accessTime,
   datasets: [{
     label: "Number of Daily Crimes",
     backgroundColor: "#f87979",
-    data: accessTime
+    data: userList
   }]
 };
 
 const config = {
   type: "line",
   data: data,
-  options: {},
+  options: {
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'day'
+        }
+      }
+    }
+  },
 };
 
 onMounted(() => {

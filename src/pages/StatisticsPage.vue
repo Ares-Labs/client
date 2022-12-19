@@ -11,7 +11,7 @@ import AuthVisitorsGraph from "../components/Graphs/AuthVisitorsGraph.vue";
   <div class="graphs">
     <BarChartGraph/>
     <daily-crime-line-graph/>
-    <!-- <AuthVisitorsGraph/> -->
+    <AuthVisitorsGraph/>
     <BarChartGraph/>
     <BarChartGraph/>
     <BarChartGraph/>

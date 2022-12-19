@@ -21,6 +21,8 @@ const QUERIES_PREFIX = "queries";
  * @property {string} PROPERTY_STATUS_CHANGE
  * @property {string} PROPERTY_EQUIPMENT_CHANGE
  * @property {string} REQUESTED_REMOVE_PROPERTY
+ * @property {string} DRONE_DISPATCHED
+ * @property {string} DRONE_RECALLED
  */
 
 /**
@@ -84,6 +86,8 @@ const EVENT_TYPE = {
   PROPERTY_STATUS_CHANGE: "property-status-change",
   PROPERTY_EQUIPMENT_CHANGE: "property-equipment-change",
   REQUESTED_REMOVE_PROPERTY: "requested-remove-property",
+  DRONE_DISPATCHED: "drone-dispatched",
+  DRONE_RECALLED: "drone-recalled",
 };
 
 /**

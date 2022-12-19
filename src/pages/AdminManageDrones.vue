@@ -15,7 +15,6 @@ function recallDrone(id) {
     await Gateway.execute(Gateway.queries.RECALL_DRONE, {
       droneId: id,
     });
-    updateDrones();
   });
 }
 
@@ -43,6 +42,10 @@ const updateSearch = (e) => {
 };
 
 updateDrones();
+
+Gateway.subscribe(Gateway.events.DRONE_DISPATCHED, updateDrones);
+Gateway.subscribe(Gateway.events.DRONE_RECALLED, updateDrones);
+
 </script>
 
 <template>

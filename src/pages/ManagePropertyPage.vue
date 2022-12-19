@@ -36,7 +36,7 @@ localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
       ></AllowedUser>
       <div id="addNewAllowedUser">
         <router-link :to="{ path: '/add-user/' + propertyBeingManaged }">
-          <img src="../assets/media/plus-icon.svg" alt="plus">
+          <img src="../assets/media/plus-icon.svg" alt="plus" >
         </router-link>
       </div>
     </div>
@@ -44,6 +44,7 @@ localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
 </template>
 
 <style lang="scss" scoped>
+@import "src/assets/css/mixins";
 
 h1 {
   display: flex;
@@ -60,6 +61,7 @@ h1 {
 }
 
 #addNewAllowedUser {
+
   border: solid black 0.1rem;
   width: 15rem;
   height: 5rem;
@@ -74,6 +76,7 @@ h1 {
     margin: 0 auto;
     height: 100%;
     width: 3rem;
+    @include img-hover;
   }
 }
 </style>

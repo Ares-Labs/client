@@ -175,7 +175,6 @@ updatePendingProperties();
         >
           <p>{{ property.id }}</p>
           <p>{{ property.description }}</p>
-          <p>{{ property.status }}</p>
           <img
             alt="see property info"
             src="../assets/media/info.svg"

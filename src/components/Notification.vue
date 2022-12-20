@@ -5,14 +5,14 @@ defineProps({
   name: String,
   description: String,
   time: String,
-  urgent: Boolean
+  urgent: Boolean,
 });
 </script>
 
 <template>
   <div v-if="urgent" class="urgent">
     <div class="main-noti">
-      <img src="/src/assets/media/profile.svg" alt="profile">
+      <img src="/src/assets/media/profile.svg" alt="profile" />
       <div>
         <p>{{ name }}</p>
         <p>{{ description }}</p>
@@ -21,20 +21,21 @@ defineProps({
     </div>
     <div class="actions">
       <a href="#" @click="infoNotification('Calling authorities')">
-        <div class="action" >
-          <img src="/src/assets/media/phone.svg" alt="phone-icon">
+        <div class="action">
+          <img src="/src/assets/media/phone.svg" alt="phone-icon" />
           <p>Call authorities</p>
         </div>
       </a>
       <a href="#">
         <div class="action">
-          <img src="/src/assets/media/view.svg" alt="arrow-left">
+          <img src="/src/assets/media/view.svg" alt="arrow-left" />
           <p>View Live</p>
         </div>
       </a>
+    </div>
   </div>
   <div v-else class="not-urgent">
-    <img src="/src/assets/media/profile.svg" alt="profile">
+    <img src="/src/assets/media/profile.svg" alt="profile" />
     <div>
       <p>{{ name }}</p>
       <p>{{ description }}</p>
@@ -82,7 +83,6 @@ img {
     flex-direction: column;
     margin: 0 2rem 0 1rem;
   }
-
 }
 
 .actions {
@@ -147,5 +147,4 @@ img {
 div:last-child {
   display: flex;
 }
-
 </style>

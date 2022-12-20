@@ -16,6 +16,7 @@ import StatisticsPage from "./pages/StatisticsPage.vue";
 import AdminManageUsers from "./pages/AdminManageUsers.vue";
 import MapPage from "./pages/MapPage.vue";
 import AdminManageDrones from "./pages/AdminManageDrones.vue";
+import AdminManagePendingProperties from "@/pages/AdminManagePendingProperties.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -33,7 +34,8 @@ const routes = [
   { path: "/statistics", component: StatisticsPage },
   { path: "/admin", redirect: "/admin/users" }, // Temporary redirect
   { path: "/admin/users", component: AdminManageUsers },
-  { path: "/admin/drones", component: AdminManageDrones}
+  { path: "/admin/drones", component: AdminManageDrones },
+  { path: "/admin/properties/pending", component: AdminManagePendingProperties },
 ];
 
 const router = createRouter({

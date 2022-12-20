@@ -18,6 +18,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} GET_CRIMES_IN_AREA
  * @property {string} SCANNED_VISITORS
  * @property {string} AUTH_ENTRIES
+ * @property {string} PROPERTY_ADDED
  * @property {string} PROPERTY_STATUS_CHANGE
  * @property {string} PROPERTY_EQUIPMENT_CHANGE
  * @property {string} REQUESTED_REMOVE_PROPERTY
@@ -83,6 +84,7 @@ const EVENT_TYPE = {
   GET_CRIMES_IN_AREA: "crimes",
   SCANNED_VISITORS: "scanned",
   AUTH_ENTRIES: "auth-entries",
+  PROPERTY_ADDED: "property-added",
   PROPERTY_STATUS_CHANGE: "property-status-change",
   PROPERTY_EQUIPMENT_CHANGE: "property-equipment-change",
   REQUESTED_REMOVE_PROPERTY: "requested-remove-property",

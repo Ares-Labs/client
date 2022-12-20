@@ -83,7 +83,6 @@ updatePendingProperties();
         >
           <p>{{ property.id }}</p>
           <p>{{ property.description }}</p>
-          <p>{{ property.status }}</p>
           <img
             alt="info"
             src="../assets/media/check-circle.svg"
@@ -170,7 +169,7 @@ main {
 
   .fetch {
     display: grid;
-    grid-template-columns: max-content 1fr 1fr min-content;
+    grid-template-columns: max-content 1fr min-content;
     grid-gap: 1rem;
 
     background-color: $secondary;

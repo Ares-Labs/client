@@ -12,7 +12,7 @@ const isFetching = ref(true);
 
 function approveRemoval(id) {
   Gateway.onReady(async () => {
-    await Gateway.execute(Gateway.queries.REMOVE_PROPERTY, {
+    await Gateway.execute(Gateway.queries.APPROVE_REMOVE_PROPERTY, {
       propertyId: id,
     });
   });
@@ -41,6 +41,7 @@ const updateSearch = (e) => {
 };
 
 Gateway.subscribe(Gateway.events.REQUESTED_REMOVE_PROPERTY, updateRemovalRequestProperties);
+Gateway.subscribe(Gateway.events.APPROVED_REMOVE_PROPERTY, updateRemovalRequestProperties);
 
 updateRemovalRequestProperties();
 </script>
@@ -50,7 +51,7 @@ updateRemovalRequestProperties();
     <AdminNavbar />
     <main>
       <div class="title">
-        <h1>Pending Properties</h1>
+        <h1>Requested properties for removal</h1>
         <div class="search">
           <img alt="search" src="../assets/media/magnifying-glass.svg" />
           <input placeholder="Search" type="text" @input="updateSearch" />
@@ -79,7 +80,6 @@ updateRemovalRequestProperties();
         >
           <p>{{ property.id }}</p>
           <p>{{ property.description }}</p>
-          <p>{{ property.status }}</p>
           <img
             alt="info"
             src="../assets/media/check-circle.svg"
@@ -166,7 +166,7 @@ main {
 
   .fetch {
     display: grid;
-    grid-template-columns: max-content 1fr 1fr min-content;
+    grid-template-columns: max-content 1fr min-content;
     grid-gap: 1rem;
 
     background-color: $secondary;

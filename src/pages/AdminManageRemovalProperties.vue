@@ -10,28 +10,25 @@ const search = ref("");
 const hasFetched = ref(false);
 const isFetching = ref(true);
 
-function approveProperty(id) {
+function approveRemoval(id) {
   Gateway.onReady(async () => {
-    await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_STATUS, {
+    await Gateway.execute(Gateway.queries.APPROVE_REMOVE_PROPERTY, {
       propertyId: id,
-      status: "APPROVED",
     });
   });
 }
 
-const updatePendingProperties = () => {
-  console.log(properties);
+const updateRemovalRequestProperties = () => {
   Gateway.onReady(async () => {
     isFetching.value = true;
     const { properties: data } = await Gateway.execute(
-      Gateway.queries.SEARCH_PENDING_PROPERTIES,
+      Gateway.queries.SEARCH_REMOVAL_PROPERTIES,
       {
         search: search.value,
         page: 1,
         limit: 10,
       }
     );
-    console.log(data);
     properties.value = data;
     isFetching.value = false;
     hasFetched.value = true;
@@ -40,13 +37,13 @@ const updatePendingProperties = () => {
 
 const updateSearch = (e) => {
   search.value = e.target.value;
-  updatePendingProperties();
+  updateRemovalRequestProperties();
 };
 
-Gateway.subscribe(Gateway.events.PROPERTY_STATUS_CHANGE, updatePendingProperties);
-Gateway.subscribe(Gateway.events.PROPERTY_ADDED, updatePendingProperties);
+Gateway.subscribe(Gateway.events.REQUESTED_REMOVE_PROPERTY, updateRemovalRequestProperties);
+Gateway.subscribe(Gateway.events.APPROVED_REMOVE_PROPERTY, updateRemovalRequestProperties);
 
-updatePendingProperties();
+updateRemovalRequestProperties();
 </script>
 
 <template>
@@ -54,7 +51,7 @@ updatePendingProperties();
     <AdminNavbar />
     <main>
       <div class="title">
-        <h1>Pending Properties</h1>
+        <h1>Requested properties for removal</h1>
         <div class="search">
           <img alt="search" src="../assets/media/magnifying-glass.svg" />
           <input placeholder="Search" type="text" @input="updateSearch" />
@@ -86,7 +83,7 @@ updatePendingProperties();
           <img
             alt="info"
             src="../assets/media/check-circle.svg"
-            @click="() => approveProperty(property.id)"
+            @click="() => approveRemoval(property.id)"
           />
         </div>
       </div>

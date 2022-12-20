@@ -58,6 +58,7 @@ function switchCamera() {
         <LiveCamera :camera="camera" />
         <button @click="switchCamera">switch cam</button>
       </div>
+
       <div id="notification-center">
         <Notification
           name="El Criminel"
@@ -97,8 +98,9 @@ function switchCamera() {
 </template>
 
 <style lang="scss" scoped>
-
 @import "src/assets/css/mixins";
+@import "src/assets/css/app";
+
 
 h1 {
   display: flex;
@@ -130,7 +132,7 @@ h1 {
 
 #notification-center {
   height: 35rem;
-  padding: 0 1rem;
+  padding: 2rem;
   overflow-y: auto;
 }
 </style>

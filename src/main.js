@@ -17,6 +17,7 @@ import AdminManageUsers from "./pages/AdminManageUsers.vue";
 import MapPage from "./pages/MapPage.vue";
 import AdminManageDrones from "./pages/AdminManageDrones.vue";
 import AdminManagePendingProperties from "@/pages/AdminManagePendingProperties.vue";
+import AdminManageRemovalProperties from "@/pages/AdminManageRemovalProperties.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -36,6 +37,7 @@ const routes = [
   { path: "/admin/users", component: AdminManageUsers },
   { path: "/admin/drones", component: AdminManageDrones },
   { path: "/admin/properties/pending", component: AdminManagePendingProperties },
+  { path: "/admin/properties/remove", component: AdminManageRemovalProperties },
 ];
 
 const router = createRouter({

@@ -6,7 +6,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 export default {
   name: 'BarChartGraph',
-  components: { Bar },
+  components: {Bar},
   computed: {
     myStyles() {
       return {
@@ -29,12 +29,15 @@ export default {
 };
 </script>
 <template>
-  <Bar
-      id="my-chart-id"
-      :style="myStyles"
-      :options="chartOptions"
-      :data="chartData"
-  />
+  <div>
+    <h2>Monthly visitors</h2>
+    <Bar
+        id="my-chart-id"
+        :style="myStyles"
+        :options="chartOptions"
+        :data="chartData"
+    />
+  </div>
 </template>
 
 <style scoped>

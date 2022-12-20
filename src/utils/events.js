@@ -21,6 +21,8 @@ const QUERIES_PREFIX = "queries";
  * @property {string} PROPERTY_STATUS_CHANGE
  * @property {string} PROPERTY_EQUIPMENT_CHANGE
  * @property {string} REQUESTED_REMOVE_PROPERTY
+ * @property {string} DRONE_DISPATCHED
+ * @property {string} DRONE_RECALLED
  */
 
 /**
@@ -32,6 +34,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} DISPATCH_DRONE
  * @property {string} GET_DISPATCHED_DRONES
  * @property {string} GET_FREE_DRONES
+ * @property {string} RECALL_DRONE
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
@@ -86,6 +89,8 @@ const EVENT_TYPE = {
   PROPERTY_STATUS_CHANGE: "property-status-change",
   PROPERTY_EQUIPMENT_CHANGE: "property-equipment-change",
   REQUESTED_REMOVE_PROPERTY: "requested-remove-property",
+  DRONE_DISPATCHED: "drone-dispatched",
+  DRONE_RECALLED: "drone-recalled",
 };
 
 /**
@@ -101,6 +106,7 @@ const QUERY_TYPE = {
   DISPATCH_DRONE: "dispatch-drone",
   GET_DISPATCHED_DRONES: "get-dispatched-drones",
   GET_FREE_DRONES: "get-free-drones",
+  RECALL_DRONE: "recall-drone",
 
   ADD_PROPERTY: "add-property",
   REMOVE_PROPERTY: "remove-property",

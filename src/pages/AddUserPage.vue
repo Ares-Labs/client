@@ -1,93 +1,96 @@
 <script setup>
 import Header from "../components/Header/Header.vue";
 import ToBeAddedUser from "@/components/users/ToBeAddedUser.vue";
+import Gateway from "@/utils/events";
+import { ref } from "vue";
 
 const propertyBeingManaged = window.location.pathname.split("/").pop();
+
+const users = ref([]);
+const search = ref("");
+
+const updateUsers = () => {
+  Gateway.onReady(async () => {
+    const { users: data } = await Gateway.execute(Gateway.queries.GET_USERS, {
+      search: search.value,
+      page: 1,
+      limit: 10,
+    });
+    users.value = data;
+  });
+};
+
+const updateSearch = (e) => {
+  search.value = e.target.value;
+  updateUsers();
+};
+
+updateUsers();
 </script>
 
 <template>
   <Header/>
   <main>
-    <aside id="recent-ppl" aria-label="recent-ppl">
-      <h2>Recent People</h2>
-      <div>
-        <ToBeAddedUser identity="9a0fbbc6-55f3-11ed-82ca-9313c9a89e82" name="John Doe"/>
-      </div>
-    </aside>
-
-    <article>
+    <div class="wrapper">
       <h1>Add a user</h1>
-      <label for="search-users">Search:</label>
-      <input id="search-users" type="search" placeholder="El criminel">
-      <div>
-        <ToBeAddedUser identity="b66e49ae-55f3-11ed-a877-6f6036c8577a" name="Jane Doe"/>
+      <div class="search">
+        <img alt="search" src="../assets/media/magnifying-glass.svg" />
+        <input placeholder="Search" type="text" @input="updateSearch" />
       </div>
-    </article>
-
-    <aside id="blacklist" aria-label="blacklist">
-      <h2>Blacklist</h2>
-      <div>
-        <ToBeAddedUser identity="bedb80fc-55f3-11ed-b681-07688aa63f8a" name="Frankenstein"/>
+      <div class="res">
+        <ToBeAddedUser
+          v-for="user in users"
+          :identity = user.id
+          :name = user.fullName>
+        </ToBeAddedUser>
       </div>
-    </aside>
+    </div>
   </main>
 </template>
 
 <style lang="scss" scoped>
+@import "../assets/css/app";
+
 main {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin-top: 7rem;
+  .wrapper {
+    width: 40%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    border: 0.2rem solid $dark;
+    border-radius: $border-radius;
+    padding: 0.1rem 0.5rem;
+    margin-bottom: 2rem;
+    width: 20rem;
+  }
+    input {
+      width: 20rem;
+      height: 2.5rem;
+      padding: 0 1rem;
+      color: $dark;
+      border: none;
+      border-radius: $border-radius;
+      outline: none;
+      font-size: $font-size-base;
+    }
+  .res {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
   margin-bottom: 3rem;
-}
-
-h2 {
-  font-size: 2rem;
-  margin-bottom: 5rem;
-  margin-top: 2rem;
-}
-
-input, label {
-  margin-bottom: 2rem;
-}
-
-article > div {
-  height: 35rem;
-  padding: 0 1rem;
-  overflow-y: auto;
-  div {
-    box-shadow: black 0 0.5rem 0.3rem 0.01rem;
-  }
-}
-
-#recent-ppl > div {
-  height: 35rem;
-  padding: 0 1rem;
-  overflow-y: auto;
-}
-
-#blacklist h2 {
-    text-align: end;
-  }
-
-#blacklist > div {
-  height: 35rem;
-  padding: 0 1rem;
-  overflow-y: auto;
-
-  div {
-    box-shadow: black 0.5rem 0.5rem 0.3rem 0.01rem;
-  }
-}
-
-#recent-ppl > div div {
-  box-shadow: black -0.5rem 0.5rem 0.3rem 0.01rem;
 }
 
 </style>

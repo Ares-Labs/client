@@ -23,19 +23,20 @@ function hide(e) {
 </template>
 
 <style lang="scss" scoped>
-
 @import "src/assets/css/mixins";
+@import "src/assets/css/app";
 
 .hidden {
   display: none;
 }
 
 .property {
+  color: $dark;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: normal;
-  border: solid black 0.1rem;
+  border: 0.25rem solid $dark;
   width: 20rem;
   height: 12rem;
   padding: 0.3rem;
@@ -43,12 +44,12 @@ function hide(e) {
   border-radius: 1rem;
   font-weight: bold;
   font-size: 2rem;
-  box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
+  box-shadow: rgba(17, 17, 26, 0.1) 0 1px 0, rgba(17, 17, 26, 0.1) 0 8px 24px, rgba(17, 17, 26, 0.1) 0 16px 48px;
+  background: linear-gradient(20deg, $normal, $light);
   transition: transform ease 0.5s;
-  background: #e8e8e8;
-  background-size: 0.4rem;
 
   a {
+    color: $dark;
     margin-top: 2.5rem;
   }
 
@@ -62,68 +63,15 @@ function hide(e) {
     width: 2rem;
     margin-left: 80%;
     margin-top: 0.5rem;
+    &:hover {
+      cursor: pointer;
+    }
   }
-
-  #delete:hover {
-    cursor: pointer;
+  &:hover {
+    @include hover;
   }
-
 }
 
-.property:hover {
-  @include hover;
-}
-
-
-// merge conflict start
-.hidden {
-  display: none;
-}
-
-.property {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: normal;
-  border: solid black 0.1rem;
-  width: 20rem;
-  height: 12rem;
-  padding: 0.3rem;
-  margin: 3rem;
-  border-radius: 1rem;
-  font-weight: bold;
-  font-size: 2rem;
-  box-shadow: black 0.1rem 0.1rem 1rem 0.1rem;
-  transition: transform ease 0.5s;
-  background: #e8e8e8;
-  background-size: 0.4rem;
-
-  a {
-    margin-top: 2.5rem;
-  }
-
-  div {
-    opacity: 0;
-    width: 0.5rem;
-    margin-top: 0.5rem;
-  }
-
-  #delete {
-    width: 2rem;
-    margin-left: 80%;
-    margin-top: 0.5rem;
-  }
-
-  #delete:hover {
-    cursor: pointer;
-  }
-
-}
-
-.property:hover {
-  @include hover;
-}
-// merge conflict end
 .pending {
   border: green dashed;
   background-image: none;

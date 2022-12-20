@@ -110,7 +110,7 @@ const exampleUsage = async () => {
   console.log(user_properties);
 };
 
-Gateway.onReady(exampleUsage);
+// Gateway.onReady(exampleUsage);
 
 Gateway.subscribe(Gateway.events.ALERTS, (data) => {
   console.log("Received alert:", data);

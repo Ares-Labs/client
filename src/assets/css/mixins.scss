@@ -11,6 +11,16 @@
   }
 }
 
+@mixin notification-open {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+@mixin notification-close {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
 @mixin button() {
   appearance: none;
   background-color: #FAFBFC;

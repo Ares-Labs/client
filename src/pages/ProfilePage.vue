@@ -2,6 +2,8 @@
 import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
 import Gateway from "../utils/events";
 import { onMounted, onUpdated, ref } from "vue";
+import Info from "@/components/Notification/Notification.vue";
+import Notification from "@/components/Notification/Notification.vue";
 
 onMounted(getUser);
 onUpdated(getUser);
@@ -22,6 +24,10 @@ function getUser() {
   });
 }
 
+function notify() {
+  document.querySelector(".alert").classList.remove("hidden")
+}
+
 </script>
 
 <template>
@@ -36,9 +42,7 @@ function getUser() {
           <p><strong>Payment:</strong> 0xD12fFe8b82b5978178da0aECd</p>
         </div>
         <div class="hor">
-          <button>
-            Update payment method
-          </button>
+          <button @click="notify">Update payment method</button>
           <button>
             <router-link to="/pricing">
               Update subscription
@@ -46,6 +50,7 @@ function getUser() {
           </button>
         </div>
       </div>
+      <notification text="Payment method updated"></notification>
     </main>
   </div>
 

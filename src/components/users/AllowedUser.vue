@@ -25,7 +25,7 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
       <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
         <p> {{name}} </p>
-        <p> ID: {{identity}} </p>
+        <p> <strong>ID:</strong> {{identity}} </p>
       </div>
     </div>
     <a @click="deleteUser(identity)" class="btn">
@@ -53,6 +53,10 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
   box-shadow: $dark 0 0.5rem 0.3rem 0.01rem;
   div {
     div {
+      p:first-child {
+        font-weight: bold;
+      }
+
       p:last-child {
         opacity: 50%;
         margin-top: 0.1rem;

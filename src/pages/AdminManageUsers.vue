@@ -3,6 +3,7 @@ import Gateway from "@/utils/events";
 import AdminNavbar from "../components/AdminNavbar.vue";
 import { OrbitSpinner } from "epic-spinners";
 import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 const users = ref([]);
 const search = ref("");
@@ -13,6 +14,9 @@ const isFetching = ref(true);
 const selectedUser = ref(null);
 const selectedUserProperties = ref(null);
 const isFetchingUserProperties = ref(false);
+
+const route = useRoute();
+const router = useRouter();
 
 const updateUsers = () => {
   Gateway.onReady(async () => {
@@ -34,6 +38,13 @@ const updateSearch = (e) => {
 };
 
 const setSelectedUser = async (user) => {
+  if (!route.params.id) {
+    await router.push({
+      name: "AdminManageUsersParams",
+      params: { id: user.id },
+    });
+  }
+
   selectedUser.value = user;
   isFetchingUserProperties.value = true;
   const { properties: data } = await Gateway.execute(
@@ -47,11 +58,22 @@ const setSelectedUser = async (user) => {
   isFetchingUserProperties.value = false;
 };
 
-const clearSelectedUser = () => {
+const clearSelectedUser = async () => {
+  await router.push({ name: "AdminManageUsers" });
   selectedUser.value = null;
   selectedUserProperties.value = null;
 };
 
+const handleRouteData = async () => {
+  const userId = route.params.id;
+
+  if (!userId) return;
+
+  const user = await Gateway.execute(Gateway.queries.GET_USER, { userId });
+  await setSelectedUser(user);
+};
+
+Gateway.onReady(handleRouteData);
 updateUsers();
 </script>
 
@@ -66,17 +88,27 @@ updateUsers();
       <div v-if="isFetchingUserProperties" class="center">
         <orbit-spinner :animation-duration="1200" :size="64" color="#1d3557" />
       </div>
-      <div v-else-if="!isFetchingUserProperties && !selectedUserProperties">
+      <div
+        v-else-if="
+          !isFetchingUserProperties && selectedUserProperties.length === 0
+        "
+      >
         <p>User does not have properties.</p>
       </div>
       <div
         v-for="property in selectedUserProperties"
+        v-else
         :key="property.id"
         class="property"
-        v-else
+        @click="
+          () =>
+            router.push({
+              name: 'AdminManagePropertiesParams',
+              params: { id: property.id },
+            })
+        "
       >
         <p>{{ property.location }}</p>
-        <!-- TODO: Wrap a router-link around this -->
         <img alt="info" src="../assets/media/info.svg" />
       </div>
     </div>
@@ -106,14 +138,16 @@ updateUsers();
             color="#F1FAEE"
           />
         </div>
-        <div v-for="user in users" v-else :key="user.id" class="fetch">
+        <div
+          v-for="user in users"
+          v-else
+          :key="user.id"
+          class="fetch"
+          @click="() => setSelectedUser(user)"
+        >
           <p>{{ user.id }}</p>
           <p>{{ user.fullName }}</p>
-          <img
-            alt="info"
-            src="../assets/media/info.svg"
-            @click="() => setSelectedUser(user)"
-          />
+          <img alt="info" src="../assets/media/info.svg" />
         </div>
       </div>
     </main>
@@ -198,6 +232,8 @@ main {
     grid-template-columns: max-content 1fr min-content;
     grid-gap: 1rem;
 
+    cursor: pointer;
+
     background-color: $secondary;
     border-radius: $border-radius;
 
@@ -273,6 +309,7 @@ main {
       padding: 0.5rem 1rem;
       margin-bottom: 1.5rem;
       border: 0.25rem solid $dark;
+      cursor: pointer;
 
       &:last-child {
         margin-bottom: 0;

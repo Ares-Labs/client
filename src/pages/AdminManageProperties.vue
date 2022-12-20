@@ -182,12 +182,14 @@ Gateway.subscribe(Gateway.events.PROPERTY_EQUIPMENT_CHANGE, (data) => {
     updatePropertyEquipment();
   }
 });
+
 Gateway.subscribe(Gateway.events.PROPERTY_SIZE_CHANGED, (data) => {
   if (data.propertyId === selectedProperty.value.id) {
     selectedProperty.value.width = data.width;
     selectedProperty.value.height = data.height;
   }
 });
+
 Gateway.subscribe(Gateway.events.PROPERTY_COORDINATES_CHANGED, (data) => {
   if (data.propertyId === selectedProperty.value.id) {
     selectedProperty.value.x = data.x;
@@ -196,6 +198,7 @@ Gateway.subscribe(Gateway.events.PROPERTY_COORDINATES_CHANGED, (data) => {
 });
 
 const refreshDrones = async () => await updateDrones(selectedProperty.value.id);
+
 Gateway.subscribe(Gateway.events.DRONE_DISPATCHED, refreshDrones);
 Gateway.subscribe(Gateway.events.DRONE_RECALLED, refreshDrones);
 
@@ -206,12 +209,14 @@ Gateway.subscribe(Gateway.events.PROPERTY_TIER_CHANGED, (data) => {
 });
 
 Gateway.onReady(handleRouteData);
+
 Gateway.onReady(async () => {
   equipment_types.value = (
     await Gateway.execute(Gateway.queries.GET_EQUIPMENT_TYPES)
   ).equipmentTypes;
   selectedEquipmentType.value = equipment_types.value[0].type;
 });
+
 updateProperties();
 </script>
 
@@ -330,7 +335,6 @@ updateProperties();
             {{ equipment.name }}
             {{ !!equipment.description ? `| ${equipment.description}` : "" }}
           </p>
-          <!--          <img alt="Change type" src="../assets/media/drop-down.svg" />-->
           <img
             alt="Remove"
             class="remove"

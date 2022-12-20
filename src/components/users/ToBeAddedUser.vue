@@ -2,7 +2,7 @@
 import Gateway from "../../utils/events";
 import { ref } from "vue";
 
-const props = defineProps({
+defineProps({
   name: String,
   identity: String,
 });
@@ -17,7 +17,7 @@ function addUser(id) {
     }).then(response => {
       console.log(response);
       if (response.success) {
-        added.value = true
+        added.value = true;
       }
     })
   });

@@ -4,25 +4,27 @@ import AdminNavbar from "../components/AdminNavbar.vue";
 import { OrbitSpinner } from "epic-spinners";
 import { ref } from "vue";
 
-const drones = ref([]);
+const properties = ref([]);
 const search = ref("");
 
 const hasFetched = ref(false);
 const isFetching = ref(true);
 
-function recallDrone(id) {
+function approveProperty(id) {
   Gateway.onReady(async () => {
-    await Gateway.execute(Gateway.queries.RECALL_DRONE, {
-      droneId: id,
+    await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_STATUS, {
+      propertyId: id,
+      status: "APPROVED",
     });
   });
 }
 
-const updateDrones = () => {
+const updatePendingProperties = () => {
+  console.log(properties);
   Gateway.onReady(async () => {
     isFetching.value = true;
-    const { drones: data } = await Gateway.execute(
-      Gateway.queries.GET_DISPATCHED_DRONES,
+    const { properties: data } = await Gateway.execute(
+      Gateway.queries.SEARCH_PENDING_PROPERTIES,
       {
         search: search.value,
         page: 1,
@@ -30,7 +32,7 @@ const updateDrones = () => {
       }
     );
     console.log(data);
-    drones.value = data;
+    properties.value = data;
     isFetching.value = false;
     hasFetched.value = true;
   });
@@ -38,14 +40,13 @@ const updateDrones = () => {
 
 const updateSearch = (e) => {
   search.value = e.target.value;
-  updateDrones();
+  updatePendingProperties();
 };
 
-updateDrones();
+Gateway.subscribe(Gateway.events.PROPERTY_STATUS_CHANGE, updatePendingProperties);
+Gateway.subscribe(Gateway.events.PROPERTY_ADDED, updatePendingProperties);
 
-Gateway.subscribe(Gateway.events.DRONE_DISPATCHED, updateDrones);
-Gateway.subscribe(Gateway.events.DRONE_RECALLED, updateDrones);
-
+updatePendingProperties();
 </script>
 
 <template>
@@ -53,7 +54,7 @@ Gateway.subscribe(Gateway.events.DRONE_RECALLED, updateDrones);
     <AdminNavbar />
     <main>
       <div class="title">
-        <h1>Dispatched Drones</h1>
+        <h1>Pending Properties</h1>
         <div class="search">
           <img alt="search" src="../assets/media/magnifying-glass.svg" />
           <input placeholder="Search" type="text" @input="updateSearch" />
@@ -62,10 +63,10 @@ Gateway.subscribe(Gateway.events.DRONE_RECALLED, updateDrones);
 
       <div id="data">
         <div
-          v-if="hasFetched && !isFetching && drones.length === 0"
+          v-if="hasFetched && !isFetching && properties.length === 0"
           class="center big-text"
         >
-          <h2>No matching drones found</h2>
+          <h2>No matching properties found</h2>
         </div>
         <div v-else-if="isFetching" class="center">
           <orbit-spinner
@@ -74,13 +75,19 @@ Gateway.subscribe(Gateway.events.DRONE_RECALLED, updateDrones);
             color="#F1FAEE"
           />
         </div>
-        <div v-for="drone in drones" v-else :key="drone.id" class="fetch">
-          <p>{{ drone.id }}</p>
-          <p>{{ drone.description }}</p>
+        <div
+          v-for="property in properties"
+          v-else
+          :key="property.id"
+          class="fetch"
+        >
+          <p>{{ property.id }}</p>
+          <p>{{ property.description }}</p>
+          <p>{{ property.status }}</p>
           <img
             alt="info"
-            src="../assets/media/return.svg"
-            @click="() => recallDrone(drone.id)"
+            src="../assets/media/check-circle.svg"
+            @click="() => approveProperty(property.id)"
           />
         </div>
       </div>
@@ -163,7 +170,7 @@ main {
 
   .fetch {
     display: grid;
-    grid-template-columns: max-content 1fr min-content;
+    grid-template-columns: max-content 1fr 1fr min-content;
     grid-gap: 1rem;
 
     background-color: $secondary;

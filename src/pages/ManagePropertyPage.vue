@@ -45,6 +45,7 @@ localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
 
 <style lang="scss" scoped>
 @import "src/assets/css/mixins";
+@import "src/assets/css/app";
 
 h1 {
   display: flex;
@@ -61,15 +62,14 @@ h1 {
 }
 
 #addNewAllowedUser {
-
-  border: solid black 0.1rem;
+  border: 0.15rem solid $dark;
   width: 15rem;
   height: 5rem;
   padding: 0.3rem;
   margin: 3rem;
   border-radius: 1rem;
   background-color: #e8e8e8;
-
+  box-shadow: $dark 0 0.5rem 0.3rem 0.01rem;
   img {
     display: block;
     align-items: center;

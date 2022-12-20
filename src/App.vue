@@ -1,6 +1,6 @@
 <script setup>
 import Gateway from "./utils/events";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 
 if (!Gateway.isInitialized) {
   const defaultId = "9a0fbbc6-55f3-11ed-82ca-9313c9a89e82";
@@ -24,7 +24,12 @@ const exampleUsage = async () => {
   });
 
   const { pendingProperties } = await Gateway.execute(
-    Gateway.queries.GET_PENDING_PROPERTIES
+    Gateway.queries.GET_PENDING_PROPERTIES,
+    {
+      search: "",
+      page: 1,
+      limit: 10,
+    }
   );
 
   const prop = pendingProperties[pendingProperties.length - 1];
@@ -117,7 +122,6 @@ const urlEndsWithNumber = window.location.pathname.split("/").pop();
 if (urlEndsWithNumber) {
   localStorage.setItem("propertyBeingManaged", parseInt(urlEndsWithNumber));
 }
-
 </script>
 
 <template>

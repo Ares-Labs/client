@@ -44,19 +44,20 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
 
 <style lang="scss" scoped>
 @import "src/assets/css/mixins";
+@import "src/assets/css/app";
 
 .to-be-added-user {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: solid black 0.1rem;
+  border: 0.15rem solid $dark;
   width: 20rem;
   height: 3rem;
   padding: 0.3rem;
   margin-bottom: 1.5rem;
   border-radius: 1rem;
   background-color: #e8e8e8;
-
+  box-shadow: $dark 0 0.5rem 0.3rem 0.01rem;
   div {
     div {
       p:last-child {
@@ -86,6 +87,7 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
 img {
   width: 2rem;
   padding-left: 0.3rem;
+  margin-right: 1rem;
 }
 
 .btn {

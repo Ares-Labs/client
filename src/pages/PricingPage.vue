@@ -23,7 +23,7 @@ import Header from "@/components/Header/Header.vue";
         </div>
       </div>
       <div id="basic-plan-wrapper">
-        <p>current</p>
+        <p class="current">current</p>
         <div>
           <h3>Basic</h3>
           <div>
@@ -43,8 +43,8 @@ import Header from "@/components/Header/Header.vue";
 
       </div>
       <div id="premium-plan-wrapper">
-        <p class="hidden">current</p>
-        <p>Select Plan</p>
+        <p class="hiddenRemove">current</p>
+        <p class="recommended">Recommended</p>
         <div>
           <h3>Premium</h3>
           <div>
@@ -63,7 +63,7 @@ import Header from "@/components/Header/Header.vue";
         <button>Select Plan</button>
       </div>
       <div id="optimum-plan-wrapper">
-        <p>current</p>
+        <p class="current hiddenVisibility">current</p>
         <div>
           <h3>Optimum</h3>
           <div>
@@ -90,10 +90,6 @@ import Header from "@/components/Header/Header.vue";
 
 @import "src/assets/css/mixins";
 
-.hidden {
-  display: none;
-}
-
 h1 {
   display: flex;
   justify-content: center;
@@ -112,11 +108,14 @@ h4 {
 article {
   display: flex;
   justify-content: center;
-  margin-bottom: 7rem;
+  padding-bottom: 7rem;
 }
 
 .selected {
-  background-color: black;
+  background-color: #7ca1b9;
+  padding: 0.1rem;
+  margin: -0.2rem;
+  border-radius: 0.3rem;
   color: white;
 }
 
@@ -139,23 +138,41 @@ button {
   text-align: center;
 }
 
+.current {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  margin-top: 1rem;
+  opacity: 50%;
+  font-weight: bold;
+
+}
+.recommended {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #485d76;
+}
+
 #optimum-plan-wrapper {
-  border-radius: 0 0.3rem 0.3rem 0;
+  border-radius: 0 0.8rem 0.8rem 0;
 }
 
 #basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
-  border: solid black;
+  border: solid #485d76;
   border-left: none;
 }
 
 #select-plan-wrapper {
-  border: solid black;
-  border-radius: 0.3rem 0 0 0.3rem;
-  padding: 3rem 3rem 2rem 3rem;
+  border: solid #485d76;
+  border-radius: 0.8rem 0 0 0.8rem;
+  padding: 3rem 3rem 2rem 3rem; // size of the select plan box (left side)
 }
 
 #select-plan-wrapper h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 #select-plan-wrapper div:last-of-type {
@@ -168,8 +185,8 @@ button {
 
 #select-plan-wrapper div:first-of-type {
     display: flex;
-    margin-bottom: 3.75rem;
-    border: solid black 0.2rem;
+    margin-bottom: 8rem;
+    border: solid #485d76 0.2rem;
     border-radius: 0.5rem;
     padding: 0.5rem;
 
@@ -180,12 +197,17 @@ button {
     }
   }
 
+#basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
+
+}
 #basic-plan-wrapper div:first-of-type,
 #premium-plan-wrapper div:first-of-type,
 #optimum-plan-wrapper div:first-of-type {
-  background-color: #e8e8e8;
+  background-color: #7ca1b9;
+  border-radius: 2rem;
+  margin: 1vw;
   text-align: center;
-  padding: 1rem 6rem;
+  padding: 1rem 3vw;  // size of the plan boxes
 
   p:nth-child(3) {
     opacity: 40%;

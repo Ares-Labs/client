@@ -4,6 +4,7 @@ import AdminNavbar from "../components/AdminNavbar.vue";
 import { OrbitSpinner } from "epic-spinners";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { successNotification, errorNotification } from "@/utils/notifications";
 
 /**
  * An object representing equipment.
@@ -86,9 +87,8 @@ const setSelectedProperty = async (property) => {
 };
 
 const updateDrones = async (propertyId) => {
-  propertyDrones.value = await Gateway.execute(
-    Gateway.queries.GET_FREE_DRONES,
-    { propertyId }
+  propertyDrones.value = (
+    await Gateway.execute(Gateway.queries.GET_FREE_DRONES, { propertyId })
   ).drones;
 };
 
@@ -156,6 +156,7 @@ const dispatchDrone = async () => {
   });
 
   await updateDrones(selectedProperty.value.id);
+  successNotification("Successfully dispatched drone");
 };
 </script>
 
@@ -170,14 +171,15 @@ const dispatchDrone = async () => {
       <h3>{{ selectedProperty.location }}</h3>
       <p>{{ selectedProperty.id }}</p>
       <p class="description">{{ selectedProperty.description }}</p>
-      <!-- TODO: Resolve issue that it doesn't hide properly -->
       <button
-        :class="{
-          'no-drones-available':
-            propertyDrones?.length !== undefined && propertyDrones.length === 0,
-        }"
+        :class="{ 'no-drones-available': propertyDrones.length === 0 }"
         class="dispatch-drone"
-        @click="dispatchDrone"
+        @click="
+          () =>
+            propertyDrones.length === 0
+              ? errorNotification('No drones available')
+              : dispatchDrone()
+        "
       >
         <img alt="" src="@/assets/media/dispatch-drone.svg" />
         <span>Dispatch drone</span>

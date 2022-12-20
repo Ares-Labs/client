@@ -1,7 +1,9 @@
 import "./assets/css/reset.css";
+import "vue-toastification/dist/index.css";
 
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import Toast from "vue-toastification";
 
 import App from "./App.vue";
 import DashboardPage from "./pages/DashboardPage.vue";
@@ -13,9 +15,11 @@ import AddPropertyPage from "./pages/AddPropertyPage.vue";
 import PricingPage from "./pages/PricingPage.vue";
 import ProfilePage from "./pages/ProfilePage.vue";
 import StatisticsPage from "./pages/StatisticsPage.vue";
-import AdminManageUsers from "./pages/AdminManageUsers.vue";
 import MapPage from "./pages/MapPage.vue";
+import AdminManageUsers from "./pages/AdminManageUsers.vue";
+import AdminManageProperties from "./pages/AdminManageProperties.vue";
 import AdminManageDrones from "./pages/AdminManageDrones.vue";
+import AdminManagePendingProperties from "@/pages/AdminManagePendingProperties.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -32,8 +36,28 @@ const routes = [
   { path: "/map-page", component: MapPage },
   { path: "/statistics", component: StatisticsPage },
   { path: "/admin", redirect: "/admin/users" }, // Temporary redirect
-  { path: "/admin/users", component: AdminManageUsers },
-  { path: "/admin/drones", component: AdminManageDrones}
+  { path: "/admin/drones", component: AdminManageDrones },
+  { path: "/admin/properties/pending", component: AdminManagePendingProperties },
+  {
+    name: "AdminManageUsers",
+    path: "/admin/users",
+    component: AdminManageUsers,
+  },
+  {
+    name: "AdminManageUsersParams",
+    path: "/admin/users/:id",
+    component: AdminManageUsers,
+  },
+  {
+    name: "AdminManageProperties",
+    path: "/admin/properties",
+    component: AdminManageProperties,
+  },
+  {
+    name: "AdminManagePropertiesParams",
+    path: "/admin/properties/:id",
+    component: AdminManageProperties,
+  },
 ];
 
 const router = createRouter({
@@ -47,3 +71,8 @@ const router = createRouter({
 const app = createApp(App);
 app.use(router);
 app.mount("#app");
+app.use(Toast, {
+  transition: "Vue-Toastification__bounce",
+  maxToasts: 20,
+  newestOnTop: true,
+});

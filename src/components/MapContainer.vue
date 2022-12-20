@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import Point from "ol/geom/Point";
+import Feature from "ol/Feature";
 import View from "ol/View";
 import Map from "ol/Map";
 import TileLayer from "ol/layer/Tile";
@@ -11,6 +13,8 @@ import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON";
 import XYZSource from "ol/source/XYZ";
 import "ol/ol.css";
+import { fromLonLat } from "ol/proj";
+import { Icon, Style } from "ol/style";
 
 export default {
   name: "MapContainer",
@@ -35,36 +39,23 @@ export default {
       layers: [
         new TileLayer({
           source: new XYZSource({
-            url: 'https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/all/{z}/{x}/{y}.png'
+            url: "https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-2/all/{z}/{x}/{y}.png",
           }),
         }),
         this.vectorLayer,
       ],
       view: new View({
-        zoom: 0,
+        zoom: 2,
         center: [0, 0],
         constrainResolution: true,
       }),
     });
-
-    /*this.olMap.on("pointermove", (event) => {
-      const hovered = this.olMap.forEachFeatureAtPixel(
-        event.pixel,
-        (feature) => feature
-      );
-      if (hovered !== this.selectedFeature) {
-        this.$set(this, "selectedFeature", hovered);
-      }
-    });
-
-    this.updateSource(this.geojson);*/
+    this.updateSource(this.geojson);
+    this.addMarker(fromLonLat([0, -40]));
   },
   watch: {
     geojson(value) {
       this.updateSource(value);
-    },
-    selectedFeature(value) {
-      this.$emit("select", value);
     },
   },
   methods: {
@@ -81,7 +72,21 @@ export default {
 
       view.fit(source.getExtent());
     },
+    addMarker(coordinates) {
+      const marker = new Feature({
+        geometry: new Point(coordinates),
+      });
+
+      marker.setStyle(
+        new Style({
+          image: new Icon({
+            src: "https://openlayers.org/en/v4.6.5/examples/data/icon.png",
+          }),
+        })
+      );
+
+      this.vectorLayer.getSource().addFeature(marker);
+    },
   },
 };
 </script>
-

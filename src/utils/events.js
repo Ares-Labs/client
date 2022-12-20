@@ -1,5 +1,6 @@
 import EventBus from "vertx3-eventbus-client";
 import { v4 as uuid } from "uuid";
+import { errorNotification, warningNotification } from "@/utils/notifications";
 
 const INBOUND_CHNL = "events.to.martians";
 const OUTBOUND_CHNL = "events.from.martians";
@@ -18,11 +19,15 @@ const QUERIES_PREFIX = "queries";
  * @property {string} GET_CRIMES_IN_AREA
  * @property {string} SCANNED_VISITORS
  * @property {string} AUTH_ENTRIES
+ * @property {string} PROPERTY_ADDED
  * @property {string} PROPERTY_STATUS_CHANGE
  * @property {string} PROPERTY_EQUIPMENT_CHANGE
  * @property {string} REQUESTED_REMOVE_PROPERTY
  * @property {string} DRONE_DISPATCHED
  * @property {string} DRONE_RECALLED
+ * @property {string} PROPERTY_COORDINATES_CHANGED
+ * @property {string} PROPERTY_SIZE_CHANGED
+ * @property {string} PROPERTY_TIER_CHANGED
  */
 
 /**
@@ -33,15 +38,18 @@ const QUERIES_PREFIX = "queries";
  * @property {string} GET_EQUIPMENT_TYPES
  * @property {string} DISPATCH_DRONE
  * @property {string} GET_DISPATCHED_DRONES
+ * @property {string} GET_FREE_DRONES
  * @property {string} RECALL_DRONE
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
+ * @property {string} GET_PROPERTY_DETAILED
  * @property {string} GET_PROPERTIES
  * @property {string} SEARCH_PENDING_PROPERTIES
  * @property {string} SEARCH_REMOVAL_PROPERTIES
  * @property {string} CHANGE_PROPERTY_STATUS
  * @property {string} CHANGE_PROPERTY_SIZE
+ * @property {string} CHANGE_PROPERTY_COORDINATES
  * @property {string} GET_PENDING_PROPERTIES
  * @property {string} ADD_EQUIPMENT_PROPERTY
  * @property {string} REMOVE_EQUIPMENT_PROPERTY
@@ -83,11 +91,15 @@ const EVENT_TYPE = {
   GET_CRIMES_IN_AREA: "crimes",
   SCANNED_VISITORS: "scanned",
   AUTH_ENTRIES: "auth-entries",
+  PROPERTY_ADDED: "property-added",
   PROPERTY_STATUS_CHANGE: "property-status-change",
   PROPERTY_EQUIPMENT_CHANGE: "property-equipment-change",
   REQUESTED_REMOVE_PROPERTY: "requested-remove-property",
   DRONE_DISPATCHED: "drone-dispatched",
   DRONE_RECALLED: "drone-recalled",
+  PROPERTY_COORDINATES_CHANGED: "property-coordinates-changed",
+  PROPERTY_SIZE_CHANGED: "property-size-changed",
+  PROPERTY_TIER_CHANGED: "property-tier-changed",
 };
 
 /**
@@ -102,14 +114,17 @@ const QUERY_TYPE = {
   GET_EQUIPMENT_TYPES: "get-equipment-types",
   DISPATCH_DRONE: "dispatch-drone",
   GET_DISPATCHED_DRONES: "get-dispatched-drones",
+  GET_FREE_DRONES: "get-free-drones",
   RECALL_DRONE: "recall-drone",
 
   ADD_PROPERTY: "add-property",
   REMOVE_PROPERTY: "remove-property",
   GET_PROPERTY: "get-property",
+  GET_PROPERTY_DETAILED: "get-property-detailed",
   GET_PROPERTIES: "get-properties",
   CHANGE_PROPERTY_STATUS: "change-property-status",
   CHANGE_PROPERTY_SIZE: "change-property-size",
+  CHANGE_PROPERTY_COORDINATES: "change-property-coordinates",
   GET_PENDING_PROPERTIES: "get-pending-properties",
   ADD_EQUIPMENT_PROPERTY: "add-equipment-property",
   REMOVE_EQUIPMENT_PROPERTY: "remove-equipment-property",
@@ -217,42 +232,6 @@ class Gateway {
   }
 
   /**
-   * Define the id of the user that is currently "signed in".
-   *
-   * @param {string} id The ID of the user
-   * @returns {void}
-   */
-  init(id) {
-    if (this.#isInitialized) {
-      throw new Error("Gateway is already initialized");
-    }
-
-    this.#id = id;
-    this.#isInitialized = true;
-    this.#eb = new EventBus(this.#url);
-    this.#subscribers = {};
-    this.#requestIdentifiers = {};
-    this.#inbound = `${INBOUND_CHNL}.${this.#id}`;
-    this.#outbound = `${OUTBOUND_CHNL}.${this.#id}`;
-
-    this.#eb.onopen = () => {
-      this.#isConnectionOpen = true;
-      this.#registerHandler(this.#inbound, this.#onMessage);
-
-      this.#executeQuery(OUTBOUND_CHNL, "session", { id: this.#id }).then(
-        () => {
-          this.#connIsReady = true;
-          Object.keys(this.#subscribers)
-            .filter((event) => event !== this.allEvents)
-            .forEach((event) => this.#subscribe(event));
-
-          this.#onReadyEvents.forEach((event) => event());
-        }
-      );
-    };
-  }
-
-  /**
    * Get whether the Gateway has been initialized.
    *
    * @returns {boolean} Whether the Gateway has been initialized.
@@ -305,6 +284,42 @@ class Gateway {
    */
   get clientId() {
     return this.#id;
+  }
+
+  /**
+   * Define the id of the user that is currently "signed in".
+   *
+   * @param {string} id The ID of the user
+   * @returns {void}
+   */
+  init(id) {
+    if (this.#isInitialized) {
+      throw new Error("Gateway is already initialized");
+    }
+
+    this.#id = id;
+    this.#isInitialized = true;
+    this.#eb = new EventBus(this.#url);
+    this.#subscribers = {};
+    this.#requestIdentifiers = {};
+    this.#inbound = `${INBOUND_CHNL}.${this.#id}`;
+    this.#outbound = `${OUTBOUND_CHNL}.${this.#id}`;
+
+    this.#eb.onopen = () => {
+      this.#isConnectionOpen = true;
+      this.#registerHandler(this.#inbound, this.#onMessage);
+
+      this.#executeQuery(OUTBOUND_CHNL, "session", { id: this.#id }).then(
+        () => {
+          this.#connIsReady = true;
+          Object.keys(this.#subscribers)
+            .filter((event) => event !== this.allEvents)
+            .forEach((event) => this.#subscribe(event));
+
+          this.#onReadyEvents.forEach((event) => event());
+        }
+      );
+    };
   }
 
   /**
@@ -395,21 +410,20 @@ class Gateway {
    */
   #onMessage(error, message) {
     if (error) {
-      // TODO: return error
+      errorNotification(`An error occurred: ${error}`);
       return;
     }
 
     const { type, data } = message.body;
 
     if (type === undefined || data === undefined) {
-      // Invalid event
+      warningNotification(`Invalid event received: ${message.body}`);
       return;
     }
 
     if (type === "error") {
-      // Event returned error.
-      // TODO: Make error visible for frontend
       console.error(data.message);
+      errorNotification(data.message);
       return;
     }
 

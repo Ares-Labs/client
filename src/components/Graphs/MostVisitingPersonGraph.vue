@@ -10,8 +10,7 @@ const data = {
   labels: ["John Doe", "Mister Bean", "Jane Sanders", "John Smith", "Jane Doe", "Jeffrey Dahmer", "Jane Smith"],
   datasets: [{
     label: "Amount of visits",
-    backgroundColor: randomRGB(),
-    data: [9, 23, 12, 3, 7, 34, 3]
+    data: [{value: 9, color: randomRGB()}, {value: 23, color: randomRGB()}, {value: 12, color:randomRGB()}, {value: 3, color:randomRGB()}, {value: 7, color: randomRGB()}, {value: 34, color: randomRGB()}, {value: 3, color: randomRGB()}]
   }]
 };
 

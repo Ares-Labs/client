@@ -18,9 +18,12 @@ const QUERIES_PREFIX = "queries";
  * @property {string} GET_CRIMES_IN_AREA
  * @property {string} SCANNED_VISITORS
  * @property {string} AUTH_ENTRIES
+ * @property {string} PROPERTY_ADDED
  * @property {string} PROPERTY_STATUS_CHANGE
  * @property {string} PROPERTY_EQUIPMENT_CHANGE
  * @property {string} REQUESTED_REMOVE_PROPERTY
+ * @property {string} DRONE_DISPATCHED
+ * @property {string} DRONE_RECALLED
  */
 
 /**
@@ -31,6 +34,7 @@ const QUERIES_PREFIX = "queries";
  * @property {string} GET_EQUIPMENT_TYPES
  * @property {string} DISPATCH_DRONE
  * @property {string} GET_DISPATCHED_DRONES
+ * @property {string} RECALL_DRONE
  * @property {string} ADD_PROPERTY
  * @property {string} REMOVE_PROPERTY
  * @property {string} GET_PROPERTY
@@ -80,9 +84,12 @@ const EVENT_TYPE = {
   GET_CRIMES_IN_AREA: "crimes",
   SCANNED_VISITORS: "scanned",
   AUTH_ENTRIES: "auth-entries",
+  PROPERTY_ADDED: "property-added",
   PROPERTY_STATUS_CHANGE: "property-status-change",
   PROPERTY_EQUIPMENT_CHANGE: "property-equipment-change",
   REQUESTED_REMOVE_PROPERTY: "requested-remove-property",
+  DRONE_DISPATCHED: "drone-dispatched",
+  DRONE_RECALLED: "drone-recalled",
 };
 
 /**
@@ -97,6 +104,7 @@ const QUERY_TYPE = {
   GET_EQUIPMENT_TYPES: "get-equipment-types",
   DISPATCH_DRONE: "dispatch-drone",
   GET_DISPATCHED_DRONES: "get-dispatched-drones",
+  RECALL_DRONE: "recall-drone",
 
   ADD_PROPERTY: "add-property",
   REMOVE_PROPERTY: "remove-property",

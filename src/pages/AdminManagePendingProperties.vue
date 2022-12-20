@@ -4,25 +4,35 @@ import AdminNavbar from "../components/AdminNavbar.vue";
 import { OrbitSpinner } from "epic-spinners";
 import { ref } from "vue";
 
-const users = ref([]);
+const properties = ref([]);
 const search = ref("");
 
 const hasFetched = ref(false);
 const isFetching = ref(true);
 
-const selectedUser = ref(null);
-const selectedUserProperties = ref(null);
-const isFetchingUserProperties = ref(false);
+function approveProperty(id) {
+  Gateway.onReady(async () => {
+    await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_STATUS, {
+      propertyId: id,
+      status: "APPROVED",
+    });
+  });
+}
 
-const updateUsers = () => {
+const updatePendingProperties = () => {
+  console.log(properties);
   Gateway.onReady(async () => {
     isFetching.value = true;
-    const { users: data } = await Gateway.execute(Gateway.queries.GET_USERS, {
-      search: search.value,
-      page: 1,
-      limit: 10,
-    });
-    users.value = data;
+    const { properties: data } = await Gateway.execute(
+      Gateway.queries.SEARCH_PENDING_PROPERTIES,
+      {
+        search: search.value,
+        page: 1,
+        limit: 10,
+      }
+    );
+    console.log(data);
+    properties.value = data;
     isFetching.value = false;
     hasFetched.value = true;
   });
@@ -30,62 +40,21 @@ const updateUsers = () => {
 
 const updateSearch = (e) => {
   search.value = e.target.value;
-  updateUsers();
+  updatePendingProperties();
 };
 
-const setSelectedUser = async (user) => {
-  selectedUser.value = user;
-  isFetchingUserProperties.value = true;
-  const { properties: data } = await Gateway.execute(
-    Gateway.queries.GET_USER_PROPERTIES,
-    {
-      userId: user.id,
-    }
-  );
+Gateway.subscribe(Gateway.events.PROPERTY_STATUS_CHANGE, updatePendingProperties);
+Gateway.subscribe(Gateway.events.PROPERTY_ADDED, updatePendingProperties);
 
-  selectedUserProperties.value = data;
-  isFetchingUserProperties.value = false;
-};
-
-const clearSelectedUser = () => {
-  selectedUser.value = null;
-  selectedUserProperties.value = null;
-};
-
-updateUsers();
+updatePendingProperties();
 </script>
 
 <template>
-  <div v-if="!!selectedUser" class="popup">
-    <div>
-      <h3>{{ selectedUser.fullName }}</h3>
-      <p>{{ selectedUser.id }}</p>
-      <button @click="clearSelectedUser">
-        <img alt="Close popup" src="../assets/media/fullscreen-exit.svg" />
-      </button>
-      <div v-if="isFetchingUserProperties" class="center">
-        <orbit-spinner :animation-duration="1200" :size="64" color="#1d3557" />
-      </div>
-      <div v-else-if="!isFetchingUserProperties && !selectedUserProperties">
-        <p>User does not have properties.</p>
-      </div>
-      <div
-        v-for="property in selectedUserProperties"
-        :key="property.id"
-        class="property"
-        v-else
-      >
-        <p>{{ property.location }}</p>
-        <!-- TODO: Wrap a router-link around this -->
-        <img alt="info" src="../assets/media/info.svg" />
-      </div>
-    </div>
-  </div>
   <div id="wrapper">
     <AdminNavbar />
     <main>
       <div class="title">
-        <h1>Manage users</h1>
+        <h1>Pending Properties</h1>
         <div class="search">
           <img alt="search" src="../assets/media/magnifying-glass.svg" />
           <input placeholder="Search" type="text" @input="updateSearch" />
@@ -94,10 +63,10 @@ updateUsers();
 
       <div id="data">
         <div
-          v-if="hasFetched && !isFetching && users.length === 0"
+          v-if="hasFetched && !isFetching && properties.length === 0"
           class="center big-text"
         >
-          <h2>No matching users found</h2>
+          <h2>No matching properties found</h2>
         </div>
         <div v-else-if="isFetching" class="center">
           <orbit-spinner
@@ -106,13 +75,19 @@ updateUsers();
             color="#F1FAEE"
           />
         </div>
-        <div v-for="user in users" v-else :key="user.id" class="fetch">
-          <p>{{ user.id }}</p>
-          <p>{{ user.fullName }}</p>
+        <div
+          v-for="property in properties"
+          v-else
+          :key="property.id"
+          class="fetch"
+        >
+          <p>{{ property.id }}</p>
+          <p>{{ property.description }}</p>
+          <p>{{ property.status }}</p>
           <img
             alt="info"
-            src="../assets/media/info.svg"
-            @click="() => setSelectedUser(user)"
+            src="../assets/media/check-circle.svg"
+            @click="() => approveProperty(property.id)"
           />
         </div>
       </div>
@@ -195,7 +170,7 @@ main {
 
   .fetch {
     display: grid;
-    grid-template-columns: max-content 1fr min-content;
+    grid-template-columns: max-content 1fr 1fr min-content;
     grid-gap: 1rem;
 
     background-color: $secondary;

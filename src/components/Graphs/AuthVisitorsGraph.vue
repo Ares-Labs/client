@@ -3,11 +3,17 @@ import Chart from 'chart.js/auto';
 import Gateway from "../../utils/events.js";
 import {onMounted} from "vue";
 import {CategoryScale} from 'chart.js';
+import 'chartjs-adapter-date-fns';
 
 Chart.register(CategoryScale);
 
+// get this month
+const today = new Date();
+const thisMonth = today.getMonth();
+
 let userList = [];
 let accessTime = [];
+let userAccessRate = {};
 
 
 Gateway.onReady(() => {
@@ -15,45 +21,44 @@ Gateway.onReady(() => {
     userId: Gateway.clientId,
     propertyId: 2,
   }).then((data) => {
-    console.log(data.authEntries);
-    console.log(data.authEntries.length);
     data.authEntries.forEach(auth => {
-      console.log(auth.user_id);
-
       Gateway.execute(Gateway.queries.GET_USER, {
         userId: auth.user_id,
       }).then((data) => {
-        userList.push(data.fullName);
-        accessTime.push(auth.timestamp);
+        // check if user is in userAccessRate list: if so + 1
+        if (userAccessRate[data.fullName] === undefined) {
+          userAccessRate[data.fullName] = 1;
+        } else {
+          userAccessRate[data.fullName] += 1;
+        }
       });
-
     })
   });
 });
 
+setInterval(() => {
+  for (let user in userAccessRate) {
+    userList.push(user);
+    accessTime.push(userAccessRate[user]);
+    userList = [];
+    accessTime = [];
+  }
+});
+
 
 const data = {
-  labels: accessTime,
+  labels: userList,
   datasets: [{
-    label: "Number of Daily Crimes",
+    label: "Amount of times user has accessed the property",
     backgroundColor: "#f87979",
-    data: userList
+    data: accessTime
   }]
 };
 
 const config = {
   type: "line",
   data: data,
-  options: {
-    scales: {
-      x: {
-        type: 'time',
-        time: {
-          unit: 'day' //change x axis to days delete scales to get back to normal todo: parse date
-        }
-      }
-    }
-  },
+  options: {},
 };
 
 onMounted(() => {
@@ -64,43 +69,12 @@ onMounted(() => {
   }
 });
 
-// get date and time from timestamp
-function getDateTimeFromTimestamp(timestamp) {
-  let date = new Date(timestamp);
-  let year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let dt = date.getDate();
-
-  if (dt < 10) {
-    dt = '0' + dt;
-  }
-  if (month < 10) {
-    month = '0' + month;
-  }
-
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let seconds = date.getSeconds();
-
-  if (hours < 10) {
-    hours = '0' + hours;
-  }
-  if (minutes < 10) {
-    minutes = '0' + minutes;
-  }
-  if (seconds < 10) {
-    seconds = '0' + seconds;
-  }
-
-  return year + '-' + month + '-' + dt + ' ' + hours + ':' + minutes + ':' + seconds;
-}
-
 </script>
 
 <template>
   <div>
     <h2>Authenticated Visitors That entered</h2>
-    <canvas id="auth-visitors-graph" width="400" height="500"></canvas>
+    <canvas id="auth-visitors-graph" width="400" height="450"></canvas>
   </div>
 </template>
 

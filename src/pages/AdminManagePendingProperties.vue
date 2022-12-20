@@ -3,9 +3,14 @@ import Gateway from "@/utils/events";
 import AdminNavbar from "../components/AdminNavbar.vue";
 import { OrbitSpinner } from "epic-spinners";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const properties = ref([]);
 const search = ref("");
+
+const router = useRouter();
+
+const selectedProperty = ref(null);
 
 const hasFetched = ref(false);
 const isFetching = ref(true);
@@ -20,7 +25,6 @@ function approveProperty(id) {
 }
 
 const updatePendingProperties = () => {
-  console.log(properties);
   Gateway.onReady(async () => {
     isFetching.value = true;
     const { properties: data } = await Gateway.execute(
@@ -31,7 +35,6 @@ const updatePendingProperties = () => {
         limit: 10,
       }
     );
-    console.log(data);
     properties.value = data;
     isFetching.value = false;
     hasFetched.value = true;
@@ -43,13 +46,94 @@ const updateSearch = (e) => {
   updatePendingProperties();
 };
 
-Gateway.subscribe(Gateway.events.PROPERTY_STATUS_CHANGE, updatePendingProperties);
+const clearSelectedProperty = async () => {
+  await router.push({ name: "AdminManagePendingProperties" });
+  selectedProperty.value = null;
+};
+
+const selectPropertyDetailed = async (property) => {
+  isFetching.value = true;
+  await router.push({
+    name: "AdminManagePendingPropertiesParams",
+    params: { id: property.id },
+  });
+  selectedProperty.value = await Gateway.execute(
+    Gateway.queries.GET_PROPERTY_DETAILED,
+    {
+      propertyId: property.id,
+    }
+  );
+  isFetching.value = false;
+};
+
+Gateway.subscribe(
+  Gateway.events.PROPERTY_STATUS_CHANGE,
+  updatePendingProperties
+);
 Gateway.subscribe(Gateway.events.PROPERTY_ADDED, updatePendingProperties);
 
 updatePendingProperties();
 </script>
 
 <template>
+  <div v-if="!!selectedProperty" class="popup">
+    <div v-if="isFetching">
+      <div class="center">
+        <orbit-spinner :animation-duration="1200" :size="64" color="#1d3557" />
+      </div>
+    </div>
+    <div v-else>
+      <h3>{{ selectedProperty.location }}</h3>
+      <p>{{ selectedProperty.id }}</p>
+      <p class="description">{{ selectedProperty.description }}</p>
+      <div class="data-field">
+        <h4>Owner:</h4>
+        <p>{{ selectedProperty.owner_full_name }}</p>
+      </div>
+      <div class="double-field">
+        <div class="data-field">
+          <h4>Location x:</h4>
+          <p>{{ selectedProperty.x }}</p>
+        </div>
+        <div class="data-field">
+          <h4>Location y:</h4>
+          <p>{{ selectedProperty.y }}</p>
+        </div>
+        <div class="data-field">
+          <h4>Width:</h4>
+          <p>{{ selectedProperty.width }}</p>
+        </div>
+        <div class="data-field">
+          <h4>Height:</h4>
+          <p>{{ selectedProperty.height }}</p>
+        </div>
+      </div>
+      <div class="data-field">
+        <h4>Status:</h4>
+        <p>{{ selectedProperty.status }}</p>
+      </div>
+      <div class="data-field">
+        <h4>Tier:</h4>
+        <p>{{ selectedProperty.tier }}</p>
+      </div>
+      <h4 class="equipment-title">Installed Equipment</h4>
+      <div class="double-field">
+        <div
+          v-for="equipment of selectedProperty.equipment"
+          :key="equipment.id"
+          class="equipment"
+        >
+          <p>
+            {{ equipment.name }}
+            {{ !!equipment.description ? `| ${equipment.description}` : "" }}
+          </p>
+        </div>
+      </div>
+      <button class="close" @click="clearSelectedProperty">
+        <img alt="Close popup" src="../assets/media/fullscreen-exit.svg" />
+      </button>
+    </div>
+  </div>
   <div id="wrapper">
     <AdminNavbar />
     <main>
@@ -85,7 +169,13 @@ updatePendingProperties();
           <p>{{ property.description }}</p>
           <p>{{ property.status }}</p>
           <img
-            alt="info"
+            alt="see property info"
+            src="../assets/media/info.svg"
+            title="more info"
+            @click="() => selectPropertyDetailed(property)"
+          />
+          <img
+            alt="approve"
             src="../assets/media/check-circle.svg"
             @click="() => approveProperty(property.id)"
           />
@@ -170,7 +260,7 @@ main {
 
   .fetch {
     display: grid;
-    grid-template-columns: max-content 1fr 1fr min-content;
+    grid-template-columns: max-content 1fr 1fr max-content max-content;
     grid-gap: 1rem;
 
     background-color: $secondary;
@@ -228,7 +318,7 @@ main {
     > p {
       font-size: $font-size-base;
       color: $normal;
-      margin-bottom: 3rem;
+      margin-bottom: 1rem;
     }
 
     button {
@@ -264,5 +354,160 @@ main {
       align-items: center;
     }
   }
+}
+
+.popup {
+  z-index: 100;
+  background-color: rgba($dark, 0.75);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    position: relative;
+    width: 50%;
+    max-width: 30rem;
+    padding: 2rem 3rem;
+    background-color: $secondary;
+    border-radius: $border-radius;
+
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: 700;
+    }
+
+    h3,
+    p {
+      text-align: center;
+      color: $dark;
+    }
+
+    > p {
+      font-size: $font-size-base * 0.85;
+      color: $normal;
+
+      &.description {
+        color: $dark;
+        font-size: $font-size-base;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    .double-field {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1rem;
+    }
+
+    .data-field {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      grid-gap: 1rem;
+      align-items: center;
+
+      input,
+      #tier,
+      p {
+        display: block;
+        text-align: left;
+        font-weight: 700;
+        border-radius: $border-radius;
+        padding: 0.25rem 0.5rem;
+        color: $dark;
+      }
+
+      input,
+      #tier {
+        border: 0.2rem solid $dark;
+      }
+
+      input {
+        background-color: $secondary;
+        -moz-appearance: textfield;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+
+    .equipment {
+      display: grid;
+      grid-template-columns: 1fr repeat(2, max-content);
+      align-items: center;
+      border-radius: $border-radius;
+      padding: 0.25rem 0.5rem;
+      margin-bottom: 0.5rem;
+      border: 0.25rem solid $dark;
+
+      p {
+        text-align: left;
+        font-weight: 700;
+      }
+
+      .remove {
+        cursor: pointer;
+      }
+    }
+
+    .add-equipment {
+      background-color: $accent;
+      border: none;
+      border-radius: $border-radius;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      height: 3rem;
+    }
+
+    button.close {
+      background-color: transparent;
+      border: none;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+    }
+
+    .property {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: $border-radius;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1.5rem;
+      border: 0.25rem solid $dark;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      p {
+        width: 100%;
+      }
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.equipment-title {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 </style>

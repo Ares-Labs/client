@@ -73,7 +73,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <h2>Authenticated Visitors That entered</h2>
+    <h2>Authorized entrance frequency</h2>
     <canvas id="auth-visitors-graph" width="400" height="450"></canvas>
   </div>
 </template>

@@ -34,7 +34,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <h2>Who was around your property the most</h2>
+    <h2>Frequency of property visitation</h2>
     <canvas id="most-visiting-person" width="400" height="500"></canvas>
   </div>
 </template>

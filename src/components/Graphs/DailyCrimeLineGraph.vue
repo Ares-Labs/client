@@ -48,7 +48,7 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    <h2>Daily Crimes in the area</h2>
+    <h2>Daily crimes in the area</h2>
     <canvas class="daily-crimes" width="500" height="300"></canvas>
   </div>
 </template>

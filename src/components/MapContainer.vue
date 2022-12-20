@@ -13,7 +13,9 @@ import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON";
 import XYZSource from "ol/source/XYZ";
 import "ol/ol.css";
-import {fromLonLat} from "ol/proj";
+import { fromLonLat } from "ol/proj";
+import { Fill, Icon, Stroke, Style } from "ol/style";
+import CircleStyle from "ol/style/Circle";
 
 export default {
   name: "MapContainer",
@@ -51,7 +53,6 @@ export default {
     });
     this.updateSource(this.geojson);
     this.addMarker(fromLonLat([0, 0]));
-
   },
   watch: {
     geojson(value) {
@@ -76,9 +77,15 @@ export default {
       const marker = new Feature({
         geometry: new Point(coordinates)
       });
+
+      marker.setStyle(new Style({
+        image: new Icon({
+          src: 'https://openlayers.org/en/v4.6.5/examples/data/icon.png'
+        }),
+      }));
+
       this.vectorLayer.getSource().addFeature(marker);
     },
-
   },
 };
 </script>

@@ -28,7 +28,7 @@ import Header from "@/components/Header/Header.vue";
           <h3>Basic</h3>
           <div>
             <img src="../images/mars-coin.png" alt="mars-coin">
-            <p>59</p>
+            <p>35</p>
           </div>
           <p>per month</p>
         </div>
@@ -49,7 +49,7 @@ import Header from "@/components/Header/Header.vue";
           <h3>Premium</h3>
           <div>
             <img src="../images/mars-coin.png" alt="mars-coin">
-            <p>79</p>
+            <p>48</p>
           </div>
           <p>per month</p>
         </div>
@@ -68,7 +68,7 @@ import Header from "@/components/Header/Header.vue";
           <h3>Optimum</h3>
           <div>
             <img src="../images/mars-coin.png" alt="mars-coin">
-            <p>99</p>
+            <p>74</p>
           </div>
           <p>per month</p>
         </div>

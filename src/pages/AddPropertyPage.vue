@@ -2,6 +2,7 @@
 import Header from "@/components/Header/Header.vue";
 import Gateway from "@/utils/events";
 import { ref } from "vue";
+import MapContainer from "@/components/MapContainer.vue";
 
 const location = ref("");
 const tier = ref(0);
@@ -49,7 +50,7 @@ function submitRequest() {
           <div class="flex">
             <div>
               <p>Choose your property location on the map</p>
-              <img src="../images/map.jpg" alt="map" />
+              <MapContainer :geojson="geojson"></MapContainer>
               <label for="name">Name of your property *</label>
               <input
                 v-model="location"
@@ -99,6 +100,7 @@ function submitRequest() {
 
 <style lang="scss" scoped>
 @import "src/assets/css/mixins";
+@import "../assets/css/app";
 
 legend {
   text-align: center;
@@ -107,20 +109,17 @@ legend {
   margin: auto auto 5rem;
 }
 
-input,
-select {
+input, select {
   display: block;
   width: 100%;
-  padding: 0;
+  border: 0.2rem solid $dark;
+  border-radius: $border-radius;
 }
 
-label {
+label, p, legend {
+  font-weight: bold;
   display: block;
-}
-
-img {
-  height: 24rem;
-  width: available;
+  color: $dark;
 }
 
 textarea {

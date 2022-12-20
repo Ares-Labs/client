@@ -1,8 +1,6 @@
 <script>
 import Header from "@/components/Header/Header.vue";
 import MapContainer from "../components/MapContainer.vue";
-//import Edit from './components/Edit'
-//import Inspect from './components/Inspect'
 
 export default {
   name: "MainPage",
@@ -22,10 +20,154 @@ export default {
         type: "Polygon",
         coordinates: [
           [
-            [-27.0703125, 43.58039085560784],
-            [-28.125, 23.563987128451217],
-            [-10.8984375, 32.84267363195431],
-            [-27.0703125, 43.58039085560784],
+            [-3, 3],
+            [-3, 8],
+            [-8, 8],
+            [-8, 3],
+          ],
+          [
+            [4, 3],
+            [4, 8],
+            [-1, 8],
+            [-1, 3],
+          ],
+          [
+            [11, 3],
+            [11, 8],
+            [6, 8],
+            [6, 3],
+          ],
+          [
+            [18, 3],
+            [18, 8],
+            [13, 8],
+            [13, 3],
+          ],
+          [
+            [25, 3],
+            [25, 8],
+            [20, 8],
+            [20, 3],
+          ],
+          [
+            [39, 3],
+            [39, 8],
+            [34, 8],
+            [34, 3],
+          ],
+          [
+            [39, -63],
+            [39, -60],
+            [34, -60],
+            [34, -63],
+          ],
+          [
+            [-24, -63],
+            [-24, -60],
+            [-18, -60],
+            [-18, -63],
+          ],
+          [
+            [-34, -83],
+            [-34, -80],
+            [-20, -80],
+            [-20, -83],
+          ],[
+              [-3, -10],
+            [-3, -5],
+            [-8, -5],
+            [-8, -10]
+          ],[
+            [4, -10],
+            [4, -5],
+            [-1, -5],
+            [-1, -10]
+          ],[
+            [11, -10],
+            [11, -5],
+            [6, -5],
+            [6, -10]
+          ],[
+            [18, -10],
+            [18, -5],
+            [13, -5],
+            [13, -10]
+          ],[
+            [25, -10],
+            [25, -5],
+            [20, -5],
+            [20, -10]
+          ],[
+            [39, -10],
+            [39, -5],
+            [34, -5],
+            [34, -10],
+          ],[
+            [39, -17],
+            [39, -12],
+            [34, -12],
+            [34, -17],
+          ],
+          [
+            [39, -24],
+            [39, -19],
+            [34, -19],
+            [34, -24],
+          ],[
+            [39, -31],
+            [39, -26],
+            [34, -26],
+            [34, -31],
+          ],[
+            [25, -17],
+            [25, -12],
+            [20, -12],
+            [20, -17]
+          ],[
+            [25, -31],
+            [25, -26],
+            [20, -26],
+            [20, -31]
+          ],[
+            [25, 10],
+            [25, 15],
+            [20, 15],
+            [20, 10],
+          ],[
+            [25, 17],
+            [25, 22],
+            [20, 22],
+            [20, 17],
+          ],[
+            [25, 24],
+            [25, 29],
+            [20, 29],
+            [20, 24],
+          ],[
+            [25, 31],
+            [25, 36],
+            [20, 36],
+            [20, 31],
+          ],[
+            [39, 10],
+            [39, 15],
+            [34, 15],
+            [34, 10],
+          ],[
+            [39, 31],
+            [39, 36],
+            [34, 36],
+            [34, 31],
+          ],[
+            [68, 31],
+            [68, 36],
+            [60, 36],
+            [60, 31],
+          ],[
+            [68, 0],
+            [68, 15],
+            [60, 15],
+            [60, 0],
           ],
         ],
       },
@@ -35,20 +177,11 @@ export default {
 </script>
 
 <template>
-  <Header/>
+  <Header />
   <div id="MapPage">
-    <div class="cell cell-map">
-      <MapContainer
-        :geojson="geojson"
-        v-on:select="selected = $event"
-      ></MapContainer>
+    <div class="map-container">
+      <MapContainer :geojson="geojson"></MapContainer>
     </div>
-    <!--<div class="cell cell-edit">
-      <Edit :geojson="geojson" v-on:change="geojson = $event"></Edit>
-    </div>
-    <div class="cell cell-inspect">
-      <Inspect :feature="selected"></Inspect>
-    </div>-->
   </div>
 </template>
 
@@ -60,36 +193,11 @@ body {
 }
 
 #MapPage {
+  margin: -4.5rem;
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 100vh;
-  grid-auto-rows: 1fr;
-  grid-gap: 1rem;
-  padding: 1rem;
-  box-sizing: border-box;
-  height: 35rem;
 }
 
-.cell {
-  border-radius: 4px;
-  background-color: lightgrey;
-}
-
-.cell-map {
-  grid-column: 1;
-  grid-row-start: 1;
-  grid-row-end: 3;
-  height: 35rem;
-}
-
-.cell-edit {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.cell-inspect {
-  grid-column: 2;
-  grid-row: 2;
+.map-container {
+  height: 43rem;
 }
 </style>

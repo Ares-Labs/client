@@ -24,7 +24,12 @@ const exampleUsage = async () => {
   });
 
   const { pendingProperties } = await Gateway.execute(
-    Gateway.queries.GET_PENDING_PROPERTIES
+    Gateway.queries.GET_PENDING_PROPERTIES,
+    {
+      search: "",
+      page: 1,
+      limit: 10,
+    }
   );
 
   const prop = pendingProperties[pendingProperties.length - 1];

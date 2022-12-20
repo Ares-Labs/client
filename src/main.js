@@ -19,6 +19,7 @@ import MapPage from "./pages/MapPage.vue";
 import AdminManageUsers from "./pages/AdminManageUsers.vue";
 import AdminManageProperties from "./pages/AdminManageProperties.vue";
 import AdminManageDrones from "./pages/AdminManageDrones.vue";
+import AdminManagePendingProperties from "@/pages/AdminManagePendingProperties.vue";
 
 const routes = [
   { path: "/", component: DashboardPage },
@@ -35,6 +36,8 @@ const routes = [
   { path: "/map-page", component: MapPage },
   { path: "/statistics", component: StatisticsPage },
   { path: "/admin", redirect: "/admin/users" }, // Temporary redirect
+  { path: "/admin/drones", component: AdminManageDrones },
+  { path: "/admin/properties/pending", component: AdminManagePendingProperties },
   {
     name: "AdminManageUsers",
     path: "/admin/users",
@@ -45,7 +48,6 @@ const routes = [
     path: "/admin/users/:id",
     component: AdminManageUsers,
   },
-  { path: "/admin/drones", component: AdminManageDrones },
   {
     name: "AdminManageProperties",
     path: "/admin/properties",

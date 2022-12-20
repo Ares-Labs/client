@@ -24,11 +24,11 @@ import Header from "@/components/Header/Header.vue";
       </div>
       <div id="basic-plan-wrapper">
         <p class="current">current</p>
-        <div>
+        <div class="plan-header">
           <h3>Basic</h3>
           <div>
             <img src="../images/mars-coin.png" alt="mars-coin">
-            <p>59</p>
+            <p>35</p>
           </div>
           <p>per month</p>
         </div>
@@ -45,11 +45,11 @@ import Header from "@/components/Header/Header.vue";
       <div id="premium-plan-wrapper">
         <p class="hiddenRemove">current</p>
         <p class="recommended">Recommended</p>
-        <div>
+        <div class="plan-header">
           <h3>Premium</h3>
           <div>
             <img src="../images/mars-coin.png" alt="mars-coin">
-            <p>79</p>
+            <p>48</p>
           </div>
           <p>per month</p>
         </div>
@@ -64,11 +64,11 @@ import Header from "@/components/Header/Header.vue";
       </div>
       <div id="optimum-plan-wrapper">
         <p class="current hiddenVisibility">current</p>
-        <div>
+        <div class="plan-header">
           <h3>Optimum</h3>
           <div>
             <img src="../images/mars-coin.png" alt="mars-coin">
-            <p>99</p>
+            <p>74</p>
           </div>
           <p>per month</p>
         </div>
@@ -89,6 +89,7 @@ import Header from "@/components/Header/Header.vue";
 <style lang="scss" scoped>
 
 @import "src/assets/css/mixins";
+@import "src/assets/css/app";
 
 h1 {
   display: flex;
@@ -144,7 +145,6 @@ button {
   font-size: 1rem;
   margin-top: 1rem;
   opacity: 50%;
-  font-weight: bold;
 
 }
 .recommended {
@@ -185,7 +185,7 @@ button {
 
 #select-plan-wrapper div:first-of-type {
     display: flex;
-    margin-bottom: 8rem;
+    margin-bottom: 7rem;
     border: solid #485d76 0.2rem;
     border-radius: 0.5rem;
     padding: 0.5rem;
@@ -198,16 +198,16 @@ button {
   }
 
 #basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
-
+  width: 20vw;
 }
-#basic-plan-wrapper div:first-of-type,
-#premium-plan-wrapper div:first-of-type,
-#optimum-plan-wrapper div:first-of-type {
-  background-color: #7ca1b9;
+
+.plan-header {
+  background: linear-gradient(20deg, $normal, $light);
   border-radius: 2rem;
-  margin: 1vw;
+  margin: 1rem 1rem 2rem 1rem;
   text-align: center;
-  padding: 1rem 3vw;  // size of the plan boxes
+  padding: 1rem 3vw;
+
 
   p:nth-child(3) {
     opacity: 40%;
@@ -217,6 +217,8 @@ button {
     display: flex;
     font-size: 2rem;
     font-weight: bold;
+    justify-content: center;
+    margin: 1rem auto;
     img {
       width: 2rem;
       margin-right: 0.2rem;

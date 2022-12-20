@@ -20,15 +20,18 @@ defineProps({
       <p>{{ time }}</p>
     </div>
     <div class="actions">
-      <div @click="infoNotification('Calling authorities')">
-        <img src="/src/assets/media/phone.svg" alt="phone-icon">
-        <p>Call authorities</p>
-      </div>
-      <div>
-        <img src="/src/assets/media/view.svg" alt="arrow-left">
-        <p>View Live</p>
-      </div>
-    </div>
+      <a href="#" @click="infoNotification('Calling authorities')">
+        <div class="action" >
+          <img src="/src/assets/media/phone.svg" alt="phone-icon">
+          <p>Call authorities</p>
+        </div>
+      </a>
+      <a href="#">
+        <div class="action">
+          <img src="/src/assets/media/view.svg" alt="arrow-left">
+          <p>View Live</p>
+        </div>
+      </a>
   </div>
   <div v-else class="not-urgent">
     <img src="/src/assets/media/profile.svg" alt="profile">
@@ -41,6 +44,9 @@ defineProps({
 </template>
 
 <style lang="scss" scoped>
+@import "src/assets/css/mixins.scss";
+@import "src/assets/css/app";
+
 img {
   width: 2rem;
   height: 2rem;
@@ -49,7 +55,7 @@ img {
 .urgent {
   margin-bottom: 1.5rem;
   max-width: 30rem;
-  box-shadow: black 0 0.5rem 0.3rem 0.01rem;
+  box-shadow: black 0 0.1rem 0.2rem 0.01rem;
   padding: 1rem;
   border: solid black;
   border-radius: 1rem;
@@ -58,7 +64,7 @@ img {
 .not-urgent {
   margin-bottom: 2rem;
   max-width: 30rem;
-  box-shadow: black 0 0.5rem 0.3rem 0.01rem;
+  box-shadow: black 0 0.1rem 0.2rem 0.01rem;
   padding: 1rem;
   border: solid black;
   border-radius: 1rem;
@@ -70,6 +76,7 @@ img {
   display: flex;
   justify-content: space-between;
   padding-bottom: 1rem;
+
   div {
     display: flex;
     flex-direction: column;
@@ -85,23 +92,35 @@ img {
   padding-top: 1rem;
   justify-content: center;
 
-  div {
+  .action {
     font-size: 0.7rem;
     display: flex;
-    border: solid black 0.1rem;
+    border: 0.15rem solid $dark;
     border-radius: 4rem;
     padding: 0.2rem 1.5rem 0.3rem 1rem;
     align-items: center;
     gap: 0.4rem;
+
+    img {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+
+  .action:hover {
+    transform: scale(0.95);
+    background-color: #7ca1b9;
   }
 }
 
 .not-urgent div {
   margin: 0 2rem 0 1rem;
+
   p:first-child {
     font-weight: bold;
     margin-bottom: 0.4rem;
   }
+
   p:last-child {
     white-space: nowrap;
     overflow: hidden;
@@ -112,21 +131,17 @@ img {
 }
 
 .main-noti div p:first-child {
-    font-weight: bold;
-    margin-bottom: 0.4rem;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
 }
 
 .main-noti div p:last-child {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 20rem;
-    max-height: 3rem;
-    font-size: 0.9rem;
-}
-
-.actions div img {
-  width: 3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20rem;
+  max-height: 3rem;
+  font-size: 0.9rem;
 }
 
 div:last-child {

@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import Point from "ol/geom/Point";
+import Feature from "ol/Feature";
 import View from "ol/View";
 import Map from "ol/Map";
 import TileLayer from "ol/layer/Tile";
@@ -11,6 +13,7 @@ import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON";
 import XYZSource from "ol/source/XYZ";
 import "ol/ol.css";
+import {fromLonLat} from "ol/proj";
 
 export default {
   name: "MapContainer",
@@ -47,6 +50,8 @@ export default {
       }),
     });
     this.updateSource(this.geojson);
+    this.addMarker(fromLonLat([0, 0]));
+
   },
   watch: {
     geojson(value) {
@@ -67,6 +72,13 @@ export default {
 
       view.fit(source.getExtent());
     },
+    addMarker(coordinates) {
+      const marker = new Feature({
+        geometry: new Point(coordinates)
+      });
+      this.vectorLayer.getSource().addFeature(marker);
+    },
+
   },
 };
 </script>

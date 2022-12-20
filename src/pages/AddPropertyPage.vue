@@ -3,6 +3,7 @@ import Header from "@/components/Header/Header.vue";
 import Gateway from "@/utils/events";
 import { ref } from "vue";
 import MapContainer from "@/components/MapContainer.vue";
+import { successNotification } from "@/utils/notifications";
 
 const location = ref("");
 const tier = ref(0);
@@ -11,10 +12,6 @@ const x = ref(0);
 const y = ref(0);
 const success = ref(false);
 const error = ref(false);
-
-function togglePopup() {
-  document.querySelector(".popup").classList.toggle("hidden");
-}
 
 function submitRequest() {
   Gateway.onReady(async () => {
@@ -28,12 +25,9 @@ function submitRequest() {
     });
 
     if (response.success) {
-      // Show popup
-      togglePopup();
+      successNotification("The request has been submitted");
       success.value = true;
     } else {
-      // Show popup
-      togglePopup();
       error.value = true;
     }
   });
@@ -58,8 +52,7 @@ function submitRequest() {
                 id="name"
                 name="name"
                 autocomplete="off"
-                required
-              />
+                required/>
               <label for="tier">Tier or protection *</label>
               <select v-model="tier" id="tier" name="tier" required>
                 <option value="1">Basic</option>
@@ -68,32 +61,19 @@ function submitRequest() {
               </select>
             </div>
             <div>
-              <label for="reason"
-                >What is the reason you want to add this property?</label
-              >
+              <label for="reason">
+                What is the reason you want to add this property?</label>
               <textarea
                 v-model="reason"
                 name="reason"
                 id="reason"
-                autocomplete="off"
-              ></textarea>
-              <input type="submit" value="Submit" />
+                autocomplete="off">
+              </textarea>
+              <input type="submit" value="Submit"/>
             </div>
           </div>
         </fieldset>
       </form>
-      <div class="popup hidden">
-        <div class="popup-inner">
-          <div v-if="success">
-            <p>Property added successfully</p>
-          </div>
-          <div v-if="error">
-            <p>Property not added</p>
-          </div>
-
-          <router-link class="popup-close" to="/"><p>Ok</p></router-link>
-        </div>
-      </div>
     </main>
   </div>
 </template>
@@ -154,43 +134,4 @@ input[type="submit"] {
   }
 }
 
-
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 99;
-  background-color: rgba(0, 0, 0, 0.2);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .popup-inner {
-    background: #fff;
-    padding: 32px;
-  }
-}
-
-.popup-close {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  margin-top: 1rem;
-  text-align: center;
-  border: black solid 0.1rem;
-  border-radius: 0.25rem;
-}
-
-.popup-close:hover {
-  background-color: #000;
-  color: #fff;
-}
-
-.hidden {
-  display: none;
-}
 </style>

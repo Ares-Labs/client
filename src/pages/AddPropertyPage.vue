@@ -48,7 +48,7 @@ function submitRequest() {
         <fieldset>
           <legend>Request to add property</legend>
           <div class="flex">
-            <div>
+            <div id="container">
               <p>Choose your property location on the map</p>
               <MapContainer :geojson="geojson"></MapContainer>
               <label for="name">Name of your property *</label>
@@ -102,6 +102,10 @@ function submitRequest() {
 @import "src/assets/css/mixins";
 @import "../assets/css/app";
 
+#container {
+  width: 50%;
+}
+
 legend {
   text-align: center;
   font-weight: bold;
@@ -150,9 +154,6 @@ input[type="submit"] {
   }
 }
 
-#reason {
-  margin-bottom: 7.5rem;
-}
 
 .popup {
   position: fixed;

@@ -4,7 +4,7 @@ import AdminNavbar from "../components/AdminNavbar.vue";
 import { OrbitSpinner } from "epic-spinners";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { successNotification, errorNotification } from "@/utils/notifications";
+import { errorNotification, successNotification } from "@/utils/notifications";
 
 /**
  * An object representing equipment.
@@ -40,6 +40,10 @@ const search = ref("");
 /** @type {DetailedProperty} */
 const selectedProperty = ref(null);
 const propertyDrones = ref([]);
+
+const addEquipment = ref(false);
+const selectedEquipmentType = ref(null);
+const equipmentDescription = ref("");
 
 const hasFetched = ref(false);
 const isFetching = ref(true);
@@ -86,6 +90,16 @@ const setSelectedProperty = async (property) => {
   await updateDrones(property.id);
 };
 
+const updatePropertyEquipment = async () => {
+  updateDrones(selectedProperty.value.id).then();
+  const { equipment } = await Gateway.execute(
+    Gateway.queries.GET_EQUIPMENT_PROPERTY,
+    { propertyId: selectedProperty.value.id }
+  );
+
+  selectedProperty.value.equipment = equipment;
+};
+
 const updateDrones = async (propertyId) => {
   propertyDrones.value = (
     await Gateway.execute(Gateway.queries.GET_FREE_DRONES, { propertyId })
@@ -98,12 +112,6 @@ const clearSelectedProperty = async () => {
   propertyDrones.value = [];
 };
 
-Gateway.onReady(async () => {
-  equipment_types.value = await Gateway.execute(
-    Gateway.queries.GET_EQUIPMENT_TYPES
-  );
-});
-
 const handleRouteData = async () => {
   const propertyId = parseInt(route.params.id);
 
@@ -112,9 +120,6 @@ const handleRouteData = async () => {
   const property = await getProperty(propertyId);
   await setSelectedProperty(property);
 };
-
-Gateway.onReady(handleRouteData);
-updateProperties();
 
 const syncPropertySize = async () => {
   await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_SIZE, {
@@ -158,9 +163,84 @@ const dispatchDrone = async () => {
   await updateDrones(selectedProperty.value.id);
   successNotification("Successfully dispatched drone");
 };
+
+const cancelAddEquipment = () => {
+  addEquipment.value = false;
+};
+
+const proceedAddEquipment = async () => {
+  addEquipment.value = false;
+  await Gateway.execute(Gateway.queries.ADD_EQUIPMENT_PROPERTY, {
+    propertyId: selectedProperty.value.id,
+    equipmentType: parseInt(selectedEquipmentType.value),
+    description: equipmentDescription.value,
+  });
+};
+
+Gateway.subscribe(Gateway.events.PROPERTY_EQUIPMENT_CHANGE, (data) => {
+  if (data.propertyId === selectedProperty.value.id) {
+    updatePropertyEquipment();
+  }
+});
+Gateway.subscribe(Gateway.events.PROPERTY_SIZE_CHANGED, (data) => {
+  if (data.propertyId === selectedProperty.value.id) {
+    selectedProperty.value.width = data.width;
+    selectedProperty.value.height = data.height;
+  }
+});
+Gateway.subscribe(Gateway.events.PROPERTY_COORDINATES_CHANGED, (data) => {
+  if (data.propertyId === selectedProperty.value.id) {
+    selectedProperty.value.x = data.x;
+    selectedProperty.value.y = data.y;
+  }
+});
+
+const refreshDrones = async () => await updateDrones(selectedProperty.value.id);
+Gateway.subscribe(Gateway.events.DRONE_DISPATCHED, refreshDrones);
+Gateway.subscribe(Gateway.events.DRONE_RECALLED, refreshDrones);
+
+Gateway.subscribe(Gateway.events.PROPERTY_TIER_CHANGED, (data) => {
+  if (data.propertyId === selectedProperty.value.id) {
+    selectedProperty.value.tier = data.tier;
+  }
+});
+
+Gateway.onReady(handleRouteData);
+Gateway.onReady(async () => {
+  equipment_types.value = (
+    await Gateway.execute(Gateway.queries.GET_EQUIPMENT_TYPES)
+  ).equipmentTypes;
+  selectedEquipmentType.value = equipment_types.value[0].type;
+});
+updateProperties();
 </script>
 
 <template>
+  <div v-if="addEquipment" class="popup add-equipment">
+    <div class="center">
+      <h3>Add equipment</h3>
+
+      <div class="align-vertical">
+        <select v-model="selectedEquipmentType">
+          <option
+            v-for="type in equipment_types"
+            :key="type.type"
+            :value="type.type"
+          >
+            {{ type.name }}
+          </option>
+        </select>
+        <label for="description">Provide a description:</label>
+        <input id="description" v-model="equipmentDescription" type="text" />
+        <button @click="proceedAddEquipment">Add</button>
+        <button @click="cancelAddEquipment">Cancel</button>
+      </div>
+
+      <button class="close" @click="cancelAddEquipment">
+        <img alt="Close popup" src="../assets/media/fullscreen-exit.svg" />
+      </button>
+    </div>
+  </div>
   <div v-if="!!selectedProperty" class="popup">
     <div v-if="isFetching">
       <div class="center">
@@ -246,7 +326,10 @@ const dispatchDrone = async () => {
           :key="equipment.id"
           class="equipment"
         >
-          <p>{{ equipment.name }} | {{ equipment.description }}</p>
+          <p>
+            {{ equipment.name }}
+            {{ !!equipment.description ? `| ${equipment.description}` : "" }}
+          </p>
           <!--          <img alt="Change type" src="../assets/media/drop-down.svg" />-->
           <img
             alt="Remove"
@@ -255,7 +338,7 @@ const dispatchDrone = async () => {
             @click="() => removeEquipment(equipment.id)"
           />
         </div>
-        <button class="add-equipment">
+        <button class="add-equipment" @click="() => (addEquipment = true)">
           <img alt="Add equipment" src="../assets/media/add-small.svg" />
         </button>
       </div>
@@ -598,5 +681,58 @@ h4 {
   font-size: $font-size-base;
   font-weight: 700;
   color: $dark;
+}
+
+.add-equipment {
+  z-index: 1000;
+
+  h3 {
+    margin-bottom: 2rem;
+  }
+
+  .align-vertical {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      border: none;
+      border-radius: $border-radius;
+      padding: 0.5rem 1rem;
+      background-color: $accent;
+      color: $secondary;
+      gap: 1rem;
+      font-size: $font-size-base;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    select,
+    input {
+      border: 0.2rem solid $dark;
+      border-radius: $border-radius;
+      padding: 0.25rem 0.5rem;
+      background-color: $secondary;
+      color: $dark;
+      font-size: $font-size-base;
+      font-weight: 700;
+    }
+
+    label {
+      font-size: $font-size-base;
+      font-weight: 700;
+      color: $dark;
+      margin-top: 1rem;
+    }
+
+    input {
+      margin-bottom: 1rem;
+    }
+  }
 }
 </style>

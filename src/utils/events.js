@@ -1,5 +1,6 @@
 import EventBus from "vertx3-eventbus-client";
 import { v4 as uuid } from "uuid";
+import { errorNotification, warningNotification } from "@/utils/notifications";
 
 const INBOUND_CHNL = "events.to.martians";
 const OUTBOUND_CHNL = "events.from.martians";
@@ -23,6 +24,9 @@ const QUERIES_PREFIX = "queries";
  * @property {string} REQUESTED_REMOVE_PROPERTY
  * @property {string} DRONE_DISPATCHED
  * @property {string} DRONE_RECALLED
+ * @property {string} PROPERTY_COORDINATES_CHANGED
+ * @property {string} PROPERTY_SIZE_CHANGED
+ * @property {string} PROPERTY_TIER_CHANGED
  */
 
 /**
@@ -91,6 +95,9 @@ const EVENT_TYPE = {
   REQUESTED_REMOVE_PROPERTY: "requested-remove-property",
   DRONE_DISPATCHED: "drone-dispatched",
   DRONE_RECALLED: "drone-recalled",
+  PROPERTY_COORDINATES_CHANGED: "property-coordinates-changed",
+  PROPERTY_SIZE_CHANGED: "property-size-changed",
+  PROPERTY_TIER_CHANGED: "property-tier-changed",
 };
 
 /**
@@ -401,21 +408,20 @@ class Gateway {
    */
   #onMessage(error, message) {
     if (error) {
-      // TODO: return error
+      errorNotification(`An error occurred: ${error}`);
       return;
     }
 
     const { type, data } = message.body;
 
     if (type === undefined || data === undefined) {
-      // Invalid event
+      warningNotification(`Invalid event received: ${message.body}`);
       return;
     }
 
     if (type === "error") {
-      // Event returned error.
-      // TODO: Make error visible for frontend
       console.error(data.message);
+      errorNotification(data.message);
       return;
     }
 

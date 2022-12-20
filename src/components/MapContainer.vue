@@ -52,7 +52,7 @@ export default {
       }),
     });
     this.updateSource(this.geojson);
-    this.addMarker(fromLonLat([0, 0]));
+    this.addMarker(fromLonLat([0, -40]));
   },
   watch: {
     geojson(value) {

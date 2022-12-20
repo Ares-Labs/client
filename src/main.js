@@ -38,7 +38,16 @@ const routes = [
   { path: "/statistics", component: StatisticsPage },
   { path: "/admin", redirect: "/admin/users" }, // Temporary redirect
   { path: "/admin/drones", component: AdminManageDrones },
-  { path: "/admin/properties/pending", component: AdminManagePendingProperties },
+  {
+    name: "AdminManagePendingProperties",
+    path: "/admin/properties/pending",
+    component: AdminManagePendingProperties,
+  },
+  {
+    name: "AdminManagePendingPropertiesParams",
+    path: "/admin/properties/pending/:id",
+    component: AdminManagePendingProperties,
+  },
   { path: "/admin/properties/remove", component: AdminManageRemovalProperties },
   {
     name: "AdminManageUsers",

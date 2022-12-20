@@ -271,6 +271,7 @@ main {
   > div {
     position: relative;
     width: 70%;
+    max-width: 50rem;
     padding: 2rem 3rem;
     background-color: $secondary;
     border-radius: $border-radius;

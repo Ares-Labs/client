@@ -3,11 +3,12 @@ import Gateway from "@/utils/events";
 import AdminNavbar from "../components/AdminNavbar.vue";
 import { OrbitSpinner } from "epic-spinners";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const properties = ref([]);
 const search = ref("");
 
+const route = useRoute();
 const router = useRouter();
 
 const selectedProperty = ref(null);
@@ -51,19 +52,25 @@ const clearSelectedProperty = async () => {
   selectedProperty.value = null;
 };
 
-const selectPropertyDetailed = async (property) => {
+const selectPropertyDetailed = async (id) => {
   isFetching.value = true;
   await router.push({
     name: "AdminManagePendingPropertiesParams",
-    params: { id: property.id },
+    params: { id },
   });
   selectedProperty.value = await Gateway.execute(
     Gateway.queries.GET_PROPERTY_DETAILED,
-    {
-      propertyId: property.id,
-    }
+    { propertyId: id }
   );
   isFetching.value = false;
+};
+
+const handleRouteData = async () => {
+  const propertyId = parseInt(route.params.id);
+
+  if (!propertyId) return;
+
+  await selectPropertyDetailed(propertyId);
 };
 
 Gateway.subscribe(
@@ -71,6 +78,7 @@ Gateway.subscribe(
   updatePendingProperties
 );
 Gateway.subscribe(Gateway.events.PROPERTY_ADDED, updatePendingProperties);
+Gateway.onReady(handleRouteData);
 
 updatePendingProperties();
 </script>
@@ -152,7 +160,7 @@ updatePendingProperties();
         >
           <h2>No matching properties found</h2>
         </div>
-        <div v-else-if="isFetching" class="center">
+        <div v-else-if="isFetching && !hasFetched" class="center">
           <orbit-spinner
             :animation-duration="1200"
             :size="128"
@@ -172,7 +180,7 @@ updatePendingProperties();
             alt="see property info"
             src="../assets/media/info.svg"
             title="more info"
-            @click="() => selectPropertyDetailed(property)"
+            @click="() => selectPropertyDetailed(property.id)"
           />
           <img
             alt="approve"

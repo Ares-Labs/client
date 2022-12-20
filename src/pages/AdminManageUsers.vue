@@ -100,9 +100,15 @@ updateUsers();
         v-else
         :key="property.id"
         class="property"
+        @click="
+          () =>
+            router.push({
+              name: 'AdminManagePropertiesParams',
+              params: { id: property.id },
+            })
+        "
       >
         <p>{{ property.location }}</p>
-        <!-- TODO: Wrap a router-link around this -->
         <img alt="info" src="../assets/media/info.svg" />
       </div>
     </div>
@@ -303,6 +309,7 @@ main {
       padding: 0.5rem 1rem;
       margin-bottom: 1.5rem;
       border: 0.25rem solid $dark;
+      cursor: pointer;
 
       &:last-child {
         margin-bottom: 0;

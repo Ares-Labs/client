@@ -43,13 +43,10 @@ const updateSearch = (e) => {
   updatePendingProperties();
 };
 
-Gateway.subscribe(
-  Gateway.events.PROPERTY_STATUS_CHANGE,
-  updatePendingProperties
-);
+Gateway.subscribe(Gateway.events.PROPERTY_STATUS_CHANGE, updatePendingProperties);
+Gateway.subscribe(Gateway.events.PROPERTY_ADDED, updatePendingProperties);
 
 updatePendingProperties();
-
 </script>
 
 <template>
@@ -86,10 +83,10 @@ updatePendingProperties();
         >
           <p>{{ property.id }}</p>
           <p>{{ property.description }}</p>
-          <p>{{ property.status}}</p>
+          <p>{{ property.status }}</p>
           <img
             alt="info"
-            src="../assets/media/return.svg"
+            src="../assets/media/check-circle.svg"
             @click="() => approveProperty(property.id)"
           />
         </div>

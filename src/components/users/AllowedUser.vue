@@ -1,8 +1,7 @@
 <script setup>
 import Gateway from "../../utils/events.js";
-import { ref } from "vue";
 
-const props = defineProps({
+defineProps({
   name: String,
   identity: String,
 });

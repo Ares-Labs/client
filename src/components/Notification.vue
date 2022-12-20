@@ -1,5 +1,7 @@
 <script setup>
-const props = defineProps({
+import { infoNotification } from "@/utils/notifications";
+
+defineProps({
   name: String,
   description: String,
   time: String,
@@ -18,7 +20,7 @@ const props = defineProps({
       <p>{{ time }}</p>
     </div>
     <div class="actions">
-      <div>
+      <div @click="infoNotification('Calling authorities')">
         <img src="/src/assets/media/phone.svg" alt="phone-icon">
         <p>Call authorities</p>
       </div>

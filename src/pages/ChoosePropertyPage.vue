@@ -29,7 +29,7 @@ Gateway.onReady(async () => {
         </template>
         <template v-else-if="properties.length > 0">
           <property
-            v-for="property in properties ?? []"
+            v-for="property in properties"
             :key="property?.id"
             :name="property?.location"
             :tier="property?.tier"

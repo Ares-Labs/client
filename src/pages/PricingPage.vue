@@ -1,6 +1,9 @@
 <script setup>
 import Header from "@/components/Header/Header.vue";
 import { successNotification } from "@/utils/notifications";
+import Gateway from "@/utils/events";
+
+const property = parseInt(localStorage.getItem("propertyBeingManaged"));
 
 function selectPeriod(e) {
   document.querySelectorAll(".selected")
@@ -8,11 +11,27 @@ function selectPeriod(e) {
   e.target.classList.toggle("selected");
 }
 
-function selectPlan(e) {
+Gateway.onReady(async () => {
+  const response = await Gateway.execute(Gateway.queries.GET_PROPERTY, {
+    propertyId: property
+  });
+  const selected = "tier" + response.tier;
+  document.querySelector(`.${selected}`).classList.add("plan");
+});
+
+
+function selectPlan(e, tier) {
+  Gateway.onReady(async () => {
+    await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_TIER, {
+      propertyId: property,
+      tier: tier
+    });
+  });
   document.querySelectorAll(".plan")
     .forEach(el => el.classList.remove("plan"))
   e.target.parentElement.classList.add("plan");
 }
+
 </script>
 
 <template>
@@ -35,7 +54,7 @@ function selectPlan(e) {
           <p>Graph logging</p>
         </div>
       </div>
-      <div id="basic-plan-wrapper">
+      <div id="basic-plan-wrapper" class="tier1">
         <p class="current">current</p>
         <div class="plan-header">
           <h3>Basic</h3>
@@ -52,10 +71,10 @@ function selectPlan(e) {
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event, 1)">Select Plan</button>
 
       </div>
-      <div id="premium-plan-wrapper">
+      <div id="premium-plan-wrapper" class="tier2">
         <p class="hiddenRemove">current</p>
         <p class="recommended">Recommended</p>
         <div class="plan-header">
@@ -73,9 +92,9 @@ function selectPlan(e) {
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event, 2)">Select Plan</button>
       </div>
-      <div id="optimum-plan-wrapper">
+      <div id="optimum-plan-wrapper" class="tier3">
         <p class="current hiddenVisibility">current</p>
         <div class="plan-header">
           <h3>Optimum</h3>
@@ -92,7 +111,7 @@ function selectPlan(e) {
           <img src="../images/checkmark.png" alt="checkmark"/>
           <img src="../images/checkmark.png" alt="checkmark"/>
         </div>
-        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event, 3)">Select Plan</button>
       </div>
     </article>
   </main>

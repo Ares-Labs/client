@@ -14,8 +14,8 @@ if (!Gateway.isInitialized) {
 
 // If the url ends with a number, make that the propertyBeingManaged in localstorage
 const urlEndsWithNumber = window.location.pathname.split("/").pop();
-if (urlEndsWithNumber) {
-  localStorage.setItem("propertyBeingManaged", parseInt(urlEndsWithNumber));
+if (!isNaN(parseInt(urlEndsWithNumber))) {
+  localStorage.setItem("propertyBeingManaged", urlEndsWithNumber);
 }
 </script>
 

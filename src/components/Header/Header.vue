@@ -1,6 +1,22 @@
 <script setup>
+
+import { ref } from "vue";
+
+let propertyBeingManaged = ref();
+
 // Get the last path parameter from the url if It's not in localstorage
-const propertyBeingManaged = parseInt(window.location.pathname.split("/").pop());
+const endOfUrlIsANumber = window.location.pathname.match(/\d+$/);
+if (endOfUrlIsANumber) {
+  propertyBeingManaged.value = endOfUrlIsANumber[0];
+} else {
+
+  const storageValue = localStorage.getItem("propertyBeingManaged");
+  if (storageValue) {
+    propertyBeingManaged.value = storageValue;
+  } else {
+    propertyBeingManaged.value = "";
+  }
+}
 
 </script>
 

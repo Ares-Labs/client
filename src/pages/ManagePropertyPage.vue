@@ -4,16 +4,36 @@ import AllowedUser from "../components/users/AllowedUser.vue";
 
 import Gateway from "../utils/events";
 import { onUpdated, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const allowedUserList = ref([]);
-const propertyBeingManaged = window.location.pathname.split("/").pop();
+const propertyBeingManaged = ref();
+
+// Check if the path ends with a number if not redirect to choose-property
+const router = useRouter();
+const endOfUrlIsANumber = router.currentRoute.value.path.match(/\d+$/);
+const localstoragePropertyBeingManaged = localStorage.getItem(
+  "propertyBeingManaged"
+);
+
+if (!endOfUrlIsANumber) {
+  // Check localstorage and redirect
+  if (localstoragePropertyBeingManaged) {
+    router.push(`/manage-property/${localstoragePropertyBeingManaged}`);
+  } else {
+    router.push("/choose-property");
+  }
+} else {
+  propertyBeingManaged.value = endOfUrlIsANumber[0];
+}
+
 onUpdated(getAllowedUsers);
 
 function getAllowedUsers() {
   Gateway.onReady(async () => {
     const data = await Gateway.execute(Gateway.queries.GET_ALLOWED_USERS, {
       userId: Gateway.clientId,
-      propertyId: propertyBeingManaged
+      propertyId: propertyBeingManaged.value
     })
     allowedUserList.value = (Object.entries(data.allowedUsers).
     map(([key, value]) => ({ identity: key, name: value })));
@@ -21,7 +41,6 @@ function getAllowedUsers() {
 }
 
 getAllowedUsers();
-localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
 </script>
 
 <template>

@@ -11,11 +11,7 @@ Gateway.onReady(async () => {
   const response = await Gateway.execute(Gateway.queries.GET_USER_PROPERTIES, {
     userId: Gateway.clientId,
   });
-  console.log(properties.value);
-  setTimeout(() => {
-    properties.value = response.properties;
-    console.log(properties.value);
-  }, 1000);
+  properties.value = response.properties;
 });
 </script>
 

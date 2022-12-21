@@ -12,6 +12,7 @@ const urlEndsWithNumber = router.currentRoute.value.path.match(/\d+$/);
 const localstoragePropertyBeingManaged = localStorage.getItem(
   "propertyBeingManaged"
 );
+
 if (!urlEndsWithNumber) {
   // Check localstorage and redirect
   if (localstoragePropertyBeingManaged) {
@@ -100,7 +101,6 @@ function switchCamera() {
 <style lang="scss" scoped>
 @import "src/assets/css/mixins";
 @import "src/assets/css/app";
-
 
 h1 {
   display: flex;

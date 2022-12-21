@@ -24,7 +24,7 @@ Gateway.onReady(async () => {
           <p>Loading...</p>
         </template>
         <template v-else-if="properties.length > 0">
-          <Property
+          <property
             v-for="property in properties"
             :key="property.id"
             :name="property.location"

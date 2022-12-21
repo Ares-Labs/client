@@ -39,7 +39,7 @@ function deleteProperty(id) {
   </GDialog>
 
   <router-link :to="`${route}`">{{name}}</router-link>
-  <p v-if="typeof this.tier === 'undefined'"></p>
+  <p v-if="typeof props.tier === 'undefined'"></p>
   <p v-else>Tier {{ tier }}</p>
 </div>
 </template>

@@ -4,7 +4,7 @@ import Property from "@/components/Property/Property.vue";
 
 <template>
   <router-link to="/add-property">
-    <Property class="add"/>
+    <Property class="add" :route="`/add-property`"/>
   </router-link>
 </template>
 

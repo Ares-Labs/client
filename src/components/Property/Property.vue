@@ -29,7 +29,7 @@ function deleteProperty(id) {
 
 <template>
 <div class="property">
-  <img v-if="show" src="src/images/action.svg" alt="action"
+  <img v-if="show" src="../../assets/media/action.svg" alt="action"
        @click="dialogState = true"/>
 
   <GDialog v-model="dialogState" max-width="max-content" local>

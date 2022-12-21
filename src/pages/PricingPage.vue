@@ -1,6 +1,9 @@
 <script setup>
 import Header from "@/components/Header/Header.vue";
 import { successNotification } from "@/utils/notifications";
+import Gateway from "@/utils/events";
+
+const property = parseInt(localStorage.getItem("propertyBeingManaged"));
 
 function selectPeriod(e) {
   document.querySelectorAll(".selected")
@@ -8,11 +11,19 @@ function selectPeriod(e) {
   e.target.classList.toggle("selected");
 }
 
-function selectPlan(e) {
+
+function selectPlan(e, tier) {
+  Gateway.onReady(async () => {
+    const response = await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_TIER, {
+      propertyId: property,
+      tier: tier
+    });
+  });
   document.querySelectorAll(".plan")
     .forEach(el => el.classList.remove("plan"))
   e.target.parentElement.classList.add("plan");
 }
+
 </script>
 
 <template>
@@ -52,7 +63,7 @@ function selectPlan(e) {
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event, 1)">Select Plan</button>
 
       </div>
       <div id="premium-plan-wrapper">
@@ -73,7 +84,7 @@ function selectPlan(e) {
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event, 2)">Select Plan</button>
       </div>
       <div id="optimum-plan-wrapper">
         <p class="current hiddenVisibility">current</p>
@@ -92,7 +103,7 @@ function selectPlan(e) {
           <img src="../images/checkmark.png" alt="checkmark"/>
           <img src="../images/checkmark.png" alt="checkmark"/>
         </div>
-        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event, 3)">Select Plan</button>
       </div>
     </article>
   </main>

@@ -11,10 +11,18 @@ function selectPeriod(e) {
   e.target.classList.toggle("selected");
 }
 
+Gateway.onReady(async () => {
+  const response = await Gateway.execute(Gateway.queries.GET_PROPERTY, {
+    propertyId: property
+  });
+  const selected = "tier" + response.tier;
+  document.querySelector(`.${selected}`).classList.add("plan");
+});
+
 
 function selectPlan(e, tier) {
   Gateway.onReady(async () => {
-    const response = await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_TIER, {
+    await Gateway.execute(Gateway.queries.CHANGE_PROPERTY_TIER, {
       propertyId: property,
       tier: tier
     });
@@ -46,7 +54,7 @@ function selectPlan(e, tier) {
           <p>Graph logging</p>
         </div>
       </div>
-      <div id="basic-plan-wrapper">
+      <div id="basic-plan-wrapper" class="tier1">
         <p class="current">current</p>
         <div class="plan-header">
           <h3>Basic</h3>
@@ -66,7 +74,7 @@ function selectPlan(e, tier) {
         <button @click="successNotification('The plan has been selected'); selectPlan($event, 1)">Select Plan</button>
 
       </div>
-      <div id="premium-plan-wrapper">
+      <div id="premium-plan-wrapper" class="tier2">
         <p class="hiddenRemove">current</p>
         <p class="recommended">Recommended</p>
         <div class="plan-header">
@@ -86,7 +94,7 @@ function selectPlan(e, tier) {
         </div>
         <button @click="successNotification('The plan has been selected'); selectPlan($event, 2)">Select Plan</button>
       </div>
-      <div id="optimum-plan-wrapper">
+      <div id="optimum-plan-wrapper" class="tier3">
         <p class="current hiddenVisibility">current</p>
         <div class="plan-header">
           <h3>Optimum</h3>

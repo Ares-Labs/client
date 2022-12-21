@@ -11,8 +11,11 @@ Gateway.onReady(async () => {
   const response = await Gateway.execute(Gateway.queries.GET_USER_PROPERTIES, {
     userId: Gateway.clientId,
   });
-  properties.value = response.properties;
-  console.log(properties);
+  console.log(properties.value);
+  setTimeout(() => {
+    properties.value = response.properties;
+    console.log(properties.value);
+  }, 1000);
 });
 </script>
 
@@ -26,7 +29,7 @@ Gateway.onReady(async () => {
         </template>
         <template v-else-if="properties.length > 0">
           <property
-            v-for="property in properties"
+            v-for="property in properties ?? []"
             :key="property?.id"
             :name="property?.location"
             :tier="property?.tier"

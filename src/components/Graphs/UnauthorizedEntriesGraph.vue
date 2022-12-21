@@ -44,8 +44,3 @@ onMounted(() => {
     <canvas id="unauthorised-entries" width="400" height="500"></canvas>
   </div>
 </template>
-
-
-<style scoped>
-
-</style>

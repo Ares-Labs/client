@@ -34,8 +34,3 @@ onMounted(() => {
     <canvas id="weekly-visitors-graph" width="400" height="500"></canvas>
   </div>
 </template>
-
-
-<style scoped>
-
-</style>

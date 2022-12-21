@@ -79,7 +79,3 @@ onMounted(() => {
     <canvas id="auth-visitors-graph" width="400" height="450"></canvas>
   </div>
 </template>
-
-<style scoped>
-
-</style>

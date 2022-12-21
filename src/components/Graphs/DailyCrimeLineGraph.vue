@@ -53,8 +53,3 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-h2 {
-  display: block;
-}
-</style>

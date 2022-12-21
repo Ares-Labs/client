@@ -19,7 +19,7 @@ function addUser(id) {
       if (response.success) {
         added.value = true;
       }
-    })
+    });
   });
 }
 

@@ -40,7 +40,7 @@ Gateway.onReady(() =>
   })
 );
 
-let camera = ref(0);
+const camera = ref(0);
 
 function switchCamera() {
   camera.value++;

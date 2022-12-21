@@ -15,9 +15,9 @@ To get started with the project, you will first have to clone the client repo fr
 ## User guide
 1. Run the server via your favourite IDE or via the CLI. (If you want to know how to do this use the server README)
 >* [Server README](https://git.ti.howest.be/TI/2022-2023/s3/analysis-and-development-project/projects/group-06/server/-/blob/main/readme.md)
-   
-2. Run `npm run dev` command in your client terminal.
-3. Click on the http://localhost:5173/ link
+2. Run `npm install`command in your client terminal.   
+3. Run `npm run dev` command in your client terminal.
+4. Click on the http://localhost:5173/ link
 
 
 

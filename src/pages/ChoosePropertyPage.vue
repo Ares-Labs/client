@@ -13,7 +13,6 @@ Gateway.onReady(async () => {
   });
   properties.value = response.properties;
   console.log(properties);
-  console.log(properties.length);
 });
 </script>
 
@@ -28,11 +27,11 @@ Gateway.onReady(async () => {
         <template v-else-if="properties.length > 0">
           <property
             v-for="property in properties"
-            :key="property.id"
-            :name="property.location"
-            :tier="property.tier"
-            :class="property.status.toLowerCase()"
-            :route="`/manage-property/${property.id}`"
+            :key="property?.id"
+            :name="property?.location"
+            :tier="property?.tier"
+            :class="property?.status.toLowerCase()"
+            :route="`/manage-property/${property?.id}`"
           ></property>
           <add-property></add-property>
         </template>

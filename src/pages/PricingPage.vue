@@ -1,5 +1,11 @@
 <script setup>
 import Header from "@/components/Header/Header.vue";
+
+function selectPeriod(e) {
+  document.querySelectorAll(".selected")
+    .forEach(el => el.classList.remove("selected"));
+  e.target.classList.toggle("selected");
+}
 </script>
 
 <template>
@@ -11,8 +17,8 @@ import Header from "@/components/Header/Header.vue";
       <div id="select-plan-wrapper">
         <h2>Select Plan</h2>
         <div>
-          <p class="selected">MONTHLY</p>
-          <p>ANNUAL</p>
+          <p @click="selectPeriod" class="selected">Monthly</p>
+          <p @click="selectPeriod">Annual</p>
         </div>
         <div>
           <p>Cameras</p>
@@ -168,7 +174,13 @@ button {
 #select-plan-wrapper {
   border: solid #485d76;
   border-radius: 0.8rem 0 0 0.8rem;
-  padding: 3rem 3rem 2rem 3rem; // size of the select plan box (left side)
+  padding: 3rem 3rem 2rem 3rem;
+  font-weight: bold;
+  div:first-of-type {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }
 
 #select-plan-wrapper h2 {
@@ -189,12 +201,6 @@ button {
     border: solid #485d76 0.2rem;
     border-radius: 0.5rem;
     padding: 0.5rem;
-
-    p:last-of-type {
-      margin-left: 0.5rem;
-      padding-left: 0.5rem;
-      border-left: solid black;
-    }
   }
 
 #basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {

@@ -1,3 +1,27 @@
+# Documentation about setting up the client
+This document will explain how you can deploy the CLient side of the POC on you device.
+
+## Prerequisites
+1. Make sure you've got `node` installed
+2. Make sure you've got `npm` installed
+3. Make sure you've got `java` installed
+
+## cloning from git
+To get started with the project, you will first have to clone the client repo from git. This can be done in 2 ways!
+## Clone the client:
+* SSH: `git@git.ti.howest.be:TI/2022-2023/s3/analysis-and-development-project/projects/group-06/client.git`
+* HTTPS: `https://git.ti.howest.be/TI/2022-2023/s3/analysis-and-development-project/projects/group-06/client.git`
+
+## User guide
+1. Run the server via your favourite IDE or via the CLI. (If you want to know how to do this use the server README)
+>* [Server README](https://git.ti.howest.be/TI/2022-2023/s3/analysis-and-development-project/projects/group-06/server/-/blob/main/readme.md)
+   
+2. Run `npm run dev` command in your client terminal.
+3. Click on the http://localhost:5173/ link
+
+
+
+
 # Mars web project group-06
 This is the client-side start project for the Analysis and Development project.
 

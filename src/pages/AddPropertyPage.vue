@@ -45,7 +45,7 @@ function submitRequest() {
             <div id="container">
               <p>Choose your property location on the map</p>
               <MapContainer :geojson="geojson"></MapContainer>
-              <label for="name">Name of your property *</label>
+              <label for="name">Name of your property</label>
               <input
                 v-model="location"
                 type="text"
@@ -53,7 +53,7 @@ function submitRequest() {
                 name="name"
                 autocomplete="off"
                 required/>
-              <label for="tier">Tier or protection *</label>
+              <label for="tier">Tier or protection</label>
               <select v-model="tier" id="tier" name="tier" required>
                 <option value="1">Basic</option>
                 <option value="2">Premium</option>

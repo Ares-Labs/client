@@ -1,5 +1,4 @@
 <script setup>
-import Gateway from "../../utils/events.js";
 import {onMounted} from "vue";
 import Chart from "chart.js/auto";
 
@@ -20,7 +19,7 @@ const config = {
 
 onMounted(() => {
   try {
-    const chart = new Chart(document.querySelector("#weekly-visitors-graph"), config);
+    new Chart(document.querySelector("#weekly-visitors-graph"), config);
   } catch (err) {
     console.error("Failed to initialize chart", err);
   }

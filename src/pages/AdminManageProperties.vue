@@ -115,7 +115,9 @@ const clearSelectedProperty = async () => {
 const handleRouteData = async () => {
   const propertyId = parseInt(route.params.id);
 
-  if (!propertyId) return;
+  if (!propertyId) {
+    return;
+  }
 
   const property = await getProperty(propertyId);
   await setSelectedProperty(property);
@@ -443,52 +445,55 @@ main {
   }
 }
 
-#data {
-  $min-data-height: 30rem;
+.add-equipment {
+  z-index: 1000;
 
-  padding: 2rem;
-  border-radius: $border-radius;
-  min-height: $min-data-height;
+  h3 {
+    margin-bottom: 2rem;
+  }
 
-  background: linear-gradient(-45deg, $dark, $normal);
-
-  .center {
+  .align-vertical {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: $min-data-height;
-  }
+    flex-direction: column;
 
-  .big-text h2 {
-    font-size: $font-size-lg;
-    font-weight: 700;
-    color: $light;
-  }
-
-  .fetch {
-    display: grid;
-    grid-template-columns: max-content 1fr min-content;
-    grid-gap: 1rem;
-
-    cursor: pointer;
-
-    background-color: $secondary;
-    border-radius: $border-radius;
-
-    padding: 1rem;
-    margin-bottom: 1rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    p {
+    button {
+      border: none;
+      border-radius: $border-radius;
+      padding: 0.5rem 1rem;
+      background-color: $accent;
+      color: $secondary;
+      gap: 1rem;
       font-size: $font-size-base;
-      color: $dark;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 1rem;
+      cursor: pointer;
     }
 
-    img {
+    select {
       cursor: pointer;
+    }
+
+    select,
+    input {
+      border: 0.2rem solid $dark;
+      border-radius: $border-radius;
+      padding: 0.25rem 0.5rem;
+      background-color: $secondary;
+      color: $dark;
+      font-size: $font-size-base;
+      font-weight: 700;
+    }
+
+    label {
+      font-size: $font-size-base;
+      font-weight: 700;
+      color: $dark;
+      margin-top: 1rem;
+    }
+
+    input {
+      margin-bottom: 1rem;
     }
   }
 }
@@ -672,6 +677,56 @@ main {
   }
 }
 
+#data {
+  $min-data-height: 30rem;
+
+  padding: 2rem;
+  border-radius: $border-radius;
+  min-height: $min-data-height;
+
+  background: linear-gradient(-45deg, $dark, $normal);
+
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $min-data-height;
+  }
+
+  .big-text h2 {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    color: $light;
+  }
+
+  .fetch {
+    display: grid;
+    grid-template-columns: max-content 1fr min-content;
+    grid-gap: 1rem;
+
+    cursor: pointer;
+
+    background-color: $secondary;
+    border-radius: $border-radius;
+
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    p {
+      font-size: $font-size-base;
+      color: $dark;
+    }
+
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
 #tier {
   background-color: $secondary;
   cursor: pointer;
@@ -688,56 +743,4 @@ h4 {
   color: $dark;
 }
 
-.add-equipment {
-  z-index: 1000;
-
-  h3 {
-    margin-bottom: 2rem;
-  }
-
-  .align-vertical {
-    display: flex;
-    flex-direction: column;
-
-    button {
-      border: none;
-      border-radius: $border-radius;
-      padding: 0.5rem 1rem;
-      background-color: $accent;
-      color: $secondary;
-      gap: 1rem;
-      font-size: $font-size-base;
-      text-transform: uppercase;
-      font-weight: 700;
-      margin-top: 1rem;
-      cursor: pointer;
-    }
-
-    select {
-      cursor: pointer;
-    }
-
-    select,
-    input {
-      border: 0.2rem solid $dark;
-      border-radius: $border-radius;
-      padding: 0.25rem 0.5rem;
-      background-color: $secondary;
-      color: $dark;
-      font-size: $font-size-base;
-      font-weight: 700;
-    }
-
-    label {
-      font-size: $font-size-base;
-      font-weight: 700;
-      color: $dark;
-      margin-top: 1rem;
-    }
-
-    input {
-      margin-bottom: 1rem;
-    }
-  }
-}
 </style>

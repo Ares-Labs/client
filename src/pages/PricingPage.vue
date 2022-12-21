@@ -156,6 +156,31 @@ button {
   color: #485d76;
 }
 
+.plan-header {
+  background: linear-gradient(20deg, $normal, $light);
+  border-radius: 2rem;
+  margin: 1rem 1rem 2rem 1rem;
+  text-align: center;
+  padding: 1rem 3vw;
+
+
+  p:nth-child(3) {
+    opacity: 40%;
+  }
+
+  div {
+    display: flex;
+    font-size: 2rem;
+    font-weight: bold;
+    justify-content: center;
+    margin: 1rem auto;
+    img {
+      width: 2rem;
+      margin-right: 0.2rem;
+    }
+  }
+}
+
 #optimum-plan-wrapper {
   border-radius: 0 0.8rem 0.8rem 0;
 }
@@ -163,6 +188,7 @@ button {
 #basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
   border: solid #485d76;
   border-left: none;
+  width: 20vw;
 }
 
 #select-plan-wrapper {
@@ -196,33 +222,4 @@ button {
       border-left: solid black;
     }
   }
-
-#basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
-  width: 20vw;
-}
-
-.plan-header {
-  background: linear-gradient(20deg, $normal, $light);
-  border-radius: 2rem;
-  margin: 1rem 1rem 2rem 1rem;
-  text-align: center;
-  padding: 1rem 3vw;
-
-
-  p:nth-child(3) {
-    opacity: 40%;
-  }
-
-  div {
-    display: flex;
-    font-size: 2rem;
-    font-weight: bold;
-    justify-content: center;
-    margin: 1rem auto;
-    img {
-      width: 2rem;
-      margin-right: 0.2rem;
-    }
-  }
-}
 </style>

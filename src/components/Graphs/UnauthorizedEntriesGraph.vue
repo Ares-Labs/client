@@ -1,5 +1,4 @@
 <script setup>
-import Gateway from "../../utils/events.js";
 import {onMounted} from "vue";
 import Chart from "chart.js/auto";
 
@@ -10,7 +9,15 @@ const data = {
   labels: ["Jeffrey Dahmer", "Mister Bean", "Blake Sanders", "Baptiste Smith,", "Jane Doe", "John Doe", "Jane Smith"],
   datasets: [{
     label: "Amount of visits",
-    data: [{value: 1, color: randomRGB()}, {value: 4, color: randomRGB()}, {value: 2, color: randomRGB()}, {value: 3, color: randomRGB()}, {value: 7, color: randomRGB()}, {value: 34, color: randomRGB()}, {value: 3, color: randomRGB()}]
+    data: [
+      {value: 1, color: randomRGB()},
+      {value: 4, color: randomRGB()},
+      {value: 2, color: randomRGB()},
+      {value: 3, color: randomRGB()},
+      {value: 7, color: randomRGB()},
+      {value: 34, color: randomRGB()},
+      {value: 3, color: randomRGB()},
+    ]
   }]
 };
 
@@ -22,7 +29,7 @@ const config = {
 
 onMounted(() => {
   try {
-    const chart = new Chart(document.querySelector("#unauthorised-entries"), config);
+    new Chart(document.querySelector("#unauthorised-entries"), config);
   } catch (err) {
     console.error("Failed to initialize chart", err);
   }

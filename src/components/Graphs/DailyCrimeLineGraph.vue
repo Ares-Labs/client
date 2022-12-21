@@ -6,8 +6,8 @@ import {CategoryScale} from 'chart.js';
 
 Chart.register(CategoryScale);
 
-let crimeDay = [];
-let crimeCount = [];
+const crimeDay = [];
+const crimeCount = [];
 
 Gateway.onReady(() => {
   Gateway.execute(Gateway.queries.GET_CRIMES_IN_AREA, {
@@ -39,7 +39,7 @@ const config = {
 
 onMounted(() => {
   try {
-    const chart = new Chart(document.querySelector(".daily-crimes"), config);
+    new Chart(document.querySelector(".daily-crimes"), config);
   } catch (e) {
     console.error("Failed to initialize chart", e);
   }

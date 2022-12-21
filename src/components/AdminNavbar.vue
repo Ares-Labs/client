@@ -50,6 +50,18 @@ header {
   background: linear-gradient(-70deg, $dark, $normal);
   height: 100vh;
   width: 9.125rem;
+  a {
+    margin-bottom: 2.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    :hover {
+      transition: opacity 0.2s ease-in-out;
+      opacity: 0.75;
+    }
+  }
 
   > a:first-child {
     position: absolute;
@@ -66,19 +78,6 @@ header {
     justify-content: center;
     height: 100%;
     width: 100%;
-
-    a {
-      margin-bottom: 2.5rem;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      :hover {
-        transition: opacity 0.2s ease-in-out;
-        opacity: 0.75;
-      }
-    }
   }
 }
 </style>

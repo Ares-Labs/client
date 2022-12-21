@@ -7,12 +7,11 @@ import { ref } from "vue";
 
 const properties = ref([]);
 
-Gateway.onReady(() => {
-  Gateway.execute(Gateway.queries.GET_USER_PROPERTIES, {
+Gateway.onReady(async () => {
+  const response = await Gateway.execute(Gateway.queries.GET_USER_PROPERTIES, {
     userId: Gateway.clientId,
-  }).then((data) => {
-    properties.value = data.properties;
   });
+  properties.value = response.properties;
 });
 </script>
 
@@ -24,16 +23,18 @@ Gateway.onReady(() => {
         <template v-if="!properties.length">
           <p>Loading...</p>
         </template>
-        <template v-else>
+        <template v-else-if="properties.length > 0">
           <property
-              v-for="property in properties"
-              :key="property.id"
-              :name="property.location"
-              :tier="property.tier"
-              :class="property.status.toLowerCase()"
-              :route="`/manage-property/${property.id}`"
+            v-for="property in properties"
+            :key="property.id"
+            :name="property.location"
+            :tier="property.tier"
+            :class="property.status.toLowerCase()"
+            :route="`/manage-property/${property.id}`"
           ></property>
-          <property name="Howest University" route="/manage-property" tier=3></property>
+          <add-property></add-property>
+        </template>
+        <template v-else>
           <add-property></add-property>
         </template>
       </div>

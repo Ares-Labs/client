@@ -2,7 +2,7 @@
 import Gateway from "../../utils/events";
 import { ref } from "vue";
 
-const props = defineProps({
+defineProps({
   name: String,
   identity: String,
 });
@@ -17,7 +17,7 @@ function addUser(id) {
     }).then(response => {
       console.log(response);
       if (response.success) {
-        added.value = true
+        added.value = true;
       }
     })
   });
@@ -32,7 +32,7 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
       <img src="/src/assets/media/profile.svg" alt="user-icon">
       <div>
         <p> {{name}} </p>
-        <p> ID: {{identity}} </p>
+        <p> <strong>ID:</strong> {{identity}} </p>
       </div>
     </div>
     <a @click="() => !added ? addUser(identity) : null" :class="{btn: !added}">
@@ -60,6 +60,10 @@ const propertyBeingManaged = window.location.pathname.split("/").pop();
   box-shadow: $dark 0 0.5rem 0.3rem 0.01rem;
   div {
     div {
+      p:first-child {
+        font-weight: bold;
+      }
+
       p:last-child {
         opacity: 50%;
         margin-top: 0.1rem;

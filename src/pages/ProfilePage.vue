@@ -2,6 +2,7 @@
 import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
 import Gateway from "../utils/events";
 import { onMounted, onUpdated, ref } from "vue";
+import { successNotification } from "@/utils/notifications";
 
 onMounted(getUser);
 onUpdated(getUser);
@@ -36,9 +37,7 @@ function getUser() {
           <p><strong>Payment:</strong> 0xD12fFe8b82b5978178da0aECd</p>
         </div>
         <div class="hor">
-          <button>
-            Update payment method
-          </button>
+          <button @click="successNotification('Payment method has been updated')">Update payment method</button>
           <button>
             <router-link to="/pricing">
               Update subscription

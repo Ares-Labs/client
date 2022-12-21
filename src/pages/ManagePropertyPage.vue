@@ -29,12 +29,12 @@ localStorage.setItem("propertyBeingManaged", propertyBeingManaged);
   <main>
     <h1>Currently allowed users</h1>
 
-    <div id="allowedUserContainer">
+    <div id="allowed-user-container">
       <AllowedUser v-for="user in allowedUserList"
                    :name="user.name"
                    :identity="user.identity"
       ></AllowedUser>
-      <div id="addNewAllowedUser">
+      <div id="add">
         <router-link :to="{ path: '/add-user/' + propertyBeingManaged }">
           <img src="../assets/media/plus-icon.svg" alt="plus" >
         </router-link>
@@ -54,19 +54,19 @@ h1 {
   margin-top: 5rem;
 }
 
-#allowedUserContainer {
+#allowed-user-container {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   margin: 7rem 3rem 0 5rem;
 }
 
-#addNewAllowedUser {
+#add {
   border: 0.15rem solid $dark;
-  width: 15rem;
-  height: 5rem;
+  width: 20rem;
+  height: 3rem;
   padding: 0.3rem;
-  margin: 3rem;
+  margin-bottom: 1.5rem;
   border-radius: 1rem;
   background-color: #e8e8e8;
   box-shadow: $dark 0 0.5rem 0.3rem 0.01rem;

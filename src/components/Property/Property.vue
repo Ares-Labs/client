@@ -5,7 +5,7 @@ import { successNotification } from "@/utils/notifications";
 
 let dialogState = ref(false);
 
-defineProps({
+const props = defineProps({
   name: String,
   tier: Number,
   route: String,
@@ -40,7 +40,7 @@ function deleteProperty(id) {
 
   <router-link :to="`${route}`">{{name}}</router-link>
   <p v-if="typeof props.tier === 'undefined'"></p>
-  <p v-else>Tier {{ tier }}</p>
+  <p v-else>Tier {{ props.tier }}</p>
 </div>
 </template>
 

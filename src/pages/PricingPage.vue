@@ -1,10 +1,17 @@
 <script setup>
 import Header from "@/components/Header/Header.vue";
+import { successNotification } from "@/utils/notifications";
 
 function selectPeriod(e) {
   document.querySelectorAll(".selected")
     .forEach(el => el.classList.remove("selected"));
   e.target.classList.toggle("selected");
+}
+
+function selectPlan(e) {
+  document.querySelectorAll(".plan")
+    .forEach(el => el.classList.remove("plan"))
+  e.target.parentElement.classList.add("plan");
 }
 </script>
 
@@ -12,7 +19,7 @@ function selectPeriod(e) {
   <Header/>
   <main>
     <h1>Compare Plan Features</h1>
-    <h4>Pick a plan that suits your needs.</h4>
+    <h4>Pick a plan that suits your needs</h4>
     <article>
       <div id="select-plan-wrapper">
         <h2>Select Plan</h2>
@@ -45,7 +52,7 @@ function selectPeriod(e) {
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button>Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
 
       </div>
       <div id="premium-plan-wrapper">
@@ -66,7 +73,7 @@ function selectPeriod(e) {
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button >Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
       </div>
       <div id="optimum-plan-wrapper">
         <p class="current hiddenVisibility">current</p>
@@ -85,8 +92,7 @@ function selectPeriod(e) {
           <img src="../images/checkmark.png" alt="checkmark"/>
           <img src="../images/checkmark.png" alt="checkmark"/>
         </div>
-        <button>Select Plan</button>
-
+        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
       </div>
     </article>
   </main>
@@ -145,14 +151,18 @@ button {
   text-align: center;
 }
 
+.plan {
+  background-color: $light;
+}
+
 .current {
   display: flex;
   justify-content: center;
   font-size: 1rem;
   margin-top: 1rem;
-  opacity: 50%;
-
+  opacity: 0;
 }
+
 .recommended {
   display: flex;
   justify-content: center;

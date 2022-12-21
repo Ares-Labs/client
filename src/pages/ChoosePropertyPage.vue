@@ -12,8 +12,6 @@ Gateway.onReady(async () => {
     userId: Gateway.clientId,
   });
   properties.value = response.properties;
-  console.log(properties);
-  console.log(properties.length);
 });
 </script>
 
@@ -26,14 +24,16 @@ Gateway.onReady(async () => {
           <p>Loading...</p>
         </template>
         <template v-else-if="properties.length > 0">
-          <property
+          <Property
             v-for="property in properties"
             :key="property.id"
             :name="property.location"
             :tier="property.tier"
             :class="property.status.toLowerCase()"
             :route="`/manage-property/${property.id}`"
-          ></property>
+            :show="true"
+            :id = property.id
+          ></Property>
           <add-property></add-property>
         </template>
         <template v-else>

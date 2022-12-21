@@ -1,21 +1,40 @@
 <script setup>
-const props = defineProps({
+import { ref } from "vue";
+import Gateway from "@/utils/events";
+import { successNotification } from "@/utils/notifications";
+
+const dialogState = ref(false);
+
+defineProps({
   name: String,
   tier: Number,
   route: String,
-  show: Boolean
+  show: Boolean,
+  id: Number
 });
 
-function hide(e) {
-  e.target.closest("div").classList.add("hidden");
-  e.target.closest("div").classList.remove("property");
+function deleteProperty(id) {
+  Gateway.onReady(async () => {
+    const response = await Gateway.execute(Gateway.queries.REQUEST_REMOVE_PROPERTY, {
+      propertyId: id
+    })
+    if (response.success) {
+      successNotification("The request has been submitted");
+    }
+  });
 }
 </script>
 
 <template>
 <div class="property">
-    <img src="../../assets/media/bin.svg" alt="options" id="delete" @click="hide" v-if="show === true">
-    <div v-else>-</div>
+  <img v-if="show" src="src/images/action.svg" alt="action" @click="dialogState = true"/>
+
+  <GDialog v-model="dialogState" max-width="80">
+    <div class="class">
+      <p @click="deleteProperty(id); dialogState = false">Delete</p>
+    </div>
+  </GDialog>
+
   <router-link :to="`${route}`">{{name}}</router-link>
   <p v-if="typeof this.tier === 'undefined'"></p>
   <p v-else>Tier {{ tier }}</p>
@@ -48,9 +67,14 @@ function hide(e) {
   background: linear-gradient(20deg, $normal, $light);
   transition: transform ease 0.5s;
 
+  img {
+    width: 3rem;
+    padding-left: 90%;
+  }
+
   a {
     color: $dark;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
   }
 
   div {
@@ -59,14 +83,6 @@ function hide(e) {
     margin-top: 0.5rem;
   }
 
-  #delete {
-    width: 2rem;
-    margin-left: 80%;
-    margin-top: 0.5rem;
-    &:hover {
-      cursor: pointer;
-    }
-  }
   &:hover {
     @include hover;
   }

@@ -60,7 +60,7 @@ import Header from "@/components/Header/Header.vue";
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button>Select Plan</button>
+        <button >Select Plan</button>
       </div>
       <div id="optimum-plan-wrapper">
         <p class="current hiddenVisibility">current</p>

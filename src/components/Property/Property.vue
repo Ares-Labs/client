@@ -3,7 +3,7 @@ import { ref } from "vue";
 import Gateway from "@/utils/events";
 import { successNotification } from "@/utils/notifications";
 
-const dialogState = ref(false);
+let dialogState = ref(false);
 
 defineProps({
   name: String,
@@ -33,7 +33,7 @@ function deleteProperty(id) {
        @click="dialogState = true"/>
 
   <GDialog v-model="dialogState" max-width="max-content" local>
-      <button class="button" @click="deleteProperty(id); dialogState = false">
+      <button class="button" @click="deleteProperty(id);dialogState = false">
         Request removal
       </button>
   </GDialog>

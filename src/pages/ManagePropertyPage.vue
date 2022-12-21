@@ -34,7 +34,7 @@ function getAllowedUsers() {
     const data = await Gateway.execute(Gateway.queries.GET_ALLOWED_USERS, {
       userId: Gateway.clientId,
       propertyId: propertyBeingManaged.value
-    })
+    });
     allowedUserList.value = (Object.entries(data.allowedUsers).
     map(([key, value]) => ({ identity: key, name: value })));
   });

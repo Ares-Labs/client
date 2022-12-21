@@ -21,6 +21,7 @@
     "chartjs-adapter-date-fns": "^3.0.0",
     "date-fns": "^2.29.3",
     "epic-spinners": "^2.0.0",
+    "gitart-vue-dialog": "^2.4.1",
     "ol": "^7.1.0",
     "sonar-scanner": "^3.1.0",
     "uuid": "^9.0.0",

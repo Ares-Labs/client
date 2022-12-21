@@ -13,7 +13,7 @@ const thisMonth = today.getMonth();
 
 let userList = [];
 let accessTime = [];
-let userAccessRate = {};
+const userAccessRate = {};
 
 
 Gateway.onReady(() => {
@@ -32,18 +32,20 @@ Gateway.onReady(() => {
           userAccessRate[data.fullName] += 1;
         }
       });
-    })
+    });
   });
 });
 
 setInterval(() => {
-  for (let user in userAccessRate) {
-    userList.push(user);
-    accessTime.push(userAccessRate[user]);
-    userList = [];
-    accessTime = [];
+  for (const user in userAccessRate) {
+    if (user) {
+      userList.push(user);
+      accessTime.push(userAccessRate[user]);
+      userList = [];
+      accessTime = [];
+    }
   }
-});
+}, 1000);
 
 
 const data = {
@@ -63,7 +65,7 @@ const config = {
 
 onMounted(() => {
   try {
-    const chart = new Chart(document.querySelector("#auth-visitors-graph"), config);
+    new Chart(document.querySelector("#auth-visitors-graph"), config);
   } catch (err) {
     console.error("Failed to initialize chart", err);
   }
@@ -77,7 +79,3 @@ onMounted(() => {
     <canvas id="auth-visitors-graph" width="400" height="450"></canvas>
   </div>
 </template>
-
-<style scoped>
-
-</style>

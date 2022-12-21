@@ -1,18 +1,31 @@
 <script setup>
 import Header from "@/components/Header/Header.vue";
+import { successNotification } from "@/utils/notifications";
+
+function selectPeriod(e) {
+  document.querySelectorAll(".selected")
+    .forEach(el => el.classList.remove("selected"));
+  e.target.classList.toggle("selected");
+}
+
+function selectPlan(e) {
+  document.querySelectorAll(".plan")
+    .forEach(el => el.classList.remove("plan"))
+  e.target.parentElement.classList.add("plan");
+}
 </script>
 
 <template>
   <Header/>
   <main>
     <h1>Compare Plan Features</h1>
-    <h4>Pick a plan that suits your needs.</h4>
+    <h4>Pick a plan that suits your needs</h4>
     <article>
       <div id="select-plan-wrapper">
         <h2>Select Plan</h2>
         <div>
-          <p class="selected">MONTHLY</p>
-          <p>ANNUAL</p>
+          <p @click="selectPeriod" class="selected">Monthly</p>
+          <p @click="selectPeriod">Annual</p>
         </div>
         <div>
           <p>Cameras</p>
@@ -39,7 +52,7 @@ import Header from "@/components/Header/Header.vue";
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button>Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
 
       </div>
       <div id="premium-plan-wrapper">
@@ -60,7 +73,7 @@ import Header from "@/components/Header/Header.vue";
           <img src="../images/x.png" alt="x"/>
           <img src="../images/x.png" alt="x"/>
         </div>
-        <button>Select Plan</button>
+        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
       </div>
       <div id="optimum-plan-wrapper">
         <p class="current hiddenVisibility">current</p>
@@ -79,8 +92,7 @@ import Header from "@/components/Header/Header.vue";
           <img src="../images/checkmark.png" alt="checkmark"/>
           <img src="../images/checkmark.png" alt="checkmark"/>
         </div>
-        <button>Select Plan</button>
-
+        <button @click="successNotification('The plan has been selected'); selectPlan($event)">Select Plan</button>
       </div>
     </article>
   </main>
@@ -139,14 +151,18 @@ button {
   text-align: center;
 }
 
+.plan {
+  background-color: $light;
+}
+
 .current {
   display: flex;
   justify-content: center;
   font-size: 1rem;
   margin-top: 1rem;
-  opacity: 50%;
-
+  opacity: 0;
 }
+
 .recommended {
   display: flex;
   justify-content: center;
@@ -154,51 +170,6 @@ button {
   margin-top: 1rem;
   font-weight: bold;
   color: #485d76;
-}
-
-#optimum-plan-wrapper {
-  border-radius: 0 0.8rem 0.8rem 0;
-}
-
-#basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
-  border: solid #485d76;
-  border-left: none;
-}
-
-#select-plan-wrapper {
-  border: solid #485d76;
-  border-radius: 0.8rem 0 0 0.8rem;
-  padding: 3rem 3rem 2rem 3rem; // size of the select plan box (left side)
-}
-
-#select-plan-wrapper h2 {
-    margin-bottom: 2rem;
-}
-
-#select-plan-wrapper div:last-of-type {
-  p {
-    margin-bottom: 3rem;
-    border-bottom: solid black 0.1rem;
-    padding-bottom: 0.5rem;
-  }
-}
-
-#select-plan-wrapper div:first-of-type {
-    display: flex;
-    margin-bottom: 7rem;
-    border: solid #485d76 0.2rem;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-
-    p:last-of-type {
-      margin-left: 0.5rem;
-      padding-left: 0.5rem;
-      border-left: solid black;
-    }
-  }
-
-#basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
-  width: 20vw;
 }
 
 .plan-header {
@@ -225,4 +196,46 @@ button {
     }
   }
 }
+
+#optimum-plan-wrapper {
+  border-radius: 0 0.8rem 0.8rem 0;
+}
+
+#basic-plan-wrapper, #premium-plan-wrapper, #optimum-plan-wrapper {
+  border: solid #485d76;
+  border-left: none;
+  width: 20vw;
+}
+
+#select-plan-wrapper {
+  border: solid #485d76;
+  border-radius: 0.8rem 0 0 0.8rem;
+  padding: 3rem 3rem 2rem 3rem;
+  font-weight: bold;
+  div:first-of-type {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+#select-plan-wrapper h2 {
+    margin-bottom: 2rem;
+}
+
+#select-plan-wrapper div:last-of-type {
+  p {
+    margin-bottom: 3rem;
+    border-bottom: solid black 0.1rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+#select-plan-wrapper div:first-of-type {
+    display: flex;
+    margin-bottom: 7rem;
+    border: solid #485d76 0.2rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
 </style>

@@ -5,7 +5,7 @@ import AddProperty from "@/components/Property/AddProperty.vue";
 import Gateway from "@/utils/events";
 import { ref } from "vue";
 
-const properties = ref(undefined);
+const properties = ref(null);
 
 Gateway.onReady(async () => {
   const response = await Gateway.execute(Gateway.queries.GET_USER_PROPERTIES, {
@@ -22,7 +22,7 @@ Gateway.onReady(async () => {
   <div class="wrapper">
     <main>
       <div class="flex">
-        <template v-if="properties === undefined">
+        <template v-if="properties === null">
           <p>Loading...</p>
         </template>
         <template v-else-if="properties.length > 0">

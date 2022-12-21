@@ -17,7 +17,7 @@ function hide(e) {
     <img src="../../assets/media/bin.svg" alt="options" id="delete" @click="hide" v-if="show === true">
     <div v-else>-</div>
   <router-link :to="`${route}`">{{name}}</router-link>
-  <p v-if="typeof this.tier === 'undefined'"></p>
+  <p v-if="typeof props.tier === 'undefined'"></p>
   <p v-else>Tier {{ tier }}</p>
 </div>
 </template>

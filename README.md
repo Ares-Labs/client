@@ -1,12 +1,12 @@
 # Documentation about setting up the client
-This document will explain how you can deploy the CLient side of the POC on you device.
+This document will explain how you can deploy the client side of the POC on your device.
 
 ## Prerequisites
 1. Make sure you've got `node` installed
 2. Make sure you've got `npm` installed
 3. Make sure you've got `java` installed
 
-## cloning from git
+## Cloning from git
 To get started with the project, you will first have to clone the client repo from git. This can be done in 2 ways!
 ## Clone the client:
 * SSH: `git@git.ti.howest.be:TI/2022-2023/s3/analysis-and-development-project/projects/group-06/client.git`

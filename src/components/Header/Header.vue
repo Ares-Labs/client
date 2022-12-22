@@ -1,8 +1,7 @@
 <script setup>
-
 import { ref } from "vue";
 
-let propertyBeingManaged = ref();
+const propertyBeingManaged = ref();
 
 // Get the last path parameter from the url if It's not in localstorage
 const endOfUrlIsANumber = window.location.pathname.match(/\d+$/);

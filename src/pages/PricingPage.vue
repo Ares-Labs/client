@@ -28,7 +28,7 @@ function selectPlan(e, tier) {
     });
   });
   document.querySelectorAll(".plan")
-    .forEach(el => el.classList.remove("plan"))
+    .forEach(el => el.classList.remove("plan"));
   e.target.parentElement.classList.add("plan");
 }
 
@@ -235,6 +235,10 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    margin-bottom: 7rem;
+    border: solid #485d76 0.2rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
   }
 }
 
@@ -249,12 +253,4 @@ button {
     padding-bottom: 0.5rem;
   }
 }
-
-#select-plan-wrapper div:first-of-type {
-    display: flex;
-    margin-bottom: 7rem;
-    border: solid #485d76 0.2rem;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-  }
 </style>

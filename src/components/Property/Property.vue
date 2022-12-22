@@ -3,7 +3,7 @@ import { ref } from "vue";
 import Gateway from "@/utils/events";
 import { successNotification } from "@/utils/notifications";
 
-let dialogState = ref(false);
+const dialogState = ref(false);
 
 const props = defineProps({
   name: String,
@@ -18,7 +18,7 @@ function deleteProperty(id) {
     const response = await Gateway.execute(Gateway.queries.
       REQUEST_REMOVE_PROPERTY, {
       propertyId: id
-    })
+    });
     if (response.success) {
       successNotification("You have successfully submitted " +
         "a request to remove the property");

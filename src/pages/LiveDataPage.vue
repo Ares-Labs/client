@@ -35,9 +35,6 @@ propertyId = parseInt(propertyId);
 Gateway.onReady(() =>
   Gateway.execute(Gateway.queries.GET_PROPERTY, {
     propertyId: propertyId,
-  }).then((data) => {
-    console.log("Property:");
-    console.log(data);
   })
 );
 

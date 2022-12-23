@@ -429,20 +429,20 @@ main {
       border: 0.2rem solid $dark;
       border-radius: $border-radius;
       padding: 0.1rem 0.5rem;
-
-      input {
-        width: 20rem;
-        height: 2.5rem;
-        padding: 0 1rem;
-        color: $dark;
-        background-color: $secondary;
-        border: none;
-        border-radius: $border-radius;
-        outline: none;
-        font-size: $font-size-base;
-      }
     }
   }
+}
+
+.search input {
+  width: 20rem;
+  height: 2.5rem;
+  padding: 0 1rem;
+  color: $dark;
+  background-color: $secondary;
+  border: none;
+  border-radius: $border-radius;
+  outline: none;
+  font-size: $font-size-base;
 }
 
 .add-equipment {
@@ -584,7 +584,6 @@ main {
       padding-bottom: 0.5rem;
 
       input,
-      #tier,
       p {
         display: block;
         text-align: left;
@@ -594,12 +593,8 @@ main {
         color: $dark;
       }
 
-      input,
-      #tier {
-        border: 0.2rem solid $dark;
-      }
-
       input {
+        border: 0.2rem solid $dark;
         background-color: $secondary;
         -moz-appearance: textfield;
       }
@@ -730,6 +725,13 @@ main {
 #tier {
   background-color: $secondary;
   cursor: pointer;
+  display: block;
+  text-align: left;
+  font-weight: 700;
+  border-radius: $border-radius;
+  padding: 0.25rem 0.5rem;
+  color: $dark;
+  border: 0.2rem solid $dark;
 }
 
 .equipment-title {

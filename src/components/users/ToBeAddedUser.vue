@@ -15,7 +15,6 @@ function addUser(id) {
       propertyId: propertyBeingManaged,
       userId: id
     }).then(response => {
-      console.log(response);
       if (response.success) {
         added.value = true;
       }

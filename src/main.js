@@ -1,5 +1,7 @@
 import "./assets/css/reset.css";
 import "vue-toastification/dist/index.css";
+import { GDialog } from 'gitart-vue-dialog';
+import 'gitart-vue-dialog/dist/style.css';
 
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
@@ -87,3 +89,4 @@ app.use(Toast, {
   maxToasts: 20,
   newestOnTop: true,
 });
+app.component('GDialog', GDialog);

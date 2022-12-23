@@ -1,24 +1,46 @@
 <script setup>
+import { ref } from "vue";
+import Gateway from "@/utils/events";
+import { successNotification } from "@/utils/notifications";
+
+const dialogState = ref(false);
+
 const props = defineProps({
   name: String,
   tier: Number,
   route: String,
-  show: Boolean
+  show: Boolean,
+  id: Number
 });
 
-function hide(e) {
-  e.target.closest("div").classList.add("hidden");
-  e.target.closest("div").classList.remove("property");
+function deleteProperty(id) {
+  Gateway.onReady(async () => {
+    const response = await Gateway.execute(Gateway.queries.
+      REQUEST_REMOVE_PROPERTY, {
+      propertyId: id
+    });
+    if (response.success) {
+      successNotification("You have successfully submitted " +
+        "a request to remove the property");
+    }
+  });
 }
 </script>
 
 <template>
 <div class="property">
-    <img src="../../assets/media/bin.svg" alt="options" id="delete" @click="hide" v-if="show === true">
-    <div v-else>-</div>
+  <img v-if="show" src="../../assets/media/action.svg" alt="action"
+       @click="dialogState = true"/>
+
+  <GDialog v-model="dialogState" max-width="max-content" local>
+      <button class="button" @click="deleteProperty(id);dialogState = false">
+        Request removal
+      </button>
+  </GDialog>
+
   <router-link :to="`${route}`">{{name}}</router-link>
   <p v-if="typeof props.tier === 'undefined'"></p>
-  <p v-else>Tier {{ tier }}</p>
+  <p v-else>Tier {{ props.tier }}</p>
 </div>
 </template>
 
@@ -44,13 +66,24 @@ function hide(e) {
   border-radius: 1rem;
   font-weight: bold;
   font-size: 2rem;
-  box-shadow: rgba(17, 17, 26, 0.1) 0 1px 0, rgba(17, 17, 26, 0.1) 0 8px 24px, rgba(17, 17, 26, 0.1) 0 16px 48px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0 1px 0, rgba(17, 17, 26, 0.1) 0 8px 24px,
+  rgba(17, 17, 26, 0.1) 0 16px 48px;
   background: linear-gradient(20deg, $normal, $light);
   transition: transform ease 0.5s;
 
+  button {
+    @include button;
+    font-weight: bold;
+  }
+
+  img {
+    width: 3rem;
+    padding-left: 90%;
+  }
+
   a {
     color: $dark;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
   }
 
   div {
@@ -59,17 +92,10 @@ function hide(e) {
     margin-top: 0.5rem;
   }
 
-  #delete {
-    width: 2rem;
-    margin-left: 80%;
-    margin-top: 0.5rem;
-    &:hover {
-      cursor: pointer;
-    }
-  }
   &:hover {
     @include hover;
   }
+
 }
 
 .pending {

@@ -29,7 +29,6 @@ const updateDrones = () => {
         limit: 10,
       }
     );
-    console.log(data);
     drones.value = data;
     isFetching.value = false;
     hasFetched.value = true;

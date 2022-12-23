@@ -3,9 +3,6 @@ import HeaderWithoutLinks from "@/components/Header/HeaderWithoutLinks.vue";
 import Gateway from "../utils/events";
 import { onMounted, onUpdated, ref } from "vue";
 import { successNotification } from "@/utils/notifications";
-import {useRouter} from "vue-router";
-
-const router = useRouter();
 
 onMounted(getUser);
 onUpdated(getUser);
@@ -45,9 +42,6 @@ function getUser() {
             <router-link to="/pricing">
               Update subscription
             </router-link>
-          </button>
-          <button @click="() => router.push({name: 'AdminManageUsers'})">
-              Admin page (only for demo)
           </button>
         </div>
       </div>

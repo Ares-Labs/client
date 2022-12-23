@@ -415,23 +415,30 @@ class Gateway {
       errorNotification(`An error occurred: ${error}`);
       return;
     }
+
     const { type, data } = message.body;
+
     if (type === undefined || data === undefined) {
       warningNotification(`Invalid event received: ${message.body}`);
       return;
     }
+
     if (type === "error") {
+      console.error(data.message);
       errorNotification(data.message);
       return;
     }
+
     const id = data.requestIdentifier;
     const hasExistingRequestIdentifier = id && id in this.#requestIdentifiers;
+
     if (hasExistingRequestIdentifier) {
       delete data.requestIdentifier;
       this.#requestIdentifiers[id](data);
       delete this.#requestIdentifiers[id];
       return;
     }
+
     this.#invokeSubscriptions(this.allEvents, data);
     this.#invokeSubscriptions(type, data);
   }

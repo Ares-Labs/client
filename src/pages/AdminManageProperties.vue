@@ -344,7 +344,7 @@ updateProperties();
             @click="() => removeEquipment(equipment.id)"
           />
         </div>
-        <button class="add-equipment" @click="() => (addEquipment = true)">
+        <button class="add-equipment-button" @click="() => (addEquipment = true)">
           <img alt="Add equipment" src="../assets/media/add-small.svg" />
         </button>
       </div>
@@ -446,7 +446,7 @@ main {
 }
 
 .add-equipment {
-  z-index: 1000;
+  z-index: 1000 !important;
 
   h3 {
     margin-bottom: 2rem;
@@ -625,7 +625,7 @@ main {
       }
     }
 
-    .add-equipment {
+    .add-equipment-button {
       background-color: $accent;
       border: none;
       border-radius: $border-radius;
